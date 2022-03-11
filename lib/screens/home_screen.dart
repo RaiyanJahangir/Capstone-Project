@@ -47,7 +47,7 @@ class HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 100,
                   child: Image.asset(
-                    "assets/logo.png",
+                    "assets/baby_picture.png",
                     fit: BoxFit.contain,
                   ),
                 ),
