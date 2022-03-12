@@ -5,8 +5,8 @@
 
 #define FIREBASE_HOST "integrated-design-projec-1e9b8-default-rtdb.firebaseio.com" //give your firebase host id here
 #define FIREBASE_AUTH "6UHbL2DgfZjzuHN22eMjRUZgg18KgkwuLcmzi9WU"                 //give your firebase database secret here
-#define WIFI_SSID "DR JAHANGIR"       //give the wifi ssid you are connected to
-#define WIFI_PASSWORD "19671967"      //give the wifi password you are connected to
+#define WIFI_SSID "A1601"       //give the wifi ssid you are connected to
+#define WIFI_PASSWORD "12345678"      //give the wifi password you are connected to
 
 //Variables
 const int RXPin = 4, TXPin = 5;  //Serial Pins

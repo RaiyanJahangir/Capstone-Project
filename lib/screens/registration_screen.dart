@@ -17,8 +17,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   //our form key
   final _formKey = GlobalKey<FormState>();
   //editing controller
-  final firstNameEditingController = TextEditingController();
-  final secondNameEditingController = TextEditingController();
+  final nameEditingController = TextEditingController();
+  final genderEditingController = TextEditingController();
+  final ageEditingController = TextEditingController();
+  final occupationEditingController = TextEditingController();
   final emailEditingController = TextEditingController();
   final passwordEditingController = TextEditingController();
   final confirmPasswordEditingController = TextEditingController();
@@ -26,14 +28,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     //first name field
-    final firstNameField = TextFormField(
+    final nameField = TextFormField(
       autocorrect: false,
-      controller: firstNameEditingController,
+      controller: nameEditingController,
       keyboardType: TextInputType.name,
       validator: (value) {
         RegExp regex = RegExp(r'^.{3,}$');
         if (value!.isEmpty) {
-          return ("First Name cannot be Empty");
+          return ("Name cannot be Empty");
         }
         if (!regex.hasMatch(value)) {
           return ("Enter Valid Name (Min 3 character");
@@ -41,39 +43,91 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         return null;
       },
       onSaved: (value) {
-        firstNameEditingController.text = value!;
+        nameEditingController.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
           prefixIcon: Icon(Icons.account_circle),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "First Name",
+          hintText: "Name",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
             10,
           ))),
     );
 
-    //second name field
-    final secondNameField = TextFormField(
+    //gender field
+    final genderField = TextFormField(
       autocorrect: false,
-      controller: secondNameEditingController,
+      controller: genderEditingController,
       keyboardType: TextInputType.name,
       validator: (value) {
         //RegExp regex = RegExp(r'^.{3,}$');
         if (value!.isEmpty) {
-          return ("Second Name cannot be Empty");
+          return ("Gender cannot be Empty");
         }
         return null;
       },
       onSaved: (value) {
-        secondNameEditingController.text = value!;
+        genderEditingController.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
           prefixIcon: Icon(Icons.account_circle),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Second Name",
+          hintText: "Gender",
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(
+            10,
+          ))),
+    );
+
+    //age field
+    final ageField = TextFormField(
+      autocorrect: false,
+      controller: ageEditingController,
+      keyboardType: TextInputType.name,
+      validator: (value) {
+        //RegExp regex = RegExp(r'^.{3,}$');
+        if (value!.isEmpty) {
+          return ("Age cannot be Empty");
+        }
+        return null;
+      },
+      onSaved: (value) {
+        ageEditingController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+          prefixIcon: Icon(Icons.account_circle),
+          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "Age",
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(
+            10,
+          ))),
+    );
+
+    //occupation field
+    final occupationField = TextFormField(
+      autocorrect: false,
+      controller: occupationEditingController,
+      keyboardType: TextInputType.name,
+      validator: (value) {
+        //RegExp regex = RegExp(r'^.{3,}$');
+        if (value!.isEmpty) {
+          return ("Occupation cannot be Empty");
+        }
+        return null;
+      },
+      onSaved: (value) {
+        ageEditingController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+          prefixIcon: Icon(Icons.account_circle),
+          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "Occupation",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
             10,
@@ -213,9 +267,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               ),
                             ),
                             SizedBox(height: 15),
-                            firstNameField,
+                            nameField,
                             SizedBox(height: 20),
-                            secondNameField,
+                            genderField,
+                            SizedBox(height: 20),
+                            ageField,
+                            SizedBox(height: 20),
+                            occupationField,
                             SizedBox(height: 20),
                             emailField,
                             SizedBox(height: 20),
@@ -255,11 +313,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     //writing all the values
     userModel.email = user!.email;
     userModel.uid = user.uid;
-    userModel.firstName = firstNameEditingController.text;
-    userModel.secondName = secondNameEditingController.text;
+    userModel.name = nameEditingController.text;
+    userModel.gender = genderEditingController.text;
+    userModel.age = int.parse(ageEditingController.text);
+    userModel.occupation = occupationEditingController.text;
 
     await firebaseFirestore
-        .collection("users")
+        .collection("Users")
         .doc(user.uid)
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");

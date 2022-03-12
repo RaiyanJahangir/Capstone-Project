@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.email_password_login">
    <application
-        android:label="email_password_login"
+        android:label="Baby Monitor"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

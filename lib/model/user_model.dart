@@ -1,18 +1,28 @@
 class UserModel {
   String? uid;
   String? email;
-  String? firstName;
-  String? secondName;
+  String? name;
+  String? gender;
+  int? age;
+  String? occupation;
 
-  UserModel({this.uid, this.email, this.firstName, this.secondName});
+  UserModel(
+      {this.uid,
+      this.email,
+      this.name,
+      this.gender,
+      this.age,
+      this.occupation});
 
   //receiving data from server
   factory UserModel.fromMap(map) {
     return UserModel(
       uid: map['uid'],
-      email: map['email'],
-      firstName: map['firstName'],
-      secondName: map['secondName'],
+      email: map['Email'],
+      name: map['Name'],
+      gender: map['Gender'],
+      age: map['Age'],
+      occupation: map['Occupation'],
     );
   }
 
@@ -20,9 +30,11 @@ class UserModel {
   Map<String, dynamic> toMap() {
     return {
       'uid': uid,
-      'email': email,
-      'firstName': firstName,
-      'secondName': secondName,
+      'Email': email,
+      'Name': name,
+      'Gender': gender,
+      'Age': age,
+      'Occupation': occupation,
     };
   }
 }

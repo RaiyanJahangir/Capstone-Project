@@ -21,7 +21,7 @@ class HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     FirebaseFirestore.instance
-        .collection("users")
+        .collection("Users")
         .doc(user!.uid)
         .get()
         .then((value) {
@@ -57,7 +57,7 @@ class HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "${loggedInUser.firstName} ${loggedInUser.secondName}",
+                  "${loggedInUser.name}",
                   style: TextStyle(
                       color: Colors.black54, fontWeight: FontWeight.w500),
                 ),
