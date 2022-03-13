@@ -18,12 +18,33 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
   //editing controller
   final nameEditingController = TextEditingController();
-  final genderEditingController = TextEditingController();
   final ageEditingController = TextEditingController();
   final occupationEditingController = TextEditingController();
   final emailEditingController = TextEditingController();
   final passwordEditingController = TextEditingController();
   final confirmPasswordEditingController = TextEditingController();
+
+  String dropdownValue = 'Male';
+  String? holder;
+
+  void getDropDownItem() {
+    setState(() {
+      holder = dropdownValue;
+    });
+  }
+
+  bool isNumeric(String? s) {
+    if (s == null) {
+      return false;
+    }
+    var value = double.tryParse(s) != null;
+    if (value) {
+      if (int.parse(s) < 0) {
+        return false;
+      }
+    }
+    return value;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,30 +77,36 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ))),
     );
 
-    //gender field
-    final genderField = TextFormField(
-      autocorrect: false,
-      controller: genderEditingController,
-      keyboardType: TextInputType.name,
-      validator: (value) {
-        //RegExp regex = RegExp(r'^.{3,}$');
-        if (value!.isEmpty) {
-          return ("Gender cannot be Empty");
-        }
-        return null;
-      },
-      onSaved: (value) {
-        genderEditingController.text = value!;
-      },
-      textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-          prefixIcon: Icon(Icons.account_circle),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Gender",
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(
-            10,
-          ))),
+    // //gender field
+    final genderField = Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey, width: 1),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: dropdownValue,
+          icon: const Icon(Icons.keyboard_arrow_down),
+          elevation: 16,
+          isExpanded: true,
+          style: TextStyle(
+            color: Colors.grey[700],
+            fontSize: 17,
+          ),
+          onChanged: (String? newValue) {
+            setState(() {
+              dropdownValue = newValue!;
+            });
+          },
+          items: <String>['Male', 'Female']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ),
     );
 
     //age field
@@ -91,6 +118,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         //RegExp regex = RegExp(r'^.{3,}$');
         if (value!.isEmpty) {
           return ("Age cannot be Empty");
+        }
+        if (!isNumeric(value)) {
+          return ("Give a valid age");
         }
         return null;
       },
@@ -226,6 +256,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
             signUp(emailEditingController.text, passwordEditingController.text);
+            getDropDownItem();
           },
           child: Text(
             "SignUp",
@@ -238,10 +269,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.blue,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.blue),
+            icon: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
               //passing this to a loop
               Navigator.of(context).pop();
@@ -314,7 +345,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     userModel.email = user!.email;
     userModel.uid = user.uid;
     userModel.name = nameEditingController.text;
-    userModel.gender = genderEditingController.text;
+    userModel.gender = holder;
     userModel.age = int.parse(ageEditingController.text);
     userModel.occupation = occupationEditingController.text;
 
