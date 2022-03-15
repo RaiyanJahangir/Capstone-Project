@@ -5,6 +5,7 @@ import 'package:email_password_login/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 //import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 //import 'package:email_password_login/model/sensor_model.dart';
@@ -26,10 +27,24 @@ class SensorScreenState extends State<SensorScreen> {
 
   final textcontroller = TextEditingController();
   final Future<FirebaseApp> _future = Firebase.initializeApp();
-  final databaseRef = FirebaseDatabase.instance.reference();
+  final databaseRef =
+      FirebaseDatabase.instance.reference().child("Sensor Data");
+  final databaseRef2 =
+      FirebaseDatabase.instance.reference().child("Temperature");
+  // DatabaseReference ref1 =
+  //     FirebaseDatabase.instance.reference().child("Pulse Rate");
+  // DatabaseReference ref2 =
+  //     FirebaseDatabase.instance.reference().child("Temperature");
+
+//  ref1.onValue.listen((DatabaseEvent event ){
+//     final data=event.snapshot.value;
+//     updateStarCount(data);
+//   });
+//DataSnapshot event=await  ref1.once();
 
   void addData(String data) {
-    databaseRef.push().set({'name': data, 'comment': 'a good season'});
+    //databaseRef.push().set({'name': data, 'comment': 'a good season'});
+    //databaseRef.push().set({'Pulse Rate': 140});
   }
 
   @override
@@ -45,11 +60,11 @@ class SensorScreenState extends State<SensorScreen> {
     });
   }
 
-  void printFirebase() {
-    databaseRef.once().then((DataSnapshot snapshot) {
-      print('Data : ${snapshot.value}');
-    });
-  }
+  // void printFirebase() {
+  //   databaseRef.child('Pulse Rate').once().then((DataSnapshot snapshot) {
+  //     print('Data : ${snapshot.value}');
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -66,36 +81,49 @@ class SensorScreenState extends State<SensorScreen> {
         title: Text("Sensor Page"),
         centerTitle: true,
       ),
-      body: FutureBuilder(
-          future: _future,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
-            } else {
-              return Container(
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: 250.0),
-                    Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: TextField(),
-                    ),
-                    SizedBox(height: 30.0),
-                    Center(
-                      child: ElevatedButton(
-                        //color: Colors.pinkAccent,
-                        child: Text("Save to Database"),
-                        onPressed: () {
-                          addData(textcontroller.text);
-                          printFirebase();
-                        },
-                      ),
-                    )
-                  ],
-                ),
-              );
-            }
-          }),
+      body: SafeArea(
+        child: FirebaseAnimatedList(
+          query: databaseRef,
+          itemBuilder: (BuildContext context, DataSnapshot snapshot,
+              Animation<double> animation, int index) {
+            //var x = snapshot.value["Pulse Rate"];
+            return ListTile(
+              title: Text('${snapshot.value}'),
+              //subtitle: Text(snapshot.value['Temperature']['Data']),
+            );
+          },
+        ),
+      ),
+      // body: FutureBuilder(
+      //     future: _future,
+      //     builder: (context, snapshot) {
+      //       if (snapshot.hasError) {
+      //         return Text(snapshot.error.toString());
+      //       } else {
+      //         return Container(
+      //           child: Column(
+      //             children: <Widget>[
+      //               SizedBox(height: 250.0),
+      //               Padding(
+      //                 padding: EdgeInsets.all(10.0),
+      //                 child: TextField(),
+      //               ),
+      //               SizedBox(height: 30.0),
+      //               Center(
+      //                 child: ElevatedButton(
+      //                   //color: Colors.pinkAccent,
+      //                   child: Text("Save to Database"),
+      //                   onPressed: () {
+      //                     addData(textcontroller.text);
+      //                     printFirebase();
+      //                   },
+      //                 ),
+      //               )
+      //             ],
+      //           ),
+      //         );
+      //       }
+      //     }),
     );
 
     // body: Container(
