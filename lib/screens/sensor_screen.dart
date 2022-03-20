@@ -3,19 +3,13 @@ import 'package:email_password_login/model/user_model.dart';
 import 'package:email_password_login/screens/home_screen.dart';
 import 'package:email_password_login/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
-//import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-//import 'package:email_password_login/model/sensor_model.dart';
-//import 'package:email_password_login/model/sensor_data_dao.dart';
-//import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'CircleProgress.dart';
 
 class SensorScreen extends StatefulWidget {
   const SensorScreen({Key? key}) : super(key: key);
-  //SensorScreen({this.app});
-  //final FirebaseApp app;
 
   @override
   SensorScreenState createState() => SensorScreenState();
@@ -26,26 +20,12 @@ class SensorScreenState extends State<SensorScreen> {
   UserModel loggedInUser = UserModel();
 
   final textcontroller = TextEditingController();
-  final Future<FirebaseApp> _future = Firebase.initializeApp();
-  final databaseRef =
-      FirebaseDatabase.instance.reference().child("Sensor Data");
-  final databaseRef2 =
-      FirebaseDatabase.instance.reference().child("Temperature");
-  // DatabaseReference ref1 =
-  //     FirebaseDatabase.instance.reference().child("Pulse Rate");
-  // DatabaseReference ref2 =
-  //     FirebaseDatabase.instance.reference().child("Temperature");
+  // final databaseRef =
+  // FirebaseDatabase.instance.reference().child("Sensor Data");
+  final databaseRef = FirebaseDatabase.instance.reference();
 
-//  ref1.onValue.listen((DatabaseEvent event ){
-//     final data=event.snapshot.value;
-//     updateStarCount(data);
-//   });
-//DataSnapshot event=await  ref1.once();
-
-  void addData(String data) {
-    //databaseRef.push().set({'name': data, 'comment': 'a good season'});
-    //databaseRef.push().set({'Pulse Rate': 140});
-  }
+  var pulse;
+  var temperature;
 
   @override
   void initState() {
@@ -58,188 +38,194 @@ class SensorScreenState extends State<SensorScreen> {
       this.loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
+
+    // databaseRef.once().then((DataSnapshot snapshot) {
+    //   Map<dynamic, dynamic> values = snapshot.value;
+    //   values.forEach((key, values) {
+    //     if (key == 'Pulse Rate') {
+    //       print(key + values.toString());
+    //       pulse = values;
+    //       print(pulse);
+    //     }
+    //     if (key == 'Temperature') {
+    //       temperature = values;
+    //       print(temperature);
+    //     }
+    //   });
+    // });
+    databaseRef.onValue.listen((event) {
+      var snapshot = event.snapshot;
+      Map<dynamic, dynamic> values = snapshot.value;
+      values.forEach((key, values) {
+        if (key == 'Pulse Rate') {
+          print(key + values.toString());
+          pulse = values;
+          print(pulse);
+        }
+        if (key == 'Temperature') {
+          temperature = values;
+          print(temperature);
+        }
+        setState(() {});
+      });
+    });
   }
 
-  // void printFirebase() {
-  //   databaseRef.child('Pulse Rate').once().then((DataSnapshot snapshot) {
-  //     print('Data : ${snapshot.value}');
-  //   });
-  // }
+  VoidCallback? fetchData() {
+    databaseRef.once().then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> values = snapshot.value;
+      values.forEach((key, values) {
+        if (key == 'Pulse Rate') {
+          print(key + ': ' + values.toString());
+          pulse = values;
+        }
+
+        if (key == 'Temperature') {
+          print(key + ": " + values.toString());
+          temperature = values;
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            //passing this to a loop
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => HomeScreen()));
-          },
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              //passing this to a loop
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => HomeScreen()));
+            },
+          ),
+          title: Text("Sensor Page"),
+          centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+                onPressed: () {
+                  logout(context);
+                },
+                icon: Icon(
+                  Icons.logout,
+                  color: Colors.white,
+                ))
+          ],
         ),
-        title: Text("Sensor Page"),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        child: FirebaseAnimatedList(
-          query: databaseRef,
-          itemBuilder: (BuildContext context, DataSnapshot snapshot,
-              Animation<double> animation, int index) {
-            //var x = snapshot.value["Pulse Rate"];
-            return ListTile(
-              title: Text('${snapshot.value}'),
-              //subtitle: Text(snapshot.value['Temperature']['Data']),
-            );
-          },
-        ),
-      ),
-      // body: FutureBuilder(
-      //     future: _future,
-      //     builder: (context, snapshot) {
-      //       if (snapshot.hasError) {
-      //         return Text(snapshot.error.toString());
-      //       } else {
-      //         return Container(
-      //           child: Column(
-      //             children: <Widget>[
-      //               SizedBox(height: 250.0),
-      //               Padding(
-      //                 padding: EdgeInsets.all(10.0),
-      //                 child: TextField(),
-      //               ),
-      //               SizedBox(height: 30.0),
-      //               Center(
-      //                 child: ElevatedButton(
-      //                   //color: Colors.pinkAccent,
-      //                   child: Text("Save to Database"),
-      //                   onPressed: () {
-      //                     addData(textcontroller.text);
-      //                     printFirebase();
-      //                   },
-      //                 ),
-      //               )
-      //             ],
-      //           ),
-      //         );
-      //       }
-      //     }),
-    );
-
-    // body: Container(
-    //   child: Column(
-    //     children: <Widget>[
-    //       Padding(
-    //         padding: const EdgeInsets.all(10.0),
-    //         child: Text(
-    //           'Name',
-    //           style: TextStyle(
-    //               fontSize: 20,
-    //               fontWeight: FontWeight.bold,
-    //               shadows: [
-    //                 Shadow(
-    //                   blurRadius: 10,
-    //                   color: Colors.blue,
-    //                 )
-    //               ]),
-    //         ),
-    //       ),
-    //       // Flexible(child: TextField(
-    //       //   onChanged: (val){
-    //       //     setState(() {
-    //       //       pulse=val;
-    //       //     });
-    //       //   },
-    //       // )),
-    //       // ElevatedButton(
-    //       //   onPressed:(){
-    //       //     dref1.set(pulse);
-    //       //   },
-    //       //   child:Text("Registration"),
-    //       //    ),
-    //       ElevatedButton(
-    //         onPressed: () {
-    //           dref1.once().then((event) {
-    //             final datasnapshot = event.snapshot;
-    //             if (datasnapshot.value != null) {
-    //               pulseData = pulse.fromSnapshot(datasnapshot);
-    //             }
-    //           });
-    //         },
-    //         child: Text("Retrieve data"),
-    //       ),
-    //       Text(pulse),
-    //     ],
-    //   ),
-    // ),
-    //);
+        body: Container(
+            child: Column(children: [
+          // Action(showData()),
+          SizedBox(height: 15),
+          Text("Pulse Rate: " + pulse.toString() + " BPM"),
+          SizedBox(height: 15),
+          Text("Temperature: " + temperature.toString() + " °C"),
+          SizedBox(height: 15),
+          // ActionChip(
+          //     label: Text("Refresh"),
+          //     onPressed: () {
+          //       fetchData();
+          //       setState(() {});
+          //     }),
+        ]))
+        // body: Container(
+        //   child: TextButton(
+        //     style: TextButton.styleFrom(
+        //       textStyle: const TextStyle(fontSize: 20),
+        //     ),
+        //     onPressed: () {
+        //       showData();
+        //     },
+        //     child: const Text('Show Data'),
+        //   ),
+        // ),
+        // body: SafeArea(
+        //   child: FirebaseAnimatedList(
+        //     query: databaseRef1,
+        //     itemBuilder: (BuildContext context, DataSnapshot snapshot,
+        //         Animation<double> animation, int index) {
+        //       return ListTile(
+        //         title: Text('${snapshot.value}'),
+        //         //subtitle: Text(snapshot.value['Temperature']['Data']),
+        //       );
+        //     },
+        //   ),
+        // ),
+        // body: Column(
+        //   children: [
+        //     FirebaseAnimatedList(
+        //       shrinkWrap: true,
+        //       query: databaseRef,
+        //       itemBuilder: (BuildContext context, DataSnapshot snapshot,
+        //           Animation<double> animation, int index) {
+        //         return ListTile(
+        //           title: Text('${snapshot.value}'),
+        //           //subtitle: Text(snapshot.value['Temperature']['Data']),
+        //         );
+        //       },
+        //     ),
+        //   ],
+        // ),
+        );
   }
-  //  Center(
-  //   child: Padding(
-  //       padding: EdgeInsets.all(20),
-  //       child: Column(
-  //         mainAxisAlignment: MainAxisAlignment.center,
-  //         crossAxisAlignment: CrossAxisAlignment.center,
-  //         children: <Widget>[
-  //           SizedBox(
-  //             height: 100,
-  //             child: Image.asset(
-  //               "assets/baby_picture.png",
-  //               fit: BoxFit.contain,
-  //             ),
-  //           ),
-  //           Text(
-  //             "Welcome Back",
-  //             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-  //           ),
-  //           SizedBox(height: 10),
-  //           Text(
-  //             "${loggedInUser.name}",
-  //             style: TextStyle(
-  //                 color: Colors.black54, fontWeight: FontWeight.w500),
-  //           ),
-  //           Text(
-  //             "${loggedInUser.email}",
-  //             style: TextStyle(
-  //                 color: Colors.black54, fontWeight: FontWeight.w500),
-  //           ),
-  //           SizedBox(height: 15),
-  //           ActionChip(
-  //               label: Text("Logout"),
-  //               onPressed: () {
-  //                 logout(context);
-  //               }),
-  //           SizedBox(height: 15),
-  //           // ActionChip(label: Text("Sensor Data"),
-  //           // onPressed:(){
-  //           //   Navigator.push(
-  //           //                   context,
-  //           //                   MaterialPageRoute(
-  //           //                       builder: (context) =>
-  //           //                           ));
-  //           // }
-  //           // ),
-  //         ],
-  //       )),
-  // ),
 
-  // Widget _getMessageList() {
-  //   return Expanded(
-  //     child: FirebaseAnimatedList(
-  //       controller: _scrollController,
-  //       query: widget.sensor.getMessageQuery(),
-  //       itemBuilder: (context, snapshot, animation, index) {
-  //         final json = snapshot.value as Map<dynamic, dynamic>;
-  //         final message = Message.fromJson(json);
-  //         return MessageWidget(message.text, message.date);
-  //       },
-  //     ),
-  //   );
-  // }
+  Color getTypeColor(String type) {
+    Color color = Theme.of(context).primaryColor;
 
+    if (type == 'Work') {
+      color = Colors.brown;
+    }
+
+    if (type == 'Family') {
+      color = Colors.green;
+    }
+
+    if (type == 'Friends') {
+      color = Colors.teal;
+    }
+    return color;
+  }
+
+  //Logout function
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 }
+
+//for adding data to realtime database
+// void addData(String data) {
+//   //databaseRef.push().set({'name': data, 'comment': 'a good season'});
+//   //databaseRef.push().set({'Pulse Rate': 140});
+// }
+// body: FutureBuilder(
+//     future: _future,
+//     builder: (context, snapshot) {
+//       if (snapshot.hasError) {
+//         return Text(snapshot.error.toString());
+//       } else {
+//         return Container(
+//           child: Column(
+//             children: <Widget>[
+//               SizedBox(height: 250.0),
+//               Padding(
+//                 padding: EdgeInsets.all(10.0),
+//                 child: TextField(),
+//               ),
+//               SizedBox(height: 30.0),
+//               Center(
+//                 child: ElevatedButton(
+//                   //color: Colors.pinkAccent,
+//                   child: Text("Save to Database"),
+//                   onPressed: () {
+//                     addData(textcontroller.text);
+//                     printFirebase();
+//                   },
+//                 ),
+//               )
+//             ],
+//           ),
+//         );
+//       }
+//     }),
