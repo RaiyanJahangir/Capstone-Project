@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'CircleProgress.dart';
 
 class SensorScreen extends StatefulWidget {
   const SensorScreen({Key? key}) : super(key: key);
@@ -19,11 +18,18 @@ class SensorScreenState extends State<SensorScreen> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
-  final textcontroller = TextEditingController();
-  // final databaseRef =
-  // FirebaseDatabase.instance.reference().child("Sensor Data");
-  final databaseRef = FirebaseDatabase.instance.reference();
-
+  final databaseRef =
+      FirebaseDatabase.instance.reference().child("Sensor Data");
+  final prevPulseRef = FirebaseDatabase.instance
+      .reference()
+      .child("Previous Sensor Data")
+      .child("Pulse Rate");
+  final prevTempRef = FirebaseDatabase.instance
+      .reference()
+      .child("Previous Sensor Data")
+      .child("Temperature");
+  List<int> prevPulse = [];
+  List<double> prevTemp = [];
   var pulse;
   var temperature;
 
@@ -54,36 +60,38 @@ class SensorScreenState extends State<SensorScreen> {
     //   });
     // });
     databaseRef.onValue.listen((event) {
+      // final now = DateTime.now();
+      // print(now);
+      // databaseRef.set({'Timestamp': now.toString()});
       var snapshot = event.snapshot;
       Map<dynamic, dynamic> values = snapshot.value;
       values.forEach((key, values) {
         if (key == 'Pulse Rate') {
-          print(key + values.toString());
+          //print(key + values.toString());
           pulse = values;
-          print(pulse);
+          //print(pulse);
         }
         if (key == 'Temperature') {
           temperature = values;
-          print(temperature);
+          //print(temperature);
         }
         setState(() {});
       });
     });
-  }
 
-  VoidCallback? fetchData() {
-    databaseRef.once().then((DataSnapshot snapshot) {
+    prevPulseRef.onValue.listen((event) {
+      var snapshot = event.snapshot;
       Map<dynamic, dynamic> values = snapshot.value;
       values.forEach((key, values) {
-        if (key == 'Pulse Rate') {
-          print(key + ': ' + values.toString());
-          pulse = values;
-        }
+        setState(() {});
+      });
+    });
 
-        if (key == 'Temperature') {
-          print(key + ": " + values.toString());
-          temperature = values;
-        }
+    prevTempRef.onValue.listen((event) {
+      var snapshot = event.snapshot;
+      Map<dynamic, dynamic> values = snapshot.value;
+      values.forEach((key, values) {
+        setState(() {});
       });
     });
   }
@@ -114,20 +122,72 @@ class SensorScreenState extends State<SensorScreen> {
           ],
         ),
         body: Container(
-            child: Column(children: [
-          // Action(showData()),
-          SizedBox(height: 15),
-          Text("Pulse Rate: " + pulse.toString() + " BPM"),
-          SizedBox(height: 15),
-          Text("Temperature: " + temperature.toString() + " °C"),
-          SizedBox(height: 15),
-          // ActionChip(
-          //     label: Text("Refresh"),
-          //     onPressed: () {
-          //       fetchData();
-          //       setState(() {});
-          //     }),
-        ]))
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+              SizedBox(height: 15),
+              Text("Pulse Rate: " + pulse.toString() + " BPM"),
+              SizedBox(height: 15),
+              Text("Temperature: " + temperature.toString() + " °C"),
+              SizedBox(height: 15),
+              Text("Previous Data:"),
+              SizedBox(height: 15),
+              Expanded(
+                child: Container(
+                  height: 500,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text("Pulse Rate:"),
+                            Expanded(
+                              child: FirebaseAnimatedList(
+                                  query: prevPulseRef,
+                                  itemBuilder: (BuildContext context,
+                                      DataSnapshot snapshot,
+                                      Animation<double> animation,
+                                      int index) {
+                                    return ListTile(
+                                      title: Text('${snapshot.value}' + " BPM"),
+                                    );
+                                  }),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text("Temperature:"),
+                            Expanded(
+                              child: FirebaseAnimatedList(
+                                  query: prevTempRef,
+                                  itemBuilder: (BuildContext context,
+                                      DataSnapshot snapshot,
+                                      Animation<double> animation,
+                                      int index) {
+                                    return ListTile(
+                                      title: Text('${snapshot.value}' + " °C"),
+                                    );
+                                  }),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ]))
         // body: Container(
         //   child: TextButton(
         //     style: TextButton.styleFrom(
@@ -167,23 +227,6 @@ class SensorScreenState extends State<SensorScreen> {
         //   ],
         // ),
         );
-  }
-
-  Color getTypeColor(String type) {
-    Color color = Theme.of(context).primaryColor;
-
-    if (type == 'Work') {
-      color = Colors.brown;
-    }
-
-    if (type == 'Family') {
-      color = Colors.green;
-    }
-
-    if (type == 'Friends') {
-      color = Colors.teal;
-    }
-    return color;
   }
 
   //Logout function
