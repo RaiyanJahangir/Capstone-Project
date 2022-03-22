@@ -28,8 +28,7 @@ class SensorScreenState extends State<SensorScreen> {
       .reference()
       .child("Previous Sensor Data")
       .child("Temperature");
-  List<int> prevPulse = [];
-  List<double> prevTemp = [];
+
   var pulse;
   var temperature;
 
@@ -108,7 +107,7 @@ class SensorScreenState extends State<SensorScreen> {
                   MaterialPageRoute(builder: (context) => HomeScreen()));
             },
           ),
-          title: Text("Sensor Page"),
+          title: Text("Baby Health Parameters"),
           centerTitle: true,
           actions: <Widget>[
             IconButton(
@@ -123,29 +122,63 @@ class SensorScreenState extends State<SensorScreen> {
         ),
         body: Container(
             child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
               SizedBox(height: 15),
-              Text("Pulse Rate: " + pulse.toString() + " BPM"),
-              SizedBox(height: 15),
-              Text("Temperature: " + temperature.toString() + " °C"),
-              SizedBox(height: 15),
-              Text("Previous Data:"),
+              Text(
+                "Pulse Rate: " + pulse.toString() + " BPM",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.blueAccent,
+                    fontSize: 25),
+              ),
+              Divider(
+                color: Colors.blue,
+                thickness: 2,
+              ),
+              //SizedBox(height: 15),
+              Text(
+                "Temperature: " + temperature.toString() + " °C",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.blueAccent,
+                    fontSize: 25),
+              ),
+              Divider(
+                color: Colors.blue,
+                thickness: 2,
+              ),
+              //SizedBox(height: 15),
+              Text(
+                "Previous Data",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.blueAccent,
+                    decoration: TextDecoration.underline,
+                    fontSize: 25),
+              ),
               SizedBox(height: 15),
               Expanded(
                 child: Container(
                   height: 500,
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Expanded(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Text("Pulse Rate:"),
+                            Text("Pulse Rate"),
+                            Divider(
+                              color: Colors.blue,
+                              thickness: 2,
+                            ),
                             Expanded(
                               child: FirebaseAnimatedList(
                                   query: prevPulseRef,
@@ -161,13 +194,51 @@ class SensorScreenState extends State<SensorScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 15),
+                      // SizedBox(height: 15),
+                      VerticalDivider(
+                        color: Colors.black,
+                        thickness: 2,
+                      ),
                       Expanded(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Text("Temperature:"),
+                            Text("Temperature"),
+                            Divider(
+                              color: Colors.blue,
+                              thickness: 2,
+                            ),
+                            Expanded(
+                              child: FirebaseAnimatedList(
+                                  query: prevTempRef,
+                                  itemBuilder: (BuildContext context,
+                                      DataSnapshot snapshot,
+                                      Animation<double> animation,
+                                      int index) {
+                                    return ListTile(
+                                      title: Text('${snapshot.value}' + " °C"),
+                                    );
+                                  }),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // SizedBox(height: 15),
+                      VerticalDivider(
+                        color: Colors.black,
+                        thickness: 2,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Text("Timstamp"),
+                            Divider(
+                              color: Colors.blue,
+                              thickness: 2,
+                            ),
                             Expanded(
                               child: FirebaseAnimatedList(
                                   query: prevTempRef,
