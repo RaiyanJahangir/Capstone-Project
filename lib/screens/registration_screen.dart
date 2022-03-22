@@ -255,8 +255,43 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
-            signUp(emailEditingController.text, passwordEditingController.text);
-            getDropDownItem();
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text("Confirm Account Registration ?",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                            color: Colors.blue,
+                            fontSize: 25)),
+                    actions: <Widget>[
+                      TextButton(
+                          onPressed: () {
+                            signUp(emailEditingController.text,
+                                passwordEditingController.text);
+                            getDropDownItem();
+                          },
+                          child: Text("YES",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.blueAccent,
+                                  fontSize: 20))),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("NO",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.blueAccent,
+                                  fontSize: 20)))
+                    ],
+                  );
+                });
           },
           child: Text(
             "SignUp",

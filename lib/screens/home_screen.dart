@@ -35,6 +35,51 @@ class HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text("Welcome"),
         centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        shape: CircleBorder(),
+                        title: Text("Confirm Logging Out ?",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic,
+                                color: Colors.blue,
+                                fontSize: 25)),
+                        actions: <Widget>[
+                          TextButton(
+                              onPressed: () {
+                                logout(context);
+                              },
+                              child: Text("YES",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.blueAccent,
+                                      fontSize: 20))),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text("NO",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.blueAccent,
+                                      fontSize: 20)))
+                        ],
+                      );
+                    });
+              },
+              icon: Icon(
+                Icons.logout,
+                color: Colors.white,
+              ))
+        ],
       ),
       body: Center(
         child: Padding(
@@ -67,13 +112,49 @@ class HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(height: 15),
                 ActionChip(
-                    label: Text("Logout"),
-                    onPressed: () {
-                      logout(context);
-                    }),
+                  label: Text("Logout"),
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            shape: CircleBorder(),
+                            title: Text("Confirmed Logging Out ?",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.blue,
+                                    fontSize: 25)),
+                            actions: <Widget>[
+                              TextButton(
+                                  onPressed: () {
+                                    logout(context);
+                                  },
+                                  child: Text("YES",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.blueAccent,
+                                          fontSize: 20))),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("NO",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.blueAccent,
+                                          fontSize: 20)))
+                            ],
+                          );
+                        });
+                  },
+                ),
                 SizedBox(height: 15),
                 ActionChip(
-                    label: Text("Sensor Screen"),
+                    label: Text("Check Health Parameters"),
                     onPressed: () {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => SensorScreen()));
