@@ -3,8 +3,8 @@
 
 #define FIREBASE_HOST "integrated-design-projec-1e9b8-default-rtdb.firebaseio.com" //give your firebase host id here
 #define FIREBASE_AUTH "6UHbL2DgfZjzuHN22eMjRUZgg18KgkwuLcmzi9WU"           //give your firebase database secret here
-#define WIFI_SSID "A1601"       //give the wifi ssid you are connected to
-#define WIFI_PASSWORD "12345678"      //give the wifi password you are connected to
+#define WIFI_SSID "DR JAHANGIR"       //give the wifi ssid you are connected to
+#define WIFI_PASSWORD "19671967"      //give the wifi password you are connected to
 
 String values,sensor_data;
 
@@ -47,17 +47,23 @@ void loop() {
     //get sensors data from values variable by  spliting by commas and put in to variables  
     String pulse_value = values.substring(0, firstCommaIndex);
     String temp_value = values.substring(firstCommaIndex+1, secondCommaIndex);
+    String timestamp; //for storing the time of data update
   
     //storing sensor data as string in firebase 
-    Firebase.setString("Pulse Rate",pulse_value);
+    Firebase.setString("Sensor Data/Pulse Rate",pulse_value);
     delay(10);
-    Firebase.setString("Temperature",temp_value);
+    Firebase.setString("Sensor Data/Temperature",temp_value);
     delay(10);
+
+    //get timestamp value from firebase
+    timestamp=Firebase.getString("Sensor Data/Timestamp");
     
     //store previous sensors data as string in firebase
-    Firebase.pushString("Previous Pulse Rate",pulse_value);
+    Firebase.pushString("Previous Sensor Data/Pulse Rate",pulse_value);
     delay(10);
-    Firebase.pushString("Previous Temperature",temp_value);
+    Firebase.pushString("Previous Sensor Data/Temperature",temp_value);
+    delay(10);
+    Firebase.pushString("Previous Sensor Data/Timestamp",timestamp);
     delay(1000);
   
     if(Firebase.failed()) {  
