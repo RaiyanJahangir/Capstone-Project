@@ -42,7 +42,6 @@ class HomeScreenState extends State<HomeScreen> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        shape: CircleBorder(),
                         title: Text("Confirm Logging Out ?",
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -118,7 +117,6 @@ class HomeScreenState extends State<HomeScreen> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            shape: CircleBorder(),
                             title: Text("Confirmed Logging Out ?",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(

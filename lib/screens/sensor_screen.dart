@@ -28,9 +28,15 @@ class SensorScreenState extends State<SensorScreen> {
       .reference()
       .child("Previous Sensor Data")
       .child("Temperature");
+  final prevTimeRef = FirebaseDatabase.instance
+      .reference()
+      .child("Previous Sensor Data")
+      .child("Timestamp");
 
   var pulse;
   var temperature;
+  var prevPulse;
+  var prevTemp;
 
   @override
   void initState() {
@@ -59,20 +65,22 @@ class SensorScreenState extends State<SensorScreen> {
     //   });
     // });
     databaseRef.onValue.listen((event) {
-      // final now = DateTime.now();
-      // print(now);
-      // databaseRef.set({'Timestamp': now.toString()});
       var snapshot = event.snapshot;
       Map<dynamic, dynamic> values = snapshot.value;
       values.forEach((key, values) {
         if (key == 'Pulse Rate') {
-          //print(key + values.toString());
+          prevPulse = pulse;
           pulse = values;
-          //print(pulse);
+          if (prevPulse != pulse) {
+            _updatevalue();
+          }
         }
         if (key == 'Temperature') {
+          prevTemp = temperature;
           temperature = values;
-          //print(temperature);
+          if (prevTemp != temperature) {
+            _updatevalue();
+          }
         }
         setState(() {});
       });
@@ -87,6 +95,14 @@ class SensorScreenState extends State<SensorScreen> {
     });
 
     prevTempRef.onValue.listen((event) {
+      var snapshot = event.snapshot;
+      Map<dynamic, dynamic> values = snapshot.value;
+      values.forEach((key, values) {
+        setState(() {});
+      });
+    });
+
+    prevTimeRef.onValue.listen((event) {
       var snapshot = event.snapshot;
       Map<dynamic, dynamic> values = snapshot.value;
       values.forEach((key, values) {
@@ -116,7 +132,6 @@ class SensorScreenState extends State<SensorScreen> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          shape: CircleBorder(),
                           title: Text("Confirm Logging Out ?",
                               textAlign: TextAlign.center,
                               style: TextStyle(
@@ -173,7 +188,6 @@ class SensorScreenState extends State<SensorScreen> {
                 color: Colors.blue,
                 thickness: 2,
               ),
-              //SizedBox(height: 15),
               Text(
                 "Temperature: " + temperature.toString() + " °C",
                 style: TextStyle(
@@ -186,7 +200,6 @@ class SensorScreenState extends State<SensorScreen> {
                 color: Colors.blue,
                 thickness: 2,
               ),
-              //SizedBox(height: 15),
               Text(
                 "Previous Data",
                 style: TextStyle(
@@ -229,7 +242,6 @@ class SensorScreenState extends State<SensorScreen> {
                           ],
                         ),
                       ),
-                      // SizedBox(height: 15),
                       VerticalDivider(
                         color: Colors.black,
                         thickness: 2,
@@ -259,7 +271,6 @@ class SensorScreenState extends State<SensorScreen> {
                           ],
                         ),
                       ),
-                      // SizedBox(height: 15),
                       VerticalDivider(
                         color: Colors.black,
                         thickness: 2,
@@ -276,13 +287,15 @@ class SensorScreenState extends State<SensorScreen> {
                             ),
                             Expanded(
                               child: FirebaseAnimatedList(
-                                  query: prevTempRef,
+                                  query: prevTimeRef,
                                   itemBuilder: (BuildContext context,
                                       DataSnapshot snapshot,
                                       Animation<double> animation,
                                       int index) {
+                                    var timestamp =
+                                        snapshot.value.substring(0, 20);
                                     return ListTile(
-                                      title: Text('${snapshot.value}' + " °C"),
+                                      title: Text(timestamp),
                                     );
                                   }),
                             ),
@@ -293,46 +306,12 @@ class SensorScreenState extends State<SensorScreen> {
                   ),
                 ),
               ),
-            ]))
-        // body: Container(
-        //   child: TextButton(
-        //     style: TextButton.styleFrom(
-        //       textStyle: const TextStyle(fontSize: 20),
-        //     ),
-        //     onPressed: () {
-        //       showData();
-        //     },
-        //     child: const Text('Show Data'),
-        //   ),
-        // ),
-        // body: SafeArea(
-        //   child: FirebaseAnimatedList(
-        //     query: databaseRef1,
-        //     itemBuilder: (BuildContext context, DataSnapshot snapshot,
-        //         Animation<double> animation, int index) {
-        //       return ListTile(
-        //         title: Text('${snapshot.value}'),
-        //         //subtitle: Text(snapshot.value['Temperature']['Data']),
-        //       );
-        //     },
-        //   ),
-        // ),
-        // body: Column(
-        //   children: [
-        //     FirebaseAnimatedList(
-        //       shrinkWrap: true,
-        //       query: databaseRef,
-        //       itemBuilder: (BuildContext context, DataSnapshot snapshot,
-        //           Animation<double> animation, int index) {
-        //         return ListTile(
-        //           title: Text('${snapshot.value}'),
-        //           //subtitle: Text(snapshot.value['Temperature']['Data']),
-        //         );
-        //       },
-        //     ),
-        //   ],
-        // ),
-        );
+            ])));
+  }
+
+  _updatevalue() {
+    var now = DateTime.now();
+    databaseRef.update({"Timestamp": now.toString()});
   }
 
   //Logout function

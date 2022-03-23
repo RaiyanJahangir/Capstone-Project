@@ -47,17 +47,23 @@ void loop() {
     //get sensors data from values variable by  spliting by commas and put in to variables  
     String pulse_value = values.substring(0, firstCommaIndex);
     String temp_value = values.substring(firstCommaIndex+1, secondCommaIndex);
+    String timestamp; //for storing the time of data update
   
     //storing sensor data as string in firebase 
     Firebase.setString("Sensor Data/Pulse Rate",pulse_value);
     delay(10);
     Firebase.setString("Sensor Data/Temperature",temp_value);
     delay(10);
+
+    //get timestamp value from firebase
+    timestamp=Firebase.getString("Sensor Data/Timestamp");
     
     //store previous sensors data as string in firebase
     Firebase.pushString("Previous Sensor Data/Pulse Rate",pulse_value);
     delay(10);
     Firebase.pushString("Previous Sensor Data/Temperature",temp_value);
+    delay(10);
+    Firebase.pushString("Previous Sensor Data/Timestamp",timestamp);
     delay(1000);
   
     if(Firebase.failed()) {  
