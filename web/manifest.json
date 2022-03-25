@@ -1,6 +1,6 @@
 {
-    "name": "email_password_login",
-    "short_name": "email_password_login",
+    "name": "capstone",
+    "short_name": "capstone",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

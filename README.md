@@ -1,4 +1,4 @@
-# Wearable Monitoring Device for Infants
+# capstone
 
 A new Flutter project.
 

@@ -1,4 +1,4 @@
-package com.example.email_password_login
+package com.example.capstone
 
 import io.flutter.embedding.android.FlutterActivity
 
