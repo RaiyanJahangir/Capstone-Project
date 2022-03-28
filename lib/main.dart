@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'baby_info_as_guardian.dart';
+import 'baby_info_as_nurturer.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: guardian_homepage(),
+      home: nurturer_homepage(),
     );
   }
 }

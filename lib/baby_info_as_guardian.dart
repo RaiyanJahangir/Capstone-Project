@@ -14,15 +14,15 @@ class guardian_homepage extends StatelessWidget {
     //var size;
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.menu,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            // do something
-          },
-        ),
+        // leading: IconButton(
+        //   icon: Icon(
+        //     Icons.menu,
+        //     color: Colors.white,
+        //   ),
+        //   onPressed: () {
+        //     // do something
+        //   },
+        // ),
           centerTitle: false,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.end,
