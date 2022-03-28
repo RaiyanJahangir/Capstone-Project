@@ -18,15 +18,6 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // leading: IconButton(
-        //   icon: Icon(
-        //     Icons.menu,
-        //     color: Colors.white,
-        //   ),
-        //   onPressed: () {
-        //     // do something
-        //   },
-        // ),
         centerTitle: false,
         title: Row(
             mainAxisAlignment: MainAxisAlignment.end,
