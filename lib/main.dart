@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'baby_info_as_guardian.dart';
-import 'baby_info_as_nurturer.dart';
-import 'give_auth_page.dart';
+//import 'package:googleapis/calendar/v3.dart';
+import 'Screens/login/login.dart';
+//import 'drive/upload_screen.dart';
+//import 'Screens/study_materials/study_materials.dart';
+import 'Screens/study_materials/book.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: auth(),
+      home: LoginScreen(),
     );
   }
 }
