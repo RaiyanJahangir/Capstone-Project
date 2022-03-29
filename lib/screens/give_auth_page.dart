@@ -156,11 +156,10 @@ class _authState extends State<auth> {
       ),
       body: Container(
         margin: EdgeInsets.all(24),
-        child: SingleChildScrollView(
-          child: Column(
+        child: Column(
             children: [
               Expanded(
-                //flex: 1,
+                flex: 1,
                   child: Text(
                 "Authorize Permission",
                 textAlign: TextAlign.center,
@@ -176,7 +175,7 @@ class _authState extends State<auth> {
               )
               ),
               Expanded(
-                //flex: 8,
+                flex: 8,
                   child: Form(
                     key: _formKey,
                     child: Column(
@@ -229,7 +228,6 @@ class _authState extends State<auth> {
             ],
           ),
         ),
-      ),
     );
   }
 }

@@ -164,22 +164,22 @@ class HomeScreenState extends State<HomeScreen> {
                 ActionChip(
                     label: Text("Guardian"),
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => guardian_homepage()));
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (c) => guardian_homepage()));
                     }),
                 SizedBox(height: 15),
                 ActionChip(
                     label: Text("Nurturer"),
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => nurturer_homepage()));
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (c) => nurturer_homepage()));
                     }),
                 SizedBox(height: 15),
                 ActionChip(
                     label: Text("Authorize people"),
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => auth()));
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (c) => auth()));
                     }),
               ],
             )),
