@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "837517832100",
+    "firebase_url": "https://integrated-design-projec-1e9b8-default-rtdb.firebaseio.com",
+    "project_id": "integrated-design-projec-1e9b8",
+    "storage_bucket": "integrated-design-projec-1e9b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:837517832100:android:abc82443df2e72b0219b31",
+        "android_client_info": {
+          "package_name": "com.example.email_password_login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "837517832100-r5qvdt6s81o3l9h8us521p51k1pb2mhv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.email_password_login",
+            "certificate_hash": "6a6b72902a847e9d5c3587b5aaeac67c93801bbf"
+          }
+        },
+        {
+          "client_id": "837517832100-pcqlupi93586j3m8ki4cr0hhh6b2p044.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADBkvyxY_P0hynMwtw3vCEMjbCefOL88Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "837517832100-pcqlupi93586j3m8ki4cr0hhh6b2p044.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

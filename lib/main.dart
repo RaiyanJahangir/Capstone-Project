@@ -1,25 +1,23 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-//import 'package:googleapis/calendar/v3.dart';
-import 'Screens/login/login.dart';
-//import 'drive/upload_screen.dart';
-//import 'Screens/study_materials/study_materials.dart';
-import 'Screens/study_materials/book.dart';
+import './screens/login_screen.dart';
 
-void main() {
-  runApp(MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Login',
-      debugShowCheckedModeBanner: false,
+      title: 'Baby Monitor',
       theme: ThemeData(
-        primaryColor: Color(0xFF2661FA),
-        scaffoldBackgroundColor: Colors.white,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        primarySwatch: Colors.blue,
       ),
       home: LoginScreen(),
     );

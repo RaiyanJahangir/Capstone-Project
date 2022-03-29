@@ -1,6 +1,6 @@
 {
-    "name": "login",
-    "short_name": "login",
+    "name": "email_password_login",
+    "short_name": "email_password_login",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
