@@ -110,7 +110,7 @@ class _authState extends State<auth> {
   }
   Widget _builduser() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Relation'),
+      decoration: InputDecoration(labelText: 'Child Relation to the User'),
       maxLength: 30,
       validator: (value){
         if(value!.isEmpty)return 'Required';
@@ -156,33 +156,46 @@ class _authState extends State<auth> {
       ),
       body: Container(
         margin: EdgeInsets.all(24),
-        child: Column(
-          children: [
-            Expanded(
-              flex: 1,
-                child: Text(
-              "Authorize Permission",
-              textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.red[400],
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    shadows: [
-                      Shadow(color: Colors.blueAccent, offset: Offset(2,1), blurRadius:10)
-                    ]
-                )
-            )
-            ),
-            Expanded(
-              flex: 8,
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Text('Username: ',
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Expanded(
+                //flex: 1,
+                  child: Text(
+                "Authorize Permission",
+                textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.red[400],
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
+                      shadows: [
+                        Shadow(color: Colors.blueAccent, offset: Offset(2,1), blurRadius:10)
+                      ]
+                  )
+              )
+              ),
+              Expanded(
+                //flex: 8,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _buildname(),
+                        SizedBox(height: 10,),
+                        _buildemail(),
+                        SizedBox(height: 10),
+                        Text('Give permission as: ',
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
+                          ),
+                            ),
+                        _buildbox(),
+                        Text('Give permission on: ',
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.black,
@@ -190,68 +203,31 @@ class _authState extends State<auth> {
                             fontStyle: FontStyle.italic,
                           ),
                         ),
-                      ),
-                      _buildname(),
-                      SizedBox(height: 20,),
-                      Text('Email: ',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                      _buildemail(),
-                      SizedBox(height: 20),
-                      Text('Give permission as: ',
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic,
-                        ),
-                          ),
-                      _buildbox(),
-                      Text('Give permission on: ',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                      _buildlist(),
-                      SizedBox(height: 20,),
-                      Text('Child relation to the user: ',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                      _builduser(),
-                      SizedBox(height: 20,),
-                      RaisedButton(
-                        child: Text(
-                          'Submit',
-                        style: TextStyle(color: Colors.blue, fontSize: 16),
-                          ),
-                        onPressed: () {
-                          if (!_formKey.currentState!.validate()) {return;}
-                          _formKey.currentState!.save();
-                          print(_site);
-                          print(_name);
-                          print(_email);
-                          print(_box);
-                          print(_relation);
-                        },
-                      )
-                    ],
+                        _buildlist(),
+                        SizedBox(height: 10,),
+                        _builduser(),
+                        SizedBox(height: 10,),
+                        RaisedButton(
+                          child: Text(
+                            'Submit',
+                          style: TextStyle(color: Colors.blue, fontSize: 16),
+                            ),
+                          onPressed: () {
+                            if (!_formKey.currentState!.validate()) {return;}
+                            _formKey.currentState!.save();
+                            print(_site);
+                            print(_name);
+                            print(_email);
+                            print(_box);
+                            print(_relation);
+                          },
+                        )
+                      ],
+                    )
                   )
-                )
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
