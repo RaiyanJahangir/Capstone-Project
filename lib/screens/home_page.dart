@@ -12,7 +12,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // ignore: prefer_typing_uninitialized_variables
   var selectType, selectGurd;
+  // ignore: prefer_final_fields
   List<String> _gurdType = <String>[
     'Check babies as Guardian',
     'Check babies as Nurturer',
@@ -113,37 +115,38 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Expanded(
-                child: DropdownButton(
-              borderRadius: BorderRadius.circular(10),
-              items: _gurdType
-                  .map((value) => DropdownMenuItem(
-                        child: Text(
-                          value,
-                          style: TextStyle(
-                            color: Colors.blue[400],
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
+              child: DropdownButton(
+                borderRadius: BorderRadius.circular(10),
+                items: _gurdType
+                    .map((value) => DropdownMenuItem(
+                          child: Text(
+                            value,
+                            style: TextStyle(
+                              color: Colors.blue[400],
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
                           ),
-                        ),
-                        value: value,
-                      ))
-                  .toList(),
-              onChanged: (selectedGurdType) {
-                setState(() {
-                  selectType = selectedGurdType;
-                });
-              },
-              value: selectType,
-              isExpanded: false,
-              hint: Text(
-                "Select Type Of Viewer",
-                style: TextStyle(
-                  color: Colors.blue[400],
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                          value: value,
+                        ))
+                    .toList(),
+                onChanged: (selectedGurdType) {
+                  setState(() {
+                    selectType = selectedGurdType;
+                  });
+                },
+                value: selectType,
+                isExpanded: false,
+                hint: Text(
+                  "Select Type Of Viewer",
+                  style: TextStyle(
+                    color: Colors.blue[400],
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            )),
+            ),
           ],
         ),
       ),

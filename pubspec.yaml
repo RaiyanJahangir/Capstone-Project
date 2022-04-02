@@ -29,12 +29,14 @@ environment:
 dependencies:
   cloud_firestore: ^3.1.4
   cupertino_icons: ^1.0.2
+  datetime_picker_formfield: ^2.0.0
   firebase_auth: ^3.3.3
   firebase_core: ^1.10.5
   firebase_database: ^7.0.0
   flutter:
     sdk: flutter
   fluttertoast: ^8.0.8
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_lints: ^1.0.0
