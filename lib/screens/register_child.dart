@@ -1,8 +1,12 @@
-// ignore_for_file: prefer_const_constructors, duplicate_ignore
+// ignore_for_file: prefer_const_constructors, duplicate_ignore, non_constant_identifier_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_password_login/model/childReg_model.dart';
 import 'package:email_password_login/screens/home_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 class RegisterChild extends StatefulWidget {
@@ -13,12 +17,16 @@ class RegisterChild extends StatefulWidget {
 }
 
 class _RegisterChildState extends State<RegisterChild> {
+  final auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   final nameEditingController = TextEditingController();
   final dobEditingController = TextEditingController();
+  final genderEditingController = TextEditingController();
   final ageEditingController = TextEditingController();
   final h8EditingController = TextEditingController();
   final w8EditingController = TextEditingController();
+  final bldgrpEditingController = TextEditingController();
+  final birthCertEditingController = TextEditingController();
   final fathersnameEditingController = TextEditingController();
   final mothersnameEditingController = TextEditingController();
   final relationEditingController = TextEditingController();
@@ -41,6 +49,14 @@ class _RegisterChildState extends State<RegisterChild> {
     'AB+',
     'AB-',
   ];
+  String? holder_gen;
+  String? holder_bldgrp;
+  void getDropDownItem() {
+    setState(() {
+      holder_gen = selectTypeGen;
+      holder_bldgrp = selectTypeBld;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,6 +146,9 @@ class _RegisterChildState extends State<RegisterChild> {
                     ),
                   ),
                   value: genValue,
+                  onTap: () {
+                    genderEditingController.text = genValue;
+                  },
                 ))
             .toList(),
         onChanged: (selectedGenderType) {
@@ -138,12 +157,14 @@ class _RegisterChildState extends State<RegisterChild> {
           });
         },
         value: selectTypeGen,
-        isExpanded: false,
+        icon: Icon(Icons.arrow_drop_down),
+        elevation: 16,
+        isExpanded: true,
         hint: Text(
           "Select Gender",
           style: TextStyle(
             color: Colors.blue[400],
-            fontSize: 20,
+            fontSize: 17,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -259,6 +280,9 @@ class _RegisterChildState extends State<RegisterChild> {
                     ),
                   ),
                   value: bloodValue,
+                  onTap: () {
+                    bldgrpEditingController.text = bloodValue;
+                  },
                 ))
             .toList(),
         onChanged: (selectBloodType) {
@@ -267,16 +291,46 @@ class _RegisterChildState extends State<RegisterChild> {
           });
         },
         value: selectTypeBld,
-        isExpanded: false,
+        icon: Icon(Icons.arrow_drop_down),
+        elevation: 16,
+        isExpanded: true,
         hint: Text(
           "Select Blood Type",
           style: TextStyle(
             color: Colors.blue[400],
-            fontSize: 20,
+            fontSize: 17,
             fontWeight: FontWeight.bold,
           ),
         ),
       ),
+    );
+    //child birth_cert field
+    final birthCertField = TextFormField(
+      autocorrect: false,
+      controller: birthCertEditingController,
+      keyboardType: TextInputType.name,
+      validator: (value) {
+        RegExp regex = RegExp(r'^.{3,}$');
+        if (value!.isEmpty) {
+          return ("Name cannot be Empty");
+        }
+        if (!regex.hasMatch(value)) {
+          return ("Enter Valid Name (Min 3 character");
+        }
+        return null;
+      },
+      onSaved: (value) {
+        birthCertEditingController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+          prefixIcon: Icon(Icons.account_circle),
+          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "Birth Certificate No.",
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(
+            10,
+          ))),
     );
 
     //child father's name field
@@ -391,7 +445,18 @@ class _RegisterChildState extends State<RegisterChild> {
                           onPressed: () {
                             // signUp(emailEditingController.text,
                             //     passwordEditingController.text);
-                            // getDropDownItem();
+                            sendData(
+                                nameEditingController.text,
+                                dobEditingController.text,
+                                genderEditingController.text,
+                                h8EditingController.text,
+                                w8EditingController.text,
+                                bldgrpEditingController.text,
+                                fathersnameEditingController.text,
+                                mothersnameEditingController.text,
+                                birthCertEditingController.text,
+                                relationEditingController.text);
+                            getDropDownItem();
                           },
                           child: Text("YES",
                               style: TextStyle(
@@ -517,6 +582,10 @@ class _RegisterChildState extends State<RegisterChild> {
                     SizedBox(
                       height: 10,
                     ),
+                    birthCertField,
+                    SizedBox(
+                      height: 10,
+                    ),
                     fatherField,
                     SizedBox(
                       height: 10,
@@ -538,5 +607,38 @@ class _RegisterChildState extends State<RegisterChild> {
         ),
       ),
     );
+  }
+
+  Future<void> sendData(
+      String name,
+      String dob,
+      String gender,
+      String h8,
+      String w8,
+      String bldgrp,
+      String fathersname,
+      String mothersname,
+      String birthCertNo,
+      String childsRltn) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = auth.currentUser;
+    ChildModel childModel = ChildModel();
+    childModel.uid = user!.uid;
+    childModel.name = nameEditingController.text;
+    childModel.dob = dobEditingController.text;
+    childModel.gender = genderEditingController.text;
+    childModel.h8 = h8EditingController.text;
+    childModel.w8 = w8EditingController.text;
+    childModel.bloodGrp = bldgrpEditingController.text;
+    childModel.birthCertNo = birthCertEditingController.text;
+    childModel.fathersName = fathersnameEditingController.text;
+    childModel.mothersName = mothersnameEditingController.text;
+    childModel.childsReltn = relationEditingController.text;
+
+    await firebaseFirestore
+        .collection("Child_reg_detail")
+        .doc(user.uid)
+        .set(childModel.toMap());
+    Fluttertoast.showToast(msg: "Child Registered");
   }
 }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/user_model.dart';
+import 'package:email_password_login/screens/home_page.dart';
 import 'package:email_password_login/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -68,8 +69,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.account_circle),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          prefixIcon: const Icon(Icons.account_circle),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Name",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
@@ -129,8 +130,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.account_circle),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          prefixIcon: const Icon(Icons.account_circle),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Age",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
@@ -155,8 +156,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.account_circle),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          prefixIcon: const Icon(Icons.account_circle),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Occupation",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
@@ -183,8 +184,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.mail),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          prefixIcon: const Icon(Icons.mail),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Email",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
@@ -211,8 +212,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.vpn_key),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          prefixIcon: const Icon(Icons.vpn_key),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Password",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
@@ -237,8 +238,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.vpn_key),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          prefixIcon: const Icon(Icons.vpn_key),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Confirm Password",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
@@ -252,14 +253,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         borderRadius: BorderRadius.circular(30),
         color: Colors.blue,
         child: MaterialButton(
-          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
             showDialog(
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: Text("Confirm Account Registration ?",
+                    title: const Text("Confirm Account Registration ?",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -273,8 +274,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 passwordEditingController.text);
                             getDropDownItem();
                           },
-                          child: Text("YES",
-                              style: TextStyle(
+                          child: const Text("YES",
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontStyle: FontStyle.italic,
                                   color: Colors.blueAccent,
@@ -283,8 +284,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text("NO",
-                              style: TextStyle(
+                          child: const Text("NO",
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontStyle: FontStyle.italic,
                                   color: Colors.blueAccent,
@@ -293,7 +294,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   );
                 });
           },
-          child: Text(
+          child: const Text(
             "SignUp",
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -307,7 +308,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           backgroundColor: Colors.blue,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
               //passing this to a loop
               Navigator.of(context).pop();
@@ -332,23 +333,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 fit: BoxFit.contain,
                               ),
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             nameField,
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             genderField,
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             ageField,
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             occupationField,
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             emailField,
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             passwordField,
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             confirmPasswordField,
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             signUpButton,
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                           ])))),
         ),
       ),
@@ -392,7 +393,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => const HomePage()),
         (route) => false);
   }
 }
