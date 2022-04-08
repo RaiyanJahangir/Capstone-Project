@@ -98,7 +98,7 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
             Expanded(
               flex: 5,
               child: GridView.count(
-                crossAxisCount: 1,
+                crossAxisCount: 2,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
                 primary: false,
