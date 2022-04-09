@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 
@@ -124,6 +125,7 @@ class _authState extends State<auth> {
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference users = FirebaseFirestore.instance.collection('Authorization');
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -213,7 +215,12 @@ class _authState extends State<auth> {
                             ),
                           onPressed: () {
                             if (!_formKey.currentState!.validate()) {return;}
-                            _formKey.currentState!.save();
+                            else {
+                              _formKey.currentState!.save();
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Sending Data to the Cloud Firestore')));
+                              users.add({'user-name': _name,'email': _email , 'permission-type' : _relation, 'permission-on': _box, 'relation': _relation, }).
+                              then((value) => print('User Added')).catchError((error)=> print('Failed to Add User : $error '));
+                            }
                             print(_site);
                             print(_name);
                             print(_email);
