@@ -36,7 +36,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
   @override
   Widget build(BuildContext context) {
     //var nm="Nasif Shahriar";
-    var baby_name = "Raiyan Jahangir";
+    var baby_name = "John Cameron";
     var dob = "25/03/1999";
     var gender = "Male";
     var baby_height = "75.2cm";
@@ -44,7 +44,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
     var blood_group = "A+";
     var baby_age = "5mo";
     var bbc = "234678909";
-    var guardians = ["Raiyan Jahangir", "Nasif Shahriar", "Mahapara Naim"];
+    var guardians = ["Jack Cameron", "Nasif Shahriar", "Mahapara Naim"];
 
     var wo = MediaQuery.of(context).size.width;
     var wh = MediaQuery.of(context).size.height;
@@ -52,18 +52,18 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
     //entire list
     List<Widget> bd = [
       Container(child: Padding(padding: EdgeInsets.only(right: 0.2 * wo))),
-      Container(
-        child: Text('Baby Information',
-            style: TextStyle(
-                fontWeight: FontWeight.w200,
-                fontSize: wh * 0.035,
-                height: 3,
-                fontStyle: FontStyle.italic)),
-      ),
+      // Container(
+      //   child: Text('Baby Information',
+      //       style: TextStyle(
+      //           fontWeight: FontWeight.w200,
+      //           fontSize: wh * 0.035,
+      //           height: 3,
+      //           fontStyle: FontStyle.italic)),
+      // ),
 
       Container(
           child: Divider(
-              color: Colors.black, endIndent: 0.1 * wo, indent: 0.1 * wo)),
+              color: Colors.white, endIndent: 0.1 * wo, indent: 0.1 * wo)),
       //taking for a row
       Row(children: <Widget>[
         Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
@@ -234,7 +234,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
                   MaterialPageRoute(builder: (context) => HomeScreen()));
             },
           ),
-          title: Text("Baby Health Parameters"),
+          title: Text("Baby Information"),
           centerTitle: true,
           actions: <Widget>[
             IconButton(
