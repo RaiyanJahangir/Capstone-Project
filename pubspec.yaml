@@ -35,6 +35,8 @@ dependencies:
   flutter:
     sdk: flutter
   fluttertoast: ^8.0.8
+  table_calendar: ^2.2.3
+  flutter_slidable: ^0.5.7
 
 dev_dependencies:
   flutter_lints: ^1.0.0
