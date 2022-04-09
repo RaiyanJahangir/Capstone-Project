@@ -2,7 +2,7 @@
 //import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:email_password_login/model/childReg_model.dart';
+import 'package:email_password_login/model/babies_model.dart';
 import 'package:email_password_login/screens/register_child.dart';
 import 'package:email_password_login/screens/registration_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';

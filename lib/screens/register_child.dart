@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, duplicate_ignore, non_constant_identifier_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:email_password_login/model/childReg_model.dart';
+import 'package:email_password_login/model/babies_model.dart';
 import 'package:email_password_login/screens/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
