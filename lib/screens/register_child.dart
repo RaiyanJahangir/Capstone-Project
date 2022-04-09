@@ -636,7 +636,7 @@ class _RegisterChildState extends State<RegisterChild> {
     childModel.childsReltn = relationEditingController.text;
 
     await firebaseFirestore
-        .collection("Child_reg_detail")
+        .collection("Babies")
         .doc(user.uid)
         .set(childModel.toMap());
     Fluttertoast.showToast(msg: "Child Registered");

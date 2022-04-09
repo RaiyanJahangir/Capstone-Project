@@ -1,3 +1,7 @@
+// ignore_for_file: non_constant_identifier_names
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ChildModel {
   String? uid;
   String? name;
@@ -10,19 +14,22 @@ class ChildModel {
   String? fathersName;
   String? mothersName;
   String? childsReltn;
+  String? guard;
+  List? Guardians;
 
-  ChildModel(
-      {this.uid,
-      this.name,
-      this.fathersName,
-      this.mothersName,
-      this.dob,
-      this.gender,
-      this.h8,
-      this.w8,
-      this.bloodGrp,
-      this.birthCertNo,
-      this.childsReltn});
+  ChildModel({
+    this.uid,
+    this.name,
+    this.fathersName,
+    this.mothersName,
+    this.dob,
+    this.gender,
+    this.h8,
+    this.w8,
+    this.bloodGrp,
+    this.birthCertNo,
+    this.childsReltn,
+  });
 
   ///Receiving data from server
   factory ChildModel.fromMap(map) {
@@ -55,6 +62,21 @@ class ChildModel {
       'fathers_name': fathersName,
       'mothers_name': mothersName,
       'childs_rltn': childsReltn,
+      'guardian': FieldValue.arrayUnion([
+        {
+          "uid": uid,
+        }
+      ]),
     };
   }
+
+  // Map<String, dynamic> guardianItem(String uid) {
+  //   return {
+  //     'guardian': FieldValue.arrayUnion([
+  //       {
+  //         "uid": uid,
+  //       }
+  //     ]),
+  //   };
+  // }
 }
