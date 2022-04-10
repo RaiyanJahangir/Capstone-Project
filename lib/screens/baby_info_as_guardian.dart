@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -5,43 +7,46 @@ import 'package:lottie/lottie.dart';
 enum _MenuValues {
   logout,
 }
-
+String? myEmail;
+String? myName;
 class guardian_homepage extends StatelessWidget {
   const guardian_homepage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     //var size;
+
     return Scaffold(
       appBar: AppBar(
-          centerTitle: false,
-          title: Row(
+        centerTitle: false,
+        title: Row(
             mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Expanded(
-                  child: Icon(
-                  Icons.circle_notifications,
-                  color: Colors.white,
-                  size: 24.0,
-                  semanticLabel: 'Text to announce in accessibility modes',
-                  ),
-                ),
-                Expanded(
-                    child: Text("John Cameron"),
-                ),
-                Expanded(
-                    child: Icon(
-                      Icons.account_circle,
-                      color: Colors.white,
-                      size: 24.0,
-                      semanticLabel: 'Text to announce in accessibility modes',
-                    ),
-                )
-              ]
-          ),
-          //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
-    ),
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Icon(
+                Icons.circle_notifications,
+                color: Colors.white,
+                size: 24.0,
+                semanticLabel: 'Text to announce in accessibility modes',
+              ),
+              FutureBuilder(
+                future: _fetch(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done)
+                    return Text("Loading data...Please wait");
+                  return Text("$myEmail");
+                },
+              ),
+              Icon(
+                Icons.account_circle,
+                color: Colors.white,
+                size: 24.0,
+                semanticLabel: 'Text to announce in accessibility modes',
+              )
+            ]
+        ),
+        //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
+      ),
       body: Container(
         child: Column(
           children: [
@@ -64,14 +69,13 @@ class guardian_homepage extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: Text('John Cameron ',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.lightBlueAccent,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic
-                        )
+                    child: FutureBuilder(
+                      future: _fetch(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState != ConnectionState.done)
+                          return Text("Loading data...Please wait");
+                        return Text("$myName");
+                      },
                     ),
                   ),
                   Expanded(
@@ -119,10 +123,10 @@ class guardian_homepage extends StatelessWidget {
                               flex: 1,
                               child: Text('Feeding Info',
                                   style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FontStyle.italic,
+                                    fontSize: 20,
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic,
                                   )
                               )
                           )
@@ -179,14 +183,16 @@ class guardian_homepage extends StatelessWidget {
                               fit: BoxFit.fill,
                             ),
                           ),
-                          Expanded(flex: 1,child: Text('Check Baby Location',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black54,
-                                fontWeight: FontWeight.bold,
-                                fontStyle: FontStyle.italic,
+                          Expanded(
+                              flex: 2,
+                              child: Text('Check Baby Location',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic,
+                                  )
                               )
-                          )
                           )
                         ],
                       ),
@@ -209,14 +215,16 @@ class guardian_homepage extends StatelessWidget {
                               fit: BoxFit.fill,
                             ),
                           ),
-                          Expanded(flex: 1,child: Text('Authorize New Users',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black54,
-                                fontWeight: FontWeight.bold,
-                                fontStyle: FontStyle.italic,
+                          Expanded(
+                              flex: 2,
+                              child: Text('Authorize New Users',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic,
+                                  )
                               )
-                          )
                           )
                         ],
                       ),
@@ -230,5 +238,21 @@ class guardian_homepage extends StatelessWidget {
         ),
       ),
     );
+  }
+  _fetch() async {
+    final firebaseUser = await FirebaseAuth.instance.currentUser!;
+    if (firebaseUser != null) {
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(firebaseUser.uid)
+          .get()
+          .then((ds) {
+        myEmail = ds.data()!['Email'];
+        myName = ds.data()!['Name'];
+        print(myEmail);
+      }).catchError((e) {
+        print(e);
+      });
+    }
   }
 }

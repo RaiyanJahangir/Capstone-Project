@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 enum user { guardian , nurturer }
-
+String? myEmail;
+String? myName;
 class auth extends StatefulWidget {
   const auth({Key? key}) : super(key: key);
 
@@ -15,7 +17,7 @@ class _authState extends State<auth> {
   user? _site = user.guardian;
   String? _name;
   String? _email;
-  String _box = 'One';
+  String? _box = 'Child1';
   String? _relation;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -100,7 +102,7 @@ class _authState extends State<auth> {
           _box = newValue!;
         });
       },
-      items: <String>['One', 'Two', 'Free', 'Four']
+      items: <String>['Child1', 'Child2', 'Child3', 'Child4']
           .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
@@ -133,38 +135,41 @@ class _authState extends State<auth> {
             mainAxisAlignment: MainAxisAlignment.end,
             //crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
-              Expanded(
-                child: Icon(
-                  Icons.circle_notifications,
-                  color: Colors.white,
-                  size: 24.0,
-                  semanticLabel: 'Text to announce in accessibility modes',
-                ),
+              Icon(
+                Icons.circle_notifications,
+                color: Colors.white,
+                size: 24.0,
+                semanticLabel: 'Text to announce in accessibility modes',
               ),
-              Expanded(
-                child: Text("John Cameron"),
+              FutureBuilder(
+                future: _fetch(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done)
+                    return Text("Loading data...Please wait");
+                  return Text("$myEmail");
+                },
               ),
-              Expanded(
-                child: Icon(
-                  Icons.account_circle,
-                  color: Colors.white,
-                  size: 24.0,
-                  semanticLabel: 'Text to announce in accessibility modes',
-                ),
+              Icon(
+                Icons.account_circle,
+                color: Colors.white,
+                size: 24.0,
+                semanticLabel: 'Text to announce in accessibility modes',
               )
             ]
         ),
         //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
       ),
+      //resizeToAvoidBottomInset: false,
       body: Container(
         margin: EdgeInsets.all(24),
-        child: Column(
+        child: SingleChildScrollView(
+          reverse: true,
+          padding: EdgeInsets.all(32),
+          child: Column(
             children: [
-              Expanded(
-                flex: 1,
-                  child: Text(
-                "Authorize Permission",
-                textAlign: TextAlign.center,
+              Text(
+                  "Authorize Permission",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 20,
                       color: Colors.red[400],
@@ -174,67 +179,81 @@ class _authState extends State<auth> {
                         Shadow(color: Colors.blueAccent, offset: Offset(2,1), blurRadius:10)
                       ]
                   )
-              )
               ),
-              Expanded(
-                flex: 8,
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _buildname(),
-                        SizedBox(height: 10,),
-                        _buildemail(),
-                        SizedBox(height: 10),
-                        Text('Give permission as: ',
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic,
-                          ),
-                            ),
-                        _buildbox(),
-                        Text('Give permission on: ',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic,
-                          ),
+              SizedBox(height: 50,),
+              Form(
+                  key: _formKey,
+                  child: Column(
+                    //mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _buildname(),
+                      SizedBox(height: 10,),
+                      _buildemail(),
+                      SizedBox(height: 20),
+                      Text('Give permission as: ',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
                         ),
-                        _buildlist(),
-                        SizedBox(height: 10,),
-                        _builduser(),
-                        SizedBox(height: 10,),
-                        RaisedButton(
-                          child: Text(
-                            'Submit',
+                      ),
+                      _buildbox(),
+                      Text('Give permission on: ',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      _buildlist(),
+                      SizedBox(height: 10,),
+                      _builduser(),
+                      SizedBox(height: 10,),
+                      RaisedButton(
+                        child: Text(
+                          'Submit',
                           style: TextStyle(color: Colors.blue, fontSize: 16),
-                            ),
-                          onPressed: () {
-                            if (!_formKey.currentState!.validate()) {return;}
-                            else {
-                              _formKey.currentState!.save();
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Sending Data to the Cloud Firestore')));
-                              users.add({'user-name': _name,'email': _email , 'permission-type' : _relation, 'permission-on': _box, 'relation': _relation, }).
-                              then((value) => print('User Added')).catchError((error)=> print('Failed to Add User : $error '));
-                            }
-                            print(_site);
-                            print(_name);
-                            print(_email);
-                            print(_box);
-                            print(_relation);
-                          },
-                        )
-                      ],
-                    )
+                        ),
+                        onPressed: () {
+                          if (!_formKey.currentState!.validate()) {return;}
+                          else {
+                            _formKey.currentState!.save();
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Sending Data to the Cloud Firestore')));
+                            users.add({'user-name': _name,'email': _email , 'permission-type' : _relation, 'permission-on': _box, 'relation': _relation, }).
+                            then((value) => print('User Added')).catchError((error)=> print('Failed to Add User : $error '));
+                          }
+                          print(_site);
+                          print(_name);
+                          print(_email);
+                          print(_box);
+                          print(_relation);
+                        },
+                      )
+                    ],
                   )
               )
             ],
           ),
         ),
+      ),
     );
+  }
+  _fetch() async {
+    final firebaseUser = await FirebaseAuth.instance.currentUser!;
+    if (firebaseUser != null) {
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(firebaseUser.uid)
+          .get()
+          .then((ds) {
+        myEmail = ds.data()!['Email'];
+        myName = ds.data()!['Name'];
+        print(myEmail);
+      }).catchError((e) {
+        print(e);
+      });
+    }
   }
 }
