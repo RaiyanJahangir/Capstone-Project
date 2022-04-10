@@ -113,6 +113,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  datetime_picker_formfield:
+    dependency: "direct main"
+    description:
+      name: datetime_picker_formfield
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   dbus:
     dependency: transitive
     description:
@@ -276,7 +283,7 @@ packages:
     source: hosted
     version: "4.0.0"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       url: "https://pub.dartlang.org"
@@ -413,7 +420,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.8.0"
-
   typed_data:
     dependency: transitive
     description:
@@ -428,8 +434,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
-sdks:
-  dart: ">=2.14.0 <3.0.0"
   flutter: ">=1.12.13+hotfix.5"
     version: "2.1.0"
   xdg_directories:
@@ -449,3 +453,4 @@ sdks:
 sdks:
   dart: ">=2.14.0 <3.0.0"
   flutter: ">=2.2.0"
+
