@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/user_model.dart';
+import 'package:email_password_login/screens/HomePage.dart';
 import 'package:email_password_login/screens/login_screen.dart';
 import 'package:email_password_login/screens/sensor_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
@@ -163,6 +164,13 @@ class HomeScreenState extends State<HomeScreen> {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => SensorScreen()));
                     }),
+                SizedBox(height: 15),
+                ActionChip(
+                    label: Text("vaccines"),
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) => HomePage()));
+                   }),
                 SizedBox(height: 15),
                 ActionChip(
                     label: Text("Profile"),
