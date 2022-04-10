@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 enum _MenuValues {
   logout,
 }
+String? myEmail;
+String? myName;
 String dropdownValue = 'One';
 class nurturer_homepage extends StatefulWidget {
   const nurturer_homepage({Key? key}) : super(key: key);
@@ -23,24 +27,25 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
-              Expanded(
-                child: Icon(
-                  Icons.circle_notifications,
-                  color: Colors.white,
-                  size: 24.0,
-                  semanticLabel: 'Text to announce in accessibility modes',
-                ),
+              Icon(
+                Icons.circle_notifications,
+                color: Colors.white,
+                size: 24.0,
+                semanticLabel: 'Text to announce in accessibility modes',
               ),
-              Expanded(
-                child: Text("John Cameron"),
+              FutureBuilder(
+                future: _fetch(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done)
+                    return Text("Loading data...Please wait");
+                  return Text("$myEmail");
+                },
               ),
-              Expanded(
-                child: Icon(
-                  Icons.account_circle,
-                  color: Colors.white,
-                  size: 24.0,
-                  semanticLabel: 'Text to announce in accessibility modes',
-                ),
+              Icon(
+                Icons.account_circle,
+                color: Colors.white,
+                size: 24.0,
+                semanticLabel: 'Text to announce in accessibility modes',
               )
             ]
         ),
@@ -174,5 +179,21 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
         ),
       ),
     );
+  }
+  _fetch() async {
+    final firebaseUser = await FirebaseAuth.instance.currentUser!;
+    if (firebaseUser != null) {
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(firebaseUser.uid)
+          .get()
+          .then((ds) {
+        myEmail = ds.data()!['Email'];
+        myName = ds.data()!['Name'];
+        print(myEmail);
+      }).catchError((e) {
+        print(e);
+      });
+    }
   }
 }
