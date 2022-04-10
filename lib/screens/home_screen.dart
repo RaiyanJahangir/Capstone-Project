@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/user_model.dart';
 import 'package:email_password_login/screens/login_screen.dart';
 import 'package:email_password_login/screens/sensor_screen.dart';
+import 'package:email_password_login/screens/notification_screen.dart';
+import 'package:email_password_login/screens/child_info_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_password_login/screens/baby_info_as_guardian.dart';
@@ -180,6 +182,14 @@ class HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (c) => auth()));
+                    }),
+                SizedBox(height: 15),
+                ActionChip(
+                    label: Text("Check baby Info"),
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => ChildInfoScreen()));
+
                     }),
               ],
             )),
