@@ -3,8 +3,13 @@ import 'package:email_password_login/model/user_model.dart';
 import 'package:email_password_login/screens/login_screen.dart';
 import 'package:email_password_login/screens/sensor_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
+import 'package:email_password_login/screens/notification_screen.dart';
+import 'package:email_password_login/screens/child_info_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:email_password_login/screens/baby_info_as_guardian.dart';
+import 'package:email_password_login/screens/baby_info_as_nurturer.dart';
+import 'package:email_password_login/screens/give_auth_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -164,6 +169,34 @@ class HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (context) => Home()));
+                    }),
+                SizedBox(height: 15),
+                ActionChip(
+                    label: Text("Guardian"),
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (c) => guardian_homepage()));
+                    }),
+                SizedBox(height: 15),
+                ActionChip(
+                    label: Text("Nurturer"),
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (c) => nurturer_homepage()));
+                    }),
+                SizedBox(height: 15),
+                ActionChip(
+                    label: Text("Authorize people"),
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (c) => auth()));
+                    }),
+                SizedBox(height: 15),
+                ActionChip(
+                    label: Text("Check baby Info"),
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => ChildInfoScreen()));
                     }),
               ],
             )),
