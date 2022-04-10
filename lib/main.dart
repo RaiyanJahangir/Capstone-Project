@@ -2,12 +2,15 @@ import 'package:email_password_login/screens/login_screen.dart';
 import 'package:email_password_login/screens/register_child.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-//import './screens/login_screen.dart';
 import './screens/home_page.dart';
+import './screens/login_screen.dart';
+import './screens/notification_screen.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 
