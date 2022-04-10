@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 enum user { guardian , nurturer }
 String? myEmail;
@@ -21,7 +22,17 @@ class _authState extends State<auth> {
   String? _relation;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  Future<bool?> toast(String message) {
+    Fluttertoast.cancel();
+    return Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 4,
+        backgroundColor: Colors.redAccent,
+        textColor: Colors.white,
+        fontSize: 15.0);
+  }
   Widget _buildname() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'UserName'),
@@ -216,13 +227,14 @@ class _authState extends State<auth> {
                           'Submit',
                         style: TextStyle(color: Colors.blue, fontSize: 16),
                           ),
-                        onPressed: () {
+                        onPressed: () async {
                           if (!_formKey.currentState!.validate()) {return;}
                           else {
                             _formKey.currentState!.save();
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Sending Data to the Cloud Firestore')));
-                            users.add({'user-name': _name,'email': _email , 'permission-type' : _relation, 'permission-on': _box, 'relation': _relation, }).
-                            then((value) => print('User Added')).catchError((error)=> print('Failed to Add User : $error '));
+                            await users.add({'user-name': _name,'email': _email , 'permission-type' : _relation, 'permission-on': _box, 'relation': _relation, }).
+                            then((value) => toast("Authorization Successful")).catchError((error)=> toast("Failed to Authorize"));
+                            Navigator.pop(context);
                           }
                           print(_site);
                           print(_name);
