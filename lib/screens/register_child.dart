@@ -104,7 +104,7 @@ class _RegisterChildState extends State<RegisterChild> {
         textInputAction: TextInputAction.next,
         format: format,
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.calendar_month_outlined),
+          prefixIcon: Icon(Icons.calendar_today_outlined),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: 'Choose Date',
           border: OutlineInputBorder(
@@ -496,7 +496,7 @@ class _RegisterChildState extends State<RegisterChild> {
           onPressed: () {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                builder: (ctx) => const HomePage(),
+                builder: (ctx) => const UserHome(),
               ),
             );
             //Navigator.pop(context);

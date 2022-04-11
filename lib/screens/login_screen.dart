@@ -88,10 +88,10 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
-            Navigator.pushReplacement(
-                // ignore: prefer_const_constructors
-                context,
-                MaterialPageRoute(builder: (context) => HomePage()));
+            // Navigator.pushReplacement(
+            // ignore: prefer_const_constructors
+            // context,
+            // MaterialPageRoute(builder: (context) => HomeScreen()));
             signIn(emailController.text, passwordController.text);
           },
           child: Text(
@@ -167,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Fluttertoast.showToast(msg: "Login Successful"),
                 Navigator.of(context).pushReplacement(
                     // ignore: prefer_const_constructors
-                    MaterialPageRoute(builder: (context) => HomePage())),
+                    MaterialPageRoute(builder: (context) => HomeScreen())),
               })
           .catchError((e) {
         Fluttertoast.showToast(msg: e!.message);

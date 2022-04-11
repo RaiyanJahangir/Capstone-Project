@@ -36,6 +36,9 @@ dependencies:
   firebase_database: ^7.0.0
   lottie: ^1.2.2
   firebase_messaging: ^11.2.7
+  firebase_messaging_platform_interface: ^3.1.6 
+# dependency_overrides: 
+#   firebase_messaging_platform_interface: ^3.1.6
 
   flutter:
     sdk: flutter
@@ -67,6 +70,7 @@ flutter:
     - assets/baby_picture.png
     - assets/reg_child.png
     - assets/child_reg.png
+    - assets/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see

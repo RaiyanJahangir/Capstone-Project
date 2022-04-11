@@ -268,7 +268,7 @@ class _newTaskState extends State<newTask> {
                                     BorderRadius.all(Radius.circular(15)),
                                 color: Color(0xffff90CAF9)),
                             child: Center(
-                              child: FlatButton(
+                              child: TextButton(
                                 child: const Text(
                                   'Submit!!',
                                   style: TextStyle(
@@ -319,13 +319,4 @@ class _newTaskState extends State<newTask> {
     //   },
     //   );
   }
-}
-
-class _checked {}
-
-class CheckBoxModal {
-  String title;
-  bool value;
-
-  CheckBoxModal({required this.title, this.value = false});
 }

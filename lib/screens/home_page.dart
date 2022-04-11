@@ -3,19 +3,20 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/babies_model.dart';
+import 'package:email_password_login/screens/home_screen.dart';
 import 'package:email_password_login/screens/register_child.dart';
 import 'package:email_password_login/screens/registration_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class UserHome extends StatefulWidget {
+  const UserHome({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<UserHome> createState() => _UserHomeState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _UserHomeState extends State<UserHome> {
   // ignore: prefer_typing_uninitialized_variables
   var selectType, selectGurd;
   var selectedType, selectedCat;
@@ -61,7 +62,7 @@ class _HomePageState extends State<HomePage> {
           onPressed: () {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                builder: (ctx) => RegistrationScreen(),
+                builder: (ctx) => HomeScreen(),
               ),
             );
           },

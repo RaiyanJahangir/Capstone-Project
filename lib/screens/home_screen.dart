@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/user_model.dart';
 import 'package:email_password_login/screens/HomePage.dart';
+import 'package:email_password_login/screens/home_page.dart';
 import 'package:email_password_login/screens/login_screen.dart';
 import 'package:email_password_login/screens/sensor_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
@@ -87,126 +88,138 @@ class HomeScreenState extends State<HomeScreen> {
               ))
         ],
       ),
+      //resizeToAvoidBottomInset: false,
       body: Center(
         child: Padding(
             padding: EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  height: 100,
-                  child: Image.asset(
-                    "assets/baby_picture.png",
-                    fit: BoxFit.contain,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 100,
+                    child: Image.asset(
+                      "assets/baby_picture.png",
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ),
-                Text(
-                  "Welcome Back",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "${loggedInUser.name}",
-                  style: TextStyle(
-                      color: Colors.black54, fontWeight: FontWeight.w500),
-                ),
-                Text(
-                  "${loggedInUser.email}",
-                  style: TextStyle(
-                      color: Colors.black54, fontWeight: FontWeight.w500),
-                ),
-                SizedBox(height: 15),
-                ActionChip(
-                  label: Text("Logout"),
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text("Confirmed Logging Out ?",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.blue,
-                                    fontSize: 25)),
-                            actions: <Widget>[
-                              TextButton(
-                                  onPressed: () {
-                                    logout(context);
-                                  },
-                                  child: Text("YES",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontStyle: FontStyle.italic,
-                                          color: Colors.blueAccent,
-                                          fontSize: 20))),
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text("NO",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontStyle: FontStyle.italic,
-                                          color: Colors.blueAccent,
-                                          fontSize: 20)))
-                            ],
-                          );
-                        });
-                  },
-                ),
-                SizedBox(height: 15),
-                ActionChip(
-                    label: Text("Check Health Parameters"),
+                  Text(
+                    "Welcome Back",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "${loggedInUser.name}",
+                    style: TextStyle(
+                        color: Colors.black54, fontWeight: FontWeight.w500),
+                  ),
+                  Text(
+                    "${loggedInUser.email}",
+                    style: TextStyle(
+                        color: Colors.black54, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 15),
+                  ActionChip(
+                    label: Text("Logout"),
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => SensorScreen()));
-                    }),
-                SizedBox(height: 15),
-                ActionChip(
-                    label: Text("vaccines"),
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => HomePage()));
-                   }),
-                SizedBox(height: 15),
-                ActionChip(
-                    label: Text("Profile"),
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => Home()));
-                    }),
-                SizedBox(height: 15),
-                ActionChip(
-                    label: Text("Guardian"),
-                    onPressed: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (c) => guardian_homepage()));
-                    }),
-                SizedBox(height: 15),
-                ActionChip(
-                    label: Text("Nurturer"),
-                    onPressed: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (c) => nurturer_homepage()));
-                    }),
-                SizedBox(height: 15),
-                ActionChip(
-                    label: Text("Authorize people"),
-                    onPressed: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (c) => auth()));
-                    }),
-                SizedBox(height: 15),
-                ActionChip(
-                    label: Text("Check baby Info"),
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => ChildInfoScreen()));
-                    }),
-              ],
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("Confirmed Logging Out ?",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.blue,
+                                      fontSize: 25)),
+                              actions: <Widget>[
+                                TextButton(
+                                    onPressed: () {
+                                      logout(context);
+                                    },
+                                    child: Text("YES",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontStyle: FontStyle.italic,
+                                            color: Colors.blueAccent,
+                                            fontSize: 20))),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("NO",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontStyle: FontStyle.italic,
+                                            color: Colors.blueAccent,
+                                            fontSize: 20)))
+                              ],
+                            );
+                          });
+                    },
+                  ),
+                  SizedBox(height: 15),
+                  ActionChip(
+                      label: Text("Check Health Parameters"),
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => SensorScreen()));
+                      }),
+                  SizedBox(height: 15),
+                  ActionChip(
+                      label: Text("vaccines"),
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => HomePage()));
+                      }),
+                  SizedBox(height: 15),
+                  ActionChip(
+                      label: Text("Profile"),
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) => Home()));
+                      }),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  ActionChip(
+                      label: Text("User Home Page"),
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => UserHome()));
+                      }),
+                  SizedBox(height: 15),
+                  ActionChip(
+                      label: Text("Guardian"),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (c) => guardian_homepage()));
+                      }),
+                  SizedBox(height: 15),
+                  ActionChip(
+                      label: Text("Nurturer"),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (c) => nurturer_homepage()));
+                      }),
+                  SizedBox(height: 5),
+                  ActionChip(
+                      label: Text("Authorize people"),
+                      onPressed: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (c) => auth()));
+                      }),
+                  SizedBox(height: 5),
+                  ActionChip(
+                      label: Text("Check baby Info"),
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => ChildInfoScreen()));
+                      }),
+                ],
+              ),
             )),
       ),
     );
