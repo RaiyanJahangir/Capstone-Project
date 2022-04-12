@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/user_model.dart';
 import 'package:email_password_login/screens/HomePage.dart';
-import 'package:email_password_login/screens/home_page.dart';
+import 'package:email_password_login/screens/user_home_page.dart';
 import 'package:email_password_login/screens/login_screen.dart';
 import 'package:email_password_login/screens/sensor_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
@@ -164,8 +164,8 @@ class HomeScreenState extends State<HomeScreen> {
                   ActionChip(
                       label: Text("Check Health Parameters"),
                       onPressed: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (c) => SensorScreen()));
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (c) => SensorScreen()));
                       }),
                   SizedBox(height: 15),
                   ActionChip(
@@ -187,8 +187,8 @@ class HomeScreenState extends State<HomeScreen> {
                   ActionChip(
                       label: Text("User Home Page"),
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (c) => UserHome()));
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (c) => UserHome()));
                       }),
                   SizedBox(height: 15),
                   ActionChip(
@@ -215,8 +215,8 @@ class HomeScreenState extends State<HomeScreen> {
                   ActionChip(
                       label: Text("Check baby Info"),
                       onPressed: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (c) => ChildInfoScreen()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (c) => ChildInfoScreen()));
                       }),
                 ],
               ),

@@ -8,6 +8,7 @@ import 'package:email_password_login/screens/register_child.dart';
 import 'package:email_password_login/screens/registration_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({Key? key}) : super(key: key);
@@ -66,8 +67,7 @@ class _UserHomeState extends State<UserHome> {
                 size: 24.0,
                 semanticLabel: 'Text to announce in accessibility modes',
               ),
-            ]
-        ),
+            ]),
         actions: [
           PopupMenuButton(
             icon: Icon(Icons.more_vert),
@@ -78,9 +78,12 @@ class _UserHomeState extends State<UserHome> {
                   leading: Icon(
                     Icons.account_circle,
                     color: Colors.blue,
-                    size: 24.0,),
+                    size: 24.0,
+                  ),
                   //title: const Text(size ?? ''),
-                  title: Text("Profile",),
+                  title: Text(
+                    "Profile",
+                  ),
                   // subtitle: Text(
                   //   a,
                   //   style: TextStyle(
@@ -134,7 +137,8 @@ class _UserHomeState extends State<UserHome> {
                     child: InkWell(
                       onTap: () => Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => RegisterChild(),
+                        MaterialPageRoute(
+                          builder: (context) => RegisterChild(),
                         ),
                       ),
                       child: Column(
@@ -143,9 +147,11 @@ class _UserHomeState extends State<UserHome> {
                         children: [
                           Expanded(
                             flex: 4,
-                            child: Image(
-                              image: AssetImage("assets/child_reg.png"),
-                              fit: BoxFit.cover,
+                            child: Lottie.asset(
+                              "assets/child_animation.json",
+                              width: 200,
+                              height: 200,
+                              fit: BoxFit.fill,
                             ),
                           ),
                           Expanded(
@@ -154,7 +160,7 @@ class _UserHomeState extends State<UserHome> {
                               'Register Child',
                               style: TextStyle(
                                 fontSize: 20,
-                                color: Colors.black54,
+                                color: Colors.blue[400],
                                 fontWeight: FontWeight.bold,
                                 fontStyle: FontStyle.normal,
                               ),

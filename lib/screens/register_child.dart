@@ -2,7 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/babies_model.dart';
-import 'package:email_password_login/screens/home_page.dart';
+import 'package:email_password_login/screens/user_home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
@@ -500,8 +500,7 @@ class _RegisterChildState extends State<RegisterChild> {
                 size: 24.0,
                 semanticLabel: 'Text to announce in accessibility modes',
               ),
-            ]
-        ),
+            ]),
         actions: [
           PopupMenuButton(
             icon: Icon(Icons.more_vert),
@@ -512,9 +511,12 @@ class _RegisterChildState extends State<RegisterChild> {
                   leading: Icon(
                     Icons.account_circle,
                     color: Colors.blue,
-                    size: 24.0,),
+                    size: 24.0,
+                  ),
                   //title: const Text(size ?? ''),
-                  title: Text("Profile",),
+                  title: Text(
+                    "Profile",
+                  ),
                   // subtitle: Text(
                   //   a,
                   //   style: TextStyle(
