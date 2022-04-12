@@ -1,21 +1,37 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:email_password_login/model/user_model.dart';
+import 'package:email_password_login/screens/home_screen.dart';
 
-enum _MenuValues {
-  logout,
-}
-String? myEmail;
-String? myName;
-class guardian_homepage extends StatelessWidget {
+
+class guardian_homepage extends StatefulWidget {
   const guardian_homepage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    //var size;
+  guardian_homepageState createState() => guardian_homepageState();
+}
 
+class guardian_homepageState extends State<guardian_homepage> {
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+  String? a;
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+    a=loggedInUser.name;
+  }
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           centerTitle: false,
@@ -23,28 +39,63 @@ class guardian_homepage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
+                Expanded(child: Text('Baby Info Page')),
                 Icon(
                 Icons.circle_notifications,
                 color: Colors.white,
                 size: 24.0,
                 semanticLabel: 'Text to announce in accessibility modes',
                 ),
-                FutureBuilder(
-                  future: _fetch(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState != ConnectionState.done)
-                    return Text("Loading data...Please wait");
-                  return Text("$myEmail");
-                },
-                  ),
-                Icon(
-                  Icons.account_circle,
-                  color: Colors.white,
-                  size: 24.0,
-                  semanticLabel: 'Text to announce in accessibility modes',
-                )
               ]
           ),
+          actions: [
+            PopupMenuButton(
+              icon: Icon(Icons.more_vert),
+              itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                const PopupMenuItem(
+                  child: ListTile(
+                    //var a;
+                    leading: Icon(
+                      Icons.account_circle,
+                      color: Colors.blue,
+                      size: 24.0,),
+                    //title: const Text(size ?? ''),
+                    title: Text("Profile",),
+                    // subtitle: Text(
+                    //   a,
+                    //   style: TextStyle(
+                    //       color: Colors.black54, fontWeight: FontWeight.w500),
+                    // ),
+                      onTap: null,
+                  ),
+                ),
+                const PopupMenuItem(
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.circle_notifications,
+                      color: Colors.blue,
+                      size: 24.0,
+                    ),
+                    title: Text('Notification'),
+                    onTap: null,
+                  ),
+                ),
+                const PopupMenuItem(
+                  child: ListTile(
+                    leading: Icon(
+                    Icons.logout,
+                    color: Colors.blue,
+                      ),
+                    title: Text('Logout'),
+                    onTap: null,
+                  ),
+                ),
+                // const PopupMenuDivider(),
+                // const PopupMenuItem(child: Text('Item A')),
+                // const PopupMenuItem(child: Text('Item B')),
+              ],
+            ),
+          ],
           //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
     ),
       body: Container(
@@ -69,14 +120,7 @@ class guardian_homepage extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: FutureBuilder(
-                      future: _fetch(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState != ConnectionState.done)
-                          return Text("Loading data...Please wait");
-                        return Text("$myName");
-                      },
-                    ),
+                    child: Text("${loggedInUser.name}"),
                   ),
                   Expanded(
                     child: RaisedButton(
@@ -238,21 +282,5 @@ class guardian_homepage extends StatelessWidget {
         ),
       ),
     );
-  }
-  _fetch() async {
-    final firebaseUser = await FirebaseAuth.instance.currentUser!;
-    if (firebaseUser != null) {
-      await FirebaseFirestore.instance
-          .collection('Users')
-          .doc(firebaseUser.uid)
-          .get()
-          .then((ds) {
-        myEmail = ds.data()!['Email'];
-        myName = ds.data()!['Name'];
-        print(myEmail);
-      }).catchError((e) {
-        print(e);
-      });
-    }
   }
 }
