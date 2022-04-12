@@ -23,28 +23,63 @@ class guardian_homepage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
+              Expanded(child: Text('Baby Info Page')),
               Icon(
                 Icons.circle_notifications,
                 color: Colors.white,
                 size: 24.0,
                 semanticLabel: 'Text to announce in accessibility modes',
               ),
-              FutureBuilder(
-                future: _fetch(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState != ConnectionState.done)
-                    return Text("Loading data...Please wait");
-                  return Text("$myEmail");
-                },
-              ),
-              Icon(
-                Icons.account_circle,
-                color: Colors.white,
-                size: 24.0,
-                semanticLabel: 'Text to announce in accessibility modes',
-              )
             ]
         ),
+        actions: [
+          PopupMenuButton(
+            icon: Icon(Icons.more_vert),
+            itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+              const PopupMenuItem(
+                child: ListTile(
+                  //var a;
+                  leading: Icon(
+                    Icons.account_circle,
+                    color: Colors.blue,
+                    size: 24.0,),
+                  //title: const Text(size ?? ''),
+                  title: Text("Profile",),
+                  // subtitle: Text(
+                  //   a,
+                  //   style: TextStyle(
+                  //       color: Colors.black54, fontWeight: FontWeight.w500),
+                  // ),
+                  onTap: null,
+                ),
+              ),
+              const PopupMenuItem(
+                child: ListTile(
+                  leading: Icon(
+                    Icons.circle_notifications,
+                    color: Colors.blue,
+                    size: 24.0,
+                  ),
+                  title: Text('Notification'),
+                  onTap: null,
+                ),
+              ),
+              const PopupMenuItem(
+                child: ListTile(
+                  leading: Icon(
+                    Icons.logout,
+                    color: Colors.blue,
+                  ),
+                  title: Text('Logout'),
+                  onTap: null,
+                ),
+              ),
+              // const PopupMenuDivider(),
+              // const PopupMenuItem(child: Text('Item A')),
+              // const PopupMenuItem(child: Text('Item B')),
+            ],
+          ),
+        ],
         //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
       ),
       body: Container(

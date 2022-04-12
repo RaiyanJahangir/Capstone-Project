@@ -115,61 +115,70 @@ class SensorScreenState extends State<SensorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () {
-              //passing this to a loop
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => HomeScreen()));
-            },
-          ),
-          title: Text("Baby Health Parameters"),
-          centerTitle: true,
-          actions: <Widget>[
-            IconButton(
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text("Confirm Logging Out ?",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.blue,
-                                  fontSize: 25)),
-                          actions: <Widget>[
-                            TextButton(
-                                onPressed: () {
-                                  logout(context);
-                                },
-                                child: Text("YES",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic,
-                                        color: Colors.blueAccent,
-                                        fontSize: 20))),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text("NO",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic,
-                                        color: Colors.blueAccent,
-                                        fontSize: 20)))
-                          ],
-                        );
-                      });
-                },
-                icon: Icon(
-                  Icons.logout,
+        appBar:AppBar(
+          centerTitle: false,
+          title: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Expanded(child: Text('Check Health Parameters')),
+                Icon(
+                  Icons.circle_notifications,
                   color: Colors.white,
-                ))
+                  size: 24.0,
+                  semanticLabel: 'Text to announce in accessibility modes',
+                ),
+              ]
+          ),
+          actions: [
+            PopupMenuButton(
+              icon: Icon(Icons.more_vert),
+              itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                const PopupMenuItem(
+                  child: ListTile(
+                    //var a;
+                    leading: Icon(
+                      Icons.account_circle,
+                      color: Colors.blue,
+                      size: 24.0,),
+                    //title: const Text(size ?? ''),
+                    title: Text("Profile",),
+                    // subtitle: Text(
+                    //   a,
+                    //   style: TextStyle(
+                    //       color: Colors.black54, fontWeight: FontWeight.w500),
+                    // ),
+                    onTap: null,
+                  ),
+                ),
+                const PopupMenuItem(
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.circle_notifications,
+                      color: Colors.blue,
+                      size: 24.0,
+                    ),
+                    title: Text('Notification'),
+                    onTap: null,
+                  ),
+                ),
+                const PopupMenuItem(
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.logout,
+                      color: Colors.blue,
+                    ),
+                    title: Text('Logout'),
+                    onTap: null,
+                  ),
+                ),
+                // const PopupMenuDivider(),
+                // const PopupMenuItem(child: Text('Item A')),
+                // const PopupMenuItem(child: Text('Item B')),
+              ],
+            ),
           ],
+          //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
         ),
         body: Container(
             child: Column(

@@ -164,8 +164,8 @@ class HomeScreenState extends State<HomeScreen> {
                   ActionChip(
                       label: Text("Check Health Parameters"),
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => SensorScreen()));
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (c) => SensorScreen()));
                       }),
                   SizedBox(height: 15),
                   ActionChip(
@@ -178,8 +178,8 @@ class HomeScreenState extends State<HomeScreen> {
                   ActionChip(
                       label: Text("Profile"),
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => Home()));
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (c) => Home()));
                       }),
                   SizedBox(
                     height: 15,
@@ -187,8 +187,8 @@ class HomeScreenState extends State<HomeScreen> {
                   ActionChip(
                       label: Text("User Home Page"),
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => UserHome()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (c) => UserHome()));
                       }),
                   SizedBox(height: 15),
                   ActionChip(
@@ -215,8 +215,8 @@ class HomeScreenState extends State<HomeScreen> {
                   ActionChip(
                       label: Text("Check baby Info"),
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => ChildInfoScreen()));
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (c) => ChildInfoScreen()));
                       }),
                 ],
               ),
