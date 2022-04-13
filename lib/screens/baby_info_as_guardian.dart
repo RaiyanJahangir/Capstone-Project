@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_password_login/screens/map.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ enum _MenuValues {
 }
 String? myEmail;
 String? myName;
+
 class guardian_homepage extends StatelessWidget {
   const guardian_homepage({Key? key}) : super(key: key);
 
@@ -30,8 +32,7 @@ class guardian_homepage extends StatelessWidget {
                 size: 24.0,
                 semanticLabel: 'Text to announce in accessibility modes',
               ),
-            ]
-        ),
+            ]),
         actions: [
           PopupMenuButton(
             icon: Icon(Icons.more_vert),
@@ -42,9 +43,12 @@ class guardian_homepage extends StatelessWidget {
                   leading: Icon(
                     Icons.account_circle,
                     color: Colors.blue,
-                    size: 24.0,),
+                    size: 24.0,
+                  ),
                   //title: const Text(size ?? ''),
-                  title: Text("Profile",),
+                  title: Text(
+                    "Profile",
+                  ),
                   // subtitle: Text(
                   //   a,
                   //   style: TextStyle(
@@ -98,10 +102,11 @@ class guardian_homepage extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             fontStyle: FontStyle.italic,
                             shadows: [
-                              Shadow(color: Colors.blueAccent, offset: Offset(2,1), blurRadius:10)
-                            ]
-                        )
-                    ),
+                              Shadow(
+                                  color: Colors.blueAccent,
+                                  offset: Offset(2, 1),
+                                  blurRadius: 10)
+                            ])),
                   ),
                   Expanded(
                     child: FutureBuilder(
@@ -146,8 +151,7 @@ class guardian_homepage extends StatelessWidget {
                         children: [
                           Expanded(
                             flex: 4,
-                            child:
-                            Lottie.asset(
+                            child: Lottie.asset(
                               "assets/food.json",
                               width: 200,
                               height: 200,
@@ -162,9 +166,7 @@ class guardian_homepage extends StatelessWidget {
                                     color: Colors.black54,
                                     fontWeight: FontWeight.bold,
                                     fontStyle: FontStyle.italic,
-                                  )
-                              )
-                          )
+                                  )))
                         ],
                       ),
                     ),
@@ -178,8 +180,7 @@ class guardian_homepage extends StatelessWidget {
                         children: [
                           Expanded(
                             flex: 4,
-                            child:
-                            Lottie.asset(
+                            child: Lottie.asset(
                               "assets/health.json",
                               width: 200,
                               height: 200,
@@ -194,9 +195,7 @@ class guardian_homepage extends StatelessWidget {
                                     color: Colors.black54,
                                     fontWeight: FontWeight.bold,
                                     fontStyle: FontStyle.italic,
-                                  )
-                              )
-                          )
+                                  )))
                         ],
                       ),
                     ),
@@ -204,14 +203,16 @@ class guardian_homepage extends StatelessWidget {
                   Card(
                     elevation: 4,
                     child: InkWell(
-                      onTap: () => null,
+                      onTap: () => {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (c) => MapSample()))
+                      },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Expanded(
                             flex: 4,
-                            child:
-                            Lottie.asset(
+                            child: Lottie.asset(
                               "assets/map.json",
                               width: 200,
                               height: 200,
@@ -226,9 +227,7 @@ class guardian_homepage extends StatelessWidget {
                                     color: Colors.black54,
                                     fontWeight: FontWeight.bold,
                                     fontStyle: FontStyle.italic,
-                                  )
-                              )
-                          )
+                                  )))
                         ],
                       ),
                     ),
@@ -242,8 +241,7 @@ class guardian_homepage extends StatelessWidget {
                         children: [
                           Expanded(
                             flex: 4,
-                            child:
-                            Lottie.asset(
+                            child: Lottie.asset(
                               "assets/user.json",
                               width: 200,
                               height: 200,
@@ -258,15 +256,12 @@ class guardian_homepage extends StatelessWidget {
                                     color: Colors.black54,
                                     fontWeight: FontWeight.bold,
                                     fontStyle: FontStyle.italic,
-                                  )
-                              )
-                          )
+                                  )))
                         ],
                       ),
                     ),
                   ),
                 ],
-
               ),
             ),
           ],
@@ -274,6 +269,7 @@ class guardian_homepage extends StatelessWidget {
       ),
     );
   }
+
   _fetch() async {
     final firebaseUser = await FirebaseAuth.instance.currentUser!;
     if (firebaseUser != null) {

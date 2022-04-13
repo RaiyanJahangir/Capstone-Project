@@ -28,25 +28,74 @@ class _newTaskState extends State<feedingList> {
   List<int> medselectedList = [];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return new Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(0xfff90CAF9),
-        elevation: 0,
-        title: Text(
-          "Feeding Details",
-          style: TextStyle(fontSize: 25),
-        ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
+        centerTitle: false,
+        title: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Expanded(child: Text('Feeding List')),
+              Icon(
+                Icons.circle_notifications,
+                color: Colors.white,
+                size: 24.0,
+                semanticLabel: 'Text to announce in accessibility modes',
+              ),
+            ]),
+        actions: [
+          PopupMenuButton(
+            icon: Icon(Icons.more_vert),
+            itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+              const PopupMenuItem(
+                child: ListTile(
+                  //var a;
+                  leading: Icon(
+                    Icons.account_circle,
+                    color: Colors.blue,
+                    size: 24.0,
+                  ),
+                  //title: const Text(size ?? ''),
+                  title: Text(
+                    "Baby Feeding List",
+                  ),
+                  // subtitle: Text(
+                  //   a,
+                  //   style: TextStyle(
+                  //       color: Colors.black54, fontWeight: FontWeight.w500),
+                  // ),
+                  onTap: null,
+                ),
+              ),
+              const PopupMenuItem(
+                child: ListTile(
+                  leading: Icon(
+                    Icons.circle_notifications,
+                    color: Colors.blue,
+                    size: 24.0,
+                  ),
+                  title: Text('Notification'),
+                  onTap: null,
+                ),
+              ),
+              const PopupMenuItem(
+                child: ListTile(
+                  leading: Icon(
+                    Icons.logout,
+                    color: Colors.blue,
+                  ),
+                  title: Text('Logout'),
+                  onTap: null,
+                ),
+              ),
+              // const PopupMenuDivider(),
+              // const PopupMenuItem(child: Text('Item A')),
+              // const PopupMenuItem(child: Text('Item B')),
+            ],
           ),
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomePage()));
-          },
-        ),
+        ],
+        //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -208,9 +257,9 @@ class _newTaskState extends State<feedingList> {
                       onChanged: (bool? value) {
                         setState(() {
                           if (value!) {
-                            selectedList.add(1);
+                            medselectedList.add(1);
                           } else {
-                            selectedList.remove(1);
+                            medselectedList.remove(1);
                           }
                         });
                       },
@@ -224,9 +273,9 @@ class _newTaskState extends State<feedingList> {
                       onChanged: (bool? value) {
                         setState(() {
                           if (value!) {
-                            selectedList.add(2);
+                            medselectedList.add(2);
                           } else {
-                            selectedList.remove(2);
+                            medselectedList.remove(2);
                           }
                         });
                       },

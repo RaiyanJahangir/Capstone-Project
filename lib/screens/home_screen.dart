@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/user_model.dart';
 import 'package:email_password_login/screens/HomePage.dart';
+import 'package:email_password_login/screens/map.dart';
 import 'package:email_password_login/screens/user_home_page.dart';
 import 'package:email_password_login/screens/login_screen.dart';
 import 'package:email_password_login/screens/sensor_screen.dart';
@@ -217,6 +218,13 @@ class HomeScreenState extends State<HomeScreen> {
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (c) => ChildInfoScreen()));
+                      }),
+                  SizedBox(height: 15),
+                  ActionChip(
+                      label: Text("Map"),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (c) => MapSample()));
                       }),
                 ],
               ),
