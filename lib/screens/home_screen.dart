@@ -165,15 +165,15 @@ class HomeScreenState extends State<HomeScreen> {
                   ActionChip(
                       label: Text("Check Health Parameters"),
                       onPressed: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (c) => SensorScreen()));
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (c) => SensorScreen()));
                       }),
                   SizedBox(height: 15),
                   ActionChip(
                       label: Text("vaccines"),
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => HomePage()));
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (c) => HomePage()));
                       }),
                   SizedBox(height: 15),
                   ActionChip(

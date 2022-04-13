@@ -88,6 +88,13 @@ class _homePageState extends State<homePage> {
 
           return Scaffold(
             appBar: AppBar(
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () {
+                  //passing this to a loop
+                  Navigator.of(context).pop();
+                },
+              ),
               centerTitle: false,
               title: Row(
                   mainAxisAlignment: MainAxisAlignment.end,

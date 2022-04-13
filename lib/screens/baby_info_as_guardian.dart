@@ -4,6 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:email_password_login/screens/sensor_screen.dart';
+import 'package:email_password_login/screens/give_auth_page.dart';
+import 'package:email_password_login/screens/child_info_screen.dart';
 
 enum _MenuValues {
   logout,
@@ -114,21 +117,39 @@ class guardian_homepage extends StatelessWidget {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState != ConnectionState.done)
                           return Text("Loading data...Please wait");
-                        return Text("$myName");
+                        return Text(
+                          "$myName",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic,
+                            )
+                        );
                       },
                     ),
                   ),
                   Expanded(
                     child: RaisedButton(
-                      //     disabledColor: Colors.red,
-                      // disabledTextColor: Colors.black,
-                      padding: const EdgeInsets.all(20),
-                      textColor: Colors.white,
-                      color: Colors.green,
                       onPressed: () {
-                        //selectf();
+                        Navigator.of(context).push(MaterialPageRoute(builder: (c) => ChildInfoScreen()));
                       },
-                      child: Text('Check Info'),
+                      textColor: Colors.white,
+                      padding: const EdgeInsets.all(0.0),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: <Color>[
+                              Color(0xFF0D47A1),
+                              Color(0xFF1976D2),
+                              Color(0xFF42A5F5),
+                            ],
+                          ),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                        child: Text('Check Info'),
+                    ),
                     ),
                   ),
                 ],
@@ -174,7 +195,7 @@ class guardian_homepage extends StatelessWidget {
                   Card(
                     elevation: 4,
                     child: InkWell(
-                      onTap: () => null,
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -235,7 +256,8 @@ class guardian_homepage extends StatelessWidget {
                   Card(
                     elevation: 4,
                     child: InkWell(
-                      onTap: () => null,
+                      onTap: () => Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (c) => auth())),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

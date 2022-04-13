@@ -314,7 +314,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               //passing this to a loop
               Navigator.of(context).pop();
             },
-          )),
+          )
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: Container(

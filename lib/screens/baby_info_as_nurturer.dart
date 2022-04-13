@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:email_password_login/screens/sensor_screen.dart';
 
 enum _MenuValues {
   logout,
@@ -178,7 +179,7 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                   Card(
                     elevation: 2,
                     child: InkWell(
-                      onTap: () => null,
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
