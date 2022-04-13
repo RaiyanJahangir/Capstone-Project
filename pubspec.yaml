@@ -37,6 +37,9 @@ dependencies:
   lottie: ^1.2.2
   firebase_messaging: ^11.2.7
   firebase_messaging_platform_interface: ^3.1.6 
+  google_maps_flutter: ^2.0.11
+  flutter_polyline_points: ^0.2.6
+  dio: ^4.0.0
 # dependency_overrides: 
 #   firebase_messaging_platform_interface: ^3.1.6
 
