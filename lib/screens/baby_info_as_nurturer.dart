@@ -4,6 +4,8 @@ import 'package:lottie/lottie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_password_login/screens/sensor_screen.dart';
+import 'package:email_password_login/model/user_model.dart';
+import 'package:email_password_login/screens/profile.dart';
 
 enum _MenuValues {
   logout,
@@ -19,6 +21,21 @@ class nurturer_homepage extends StatefulWidget {
 }
 
 class _nurturer_homepageState extends State<nurturer_homepage> {
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,24 +58,25 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
           PopupMenuButton(
             icon: Icon(Icons.more_vert),
             itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-              const PopupMenuItem(
+              PopupMenuItem(
                 child: ListTile(
                   //var a;
                   leading: Icon(
                     Icons.account_circle,
                     color: Colors.blue,
-                    size: 24.0,),
+                    size: 24.0,
+                  ),
                   //title: const Text(size ?? ''),
-                  title: Text("Profile",),
-                  // subtitle: Text(
-                  //   a,
-                  //   style: TextStyle(
-                  //       color: Colors.black54, fontWeight: FontWeight.w500),
-                  // ),
-                  onTap: null,
+                  title: Text(
+                    "Profile",
+                  ),
+                  subtitle: Text(
+                    "${loggedInUser.name}",
+                  ),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => Home())),
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 child: ListTile(
                   leading: Icon(
                     Icons.circle_notifications,
@@ -69,19 +87,50 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                   onTap: null,
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 child: ListTile(
                   leading: Icon(
                     Icons.logout,
                     color: Colors.blue,
                   ),
                   title: Text('Logout'),
-                  onTap: null,
+                  onTap: () => showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("Confirmed Logging Out ?",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.blue,
+                                  fontSize: 25)),
+                          actions: <Widget>[
+                            TextButton(
+                                onPressed: () {
+                                  logout(context);
+                                },
+                                child: Text("YES",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                        color: Colors.blueAccent,
+                                        fontSize: 20))),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("NO",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                        color: Colors.blueAccent,
+                                        fontSize: 20)))
+                          ],
+                        );
+                      }),
                 ),
               ),
-              // const PopupMenuDivider(),
-              // const PopupMenuItem(child: Text('Item A')),
-              // const PopupMenuItem(child: Text('Item B')),
             ],
           ),
         ],
@@ -216,20 +265,10 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
       ),
     );
   }
-  _fetch() async {
-    final firebaseUser = await FirebaseAuth.instance.currentUser!;
-    if (firebaseUser != null) {
-      await FirebaseFirestore.instance
-          .collection('Users')
-          .doc(firebaseUser.uid)
-          .get()
-          .then((ds) {
-        myEmail = ds.data()!['Email'];
-        myName = ds.data()!['Name'];
-        print(myEmail);
-      }).catchError((e) {
-        print(e);
-      });
-    }
+  Future<void> logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).popUntil(
+            (route) => route.isFirst
+    );
   }
 }

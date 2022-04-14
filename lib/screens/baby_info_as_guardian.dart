@@ -7,6 +7,9 @@ import 'package:lottie/lottie.dart';
 import 'package:email_password_login/screens/sensor_screen.dart';
 import 'package:email_password_login/screens/give_auth_page.dart';
 import 'package:email_password_login/screens/child_info_screen.dart';
+import 'package:email_password_login/screens/profile.dart';
+
+import '../model/user_model.dart';
 
 enum _MenuValues {
   logout,
@@ -14,9 +17,29 @@ enum _MenuValues {
 String? myEmail;
 String? myName;
 
-class guardian_homepage extends StatelessWidget {
+class guardian_homepage extends StatefulWidget {
   const guardian_homepage({Key? key}) : super(key: key);
 
+  @override
+  guardian_homepageState createState() => guardian_homepageState();
+}
+
+class guardian_homepageState extends State<guardian_homepage> {
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
   @override
   Widget build(BuildContext context) {
     //var size;
@@ -40,7 +63,7 @@ class guardian_homepage extends StatelessWidget {
           PopupMenuButton(
             icon: Icon(Icons.more_vert),
             itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-              const PopupMenuItem(
+              PopupMenuItem(
                 child: ListTile(
                   //var a;
                   leading: Icon(
@@ -52,15 +75,14 @@ class guardian_homepage extends StatelessWidget {
                   title: Text(
                     "Profile",
                   ),
-                  // subtitle: Text(
-                  //   a,
-                  //   style: TextStyle(
-                  //       color: Colors.black54, fontWeight: FontWeight.w500),
-                  // ),
-                  onTap: null,
+                  subtitle: Text(
+                    "${loggedInUser.name}",
+                  ),
+                  //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => Home())),
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 child: ListTile(
                   leading: Icon(
                     Icons.circle_notifications,
@@ -71,19 +93,50 @@ class guardian_homepage extends StatelessWidget {
                   onTap: null,
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 child: ListTile(
                   leading: Icon(
                     Icons.logout,
                     color: Colors.blue,
                   ),
                   title: Text('Logout'),
-                  onTap: null,
+                  onTap: () => showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("Confirmed Logging Out ?",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.blue,
+                                  fontSize: 25)),
+                          actions: <Widget>[
+                            TextButton(
+                                onPressed: () {
+                                  logout(context);
+                                },
+                                child: Text("YES",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                        color: Colors.blueAccent,
+                                        fontSize: 20))),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("NO",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                        color: Colors.blueAccent,
+                                        fontSize: 20)))
+                          ],
+                        );
+                      }),
                 ),
               ),
-              // const PopupMenuDivider(),
-              // const PopupMenuItem(child: Text('Item A')),
-              // const PopupMenuItem(child: Text('Item B')),
             ],
           ),
         ],
@@ -112,23 +165,7 @@ class guardian_homepage extends StatelessWidget {
                             ])),
                   ),
                   Expanded(
-                    child: FutureBuilder(
-                      future: _fetch(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState != ConnectionState.done)
-                          return Text("Loading data...Please wait");
-                        return Text(
-                          "$myName",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                                fontStyle: FontStyle.italic,
-                            )
-                        );
-                      },
-                    ),
+                      child: Text("${loggedInUser.name}",)
                   ),
                   Expanded(
                     child: RaisedButton(
@@ -292,20 +329,10 @@ class guardian_homepage extends StatelessWidget {
     );
   }
 
-  _fetch() async {
-    final firebaseUser = await FirebaseAuth.instance.currentUser!;
-    if (firebaseUser != null) {
-      await FirebaseFirestore.instance
-          .collection('Users')
-          .doc(firebaseUser.uid)
-          .get()
-          .then((ds) {
-        myEmail = ds.data()!['Email'];
-        myName = ds.data()!['Name'];
-        print(myEmail);
-      }).catchError((e) {
-        print(e);
-      });
-    }
+  Future<void> logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).popUntil(
+            (route) => route.isFirst
+    );
   }
 }
