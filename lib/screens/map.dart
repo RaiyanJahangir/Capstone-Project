@@ -31,10 +31,10 @@ class MapSampleState extends State<MapSample> {
       appBar: AppBar(
         centerTitle: false,
         title: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Expanded(child: Text('Profile')),
+              Expanded(child: Text('Child Location')),
               Icon(
                 Icons.circle_notifications,
                 color: Colors.white,
@@ -56,7 +56,7 @@ class MapSampleState extends State<MapSample> {
                   ),
                   //title: const Text(size ?? ''),
                   title: Text(
-                    "Profile",
+                    "Child Location",
                   ),
                   // subtitle: Text(
                   //   a,
@@ -102,11 +102,11 @@ class MapSampleState extends State<MapSample> {
           _controller.complete(controller);
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: Text('To the lake!'),
-        icon: Icon(Icons.directions_boat),
-      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: _goToTheLake,
+      //   label: Text('To the lake!'),
+      //   icon: Icon(Icons.directions_boat),
+      // ),
     );
   }
 
