@@ -3,6 +3,8 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/babies_model.dart';
+import 'package:email_password_login/screens/baby_info_as_guardian.dart';
+import 'package:email_password_login/screens/baby_info_as_nurturer.dart';
 import 'package:email_password_login/screens/home_screen.dart';
 import 'package:email_password_login/screens/register_child.dart';
 import 'package:email_password_login/screens/registration_screen.dart';
@@ -172,6 +174,26 @@ class _UserHomeState extends State<UserHome> {
                   ),
                 ],
               ),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: Colors.blue,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (c) => guardian_homepage()));
+              },
+              child: Text('Guardian'),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: Colors.blue,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (c) => nurturer_homepage()));
+              },
+              child: Text('Nurturer'),
             ),
             Expanded(
               child: DropdownButton(

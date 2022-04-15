@@ -8,7 +8,7 @@ import 'package:email_password_login/screens/sensor_screen.dart';
 import 'package:email_password_login/screens/give_auth_page.dart';
 import 'package:email_password_login/screens/child_info_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
-
+import 'package:email_password_login/screens/notification_screen.dart';
 import '../model/user_model.dart';
 
 enum _MenuValues {
@@ -48,15 +48,18 @@ class guardian_homepageState extends State<guardian_homepage> {
       appBar: AppBar(
         centerTitle: false,
         title: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(child: Text('Baby Info Page')),
-              Icon(
-                Icons.circle_notifications,
-                color: Colors.white,
-                size: 24.0,
-                semanticLabel: 'Text to announce in accessibility modes',
+              IconButton(
+                icon: Icon(
+                  Icons.circle_notifications,
+                  color: Colors.white,
+                  size: 24.0,
+                ), onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (c) => NotificationScreen()));
+              },
               ),
             ]),
         actions: [
@@ -80,17 +83,6 @@ class guardian_homepageState extends State<guardian_homepage> {
                   ),
                   //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => Home())),
-                ),
-              ),
-              PopupMenuItem(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.circle_notifications,
-                    color: Colors.blue,
-                    size: 24.0,
-                  ),
-                  title: Text('Notification'),
-                  onTap: null,
                 ),
               ),
               PopupMenuItem(
@@ -165,8 +157,16 @@ class guardian_homepageState extends State<guardian_homepage> {
                             ])),
                   ),
                   Expanded(
-                      child: Text("${loggedInUser.name}",)
-                  ),
+                      child: Text("${loggedInUser.name}",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
+                          )
+                      ),
+                      ),
                   Expanded(
                     child: RaisedButton(
                       onPressed: () {

@@ -1,3 +1,4 @@
+import 'package:email_password_login/screens/notification_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -46,14 +47,16 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               Expanded(child: Text('Baby Info Page')),
-              Icon(
-                Icons.circle_notifications,
-                color: Colors.white,
-                size: 24.0,
-                semanticLabel: 'Text to announce in accessibility modes',
+              IconButton(
+                icon: Icon(
+                  Icons.circle_notifications,
+                  color: Colors.white,
+                  size: 24.0,
+                ), onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (c) => NotificationScreen()));
+              },
               ),
-            ]
-        ),
+            ]),
         actions: [
           PopupMenuButton(
             icon: Icon(Icons.more_vert),
@@ -73,18 +76,8 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                   subtitle: Text(
                     "${loggedInUser.name}",
                   ),
+                  //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => Home())),
-                ),
-              ),
-              PopupMenuItem(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.circle_notifications,
-                    color: Colors.blue,
-                    size: 24.0,
-                  ),
-                  title: Text('Notification'),
-                  onTap: null,
                 ),
               ),
               PopupMenuItem(
