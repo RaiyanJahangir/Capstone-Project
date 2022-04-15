@@ -9,9 +9,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'give_auth_page.dart';
 
-enum supervisor { guardian , nurturer }
+enum supervisor { guardian, nurturer }
 String? myEmail;
 String? myName;
+
 class auth extends StatefulWidget {
   const auth({Key? key}) : super(key: key);
 
@@ -48,15 +49,16 @@ class _authState extends State<auth> {
     return TextFormField(
       decoration: InputDecoration(labelText: 'UserName'),
       maxLength: 30,
-      validator: (value){
-        if(value!.isEmpty)return 'Required';
+      validator: (value) {
+        if (value!.isEmpty) return 'Required';
         return null;
       },
-      onSaved: (value){
-        _name=value;
+      onSaved: (value) {
+        _name = value;
       },
     );
   }
+
   Widget _buildemail() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Email Address'),
@@ -66,7 +68,7 @@ class _authState extends State<auth> {
         }
 
         if (!RegExp(
-            r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
             .hasMatch(value)) {
           return 'Please enter a valid email Address';
         }
@@ -78,6 +80,7 @@ class _authState extends State<auth> {
       },
     );
   }
+
   Widget _buildbox() {
     return Column(
       children: <Widget>[
@@ -108,6 +111,7 @@ class _authState extends State<auth> {
       ],
     );
   }
+
   Widget _buildlist() {
     return DropdownButton<String>(
       value: _box,
@@ -133,39 +137,43 @@ class _authState extends State<auth> {
       }).toList(),
     );
   }
+
   Widget _builduser() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Child Relation to the User'),
       maxLength: 30,
-      validator: (value){
-        if(value!.isEmpty)return 'Required';
+      validator: (value) {
+        if (value!.isEmpty) return 'Required';
         return null;
       },
-      onSaved: (value){
-        _relation=(value as String?)!;
+      onSaved: (value) {
+        _relation = (value as String?)!;
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('Authorization');
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('Authorization');
     return Scaffold(
       appBar: AppBar(
-        centerTitle: false,
+        centerTitle: true,
         title: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Expanded(child: Text('Authorization page')),
+              Expanded(child: Text('Give Authorization')),
               IconButton(
                 icon: Icon(
                   Icons.circle_notifications,
                   color: Colors.white,
                   size: 24.0,
-                ), onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (c) => NotificationScreen()));
-              },
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (c) => NotificationScreen()));
+                },
               ),
             ]),
         actions: [
@@ -182,13 +190,14 @@ class _authState extends State<auth> {
                   ),
                   //title: const Text(size ?? ''),
                   title: Text(
-                    "Profile",
+                    "User Profile",
                   ),
                   subtitle: Text(
                     "${loggedInUser.name}",
                   ),
                   //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => Home())),
+                  onTap: () => Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (c) => Home())),
                 ),
               ),
               PopupMenuItem(
@@ -202,7 +211,7 @@ class _authState extends State<auth> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: Text("Confirmed Logging Out ?",
+                          title: Text("Confirm Logging Out ?",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -248,8 +257,7 @@ class _authState extends State<auth> {
           padding: EdgeInsets.all(32),
           child: Column(
             children: [
-              Text(
-                  "Authorize Permission",
+              Text("Authorize Permission",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 20,
@@ -257,21 +265,27 @@ class _authState extends State<auth> {
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.italic,
                       shadows: [
-                        Shadow(color: Colors.blueAccent, offset: Offset(2,1), blurRadius:10)
-                      ]
-                  )
+                        Shadow(
+                            color: Colors.blueAccent,
+                            offset: Offset(2, 1),
+                            blurRadius: 10)
+                      ])),
+              SizedBox(
+                height: 50,
               ),
-              SizedBox(height: 50,),
               Form(
                   key: _formKey,
                   child: Column(
                     //mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       _buildname(),
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       _buildemail(),
                       SizedBox(height: 20),
-                      Text('Give permission as: ',
+                      Text(
+                        'Give permission as: ',
                         style: TextStyle(
                           fontSize: 15,
                           color: Colors.black,
@@ -280,7 +294,8 @@ class _authState extends State<auth> {
                         ),
                       ),
                       _buildbox(),
-                      Text('Give permission on: ',
+                      Text(
+                        'Give permission on: ',
                         style: TextStyle(
                           fontSize: 15,
                           color: Colors.black,
@@ -289,21 +304,37 @@ class _authState extends State<auth> {
                         ),
                       ),
                       _buildlist(),
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       _builduser(),
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       RaisedButton(
                         child: Text(
                           'Submit',
                           style: TextStyle(color: Colors.blue, fontSize: 16),
                         ),
                         onPressed: () {
-                          if (!_formKey.currentState!.validate()) {return;}
-                          else {
+                          if (!_formKey.currentState!.validate()) {
+                            return;
+                          } else {
                             _formKey.currentState!.save();
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Sending Data to the Cloud Firestore')));
-                            users.add({'user-name': _name,'email': _email , 'permission-type' : _relation, 'permission-on': _box, 'relation': _relation, }).
-                            then((value) => print('User Added')).catchError((error)=> print('Failed to Add User : $error '));
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    'Sending Data to the Cloud Firestore')));
+                            users
+                                .add({
+                                  'user-name': _name,
+                                  'email': _email,
+                                  'permission-type': _relation,
+                                  'permission-on': _box,
+                                  'relation': _relation,
+                                })
+                                .then((value) => print('User Added'))
+                                .catchError((error) =>
+                                    print('Failed to Add User : $error '));
                           }
                           print(_site);
                           print(_name);
@@ -313,18 +344,16 @@ class _authState extends State<auth> {
                         },
                       )
                     ],
-                  )
-              )
+                  ))
             ],
           ),
         ),
       ),
     );
   }
+
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.of(context).popUntil(
-            (route) => route.isFirst
-    );
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 }

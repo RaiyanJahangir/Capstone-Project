@@ -1,3 +1,5 @@
+import 'package:email_password_login/screens/FeedingList.dart';
+import 'package:email_password_login/screens/Vaccine_Feeding.dart';
 import 'package:email_password_login/screens/notification_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,7 @@ enum _MenuValues {
 String? myEmail;
 String? myName;
 String dropdownValue = 'One';
+
 class nurturer_homepage extends StatefulWidget {
   const nurturer_homepage({Key? key}) : super(key: key);
 
@@ -37,14 +40,15 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
       setState(() {});
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: false,
+        centerTitle: true,
         title: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(child: Text('Baby Info Page')),
               IconButton(
@@ -52,9 +56,11 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                   Icons.circle_notifications,
                   color: Colors.white,
                   size: 24.0,
-                ), onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (c) => NotificationScreen()));
-              },
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (c) => NotificationScreen()));
+                },
               ),
             ]),
         actions: [
@@ -71,13 +77,14 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                   ),
                   //title: const Text(size ?? ''),
                   title: Text(
-                    "Profile",
+                    "User Profile",
                   ),
                   subtitle: Text(
                     "${loggedInUser.name}",
                   ),
                   //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => Home())),
+                  onTap: () => Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (c) => Home())),
                 ),
               ),
               PopupMenuItem(
@@ -91,7 +98,7 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: Text("Confirmed Logging Out ?",
+                          title: Text("Confirm Logging Out ?",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -145,36 +152,36 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                             fontWeight: FontWeight.bold,
                             fontStyle: FontStyle.italic,
                             shadows: [
-                              Shadow(color: Colors.blueAccent, offset: Offset(2,1), blurRadius:10)
-                            ]
-                        )
-                    ),
+                              Shadow(
+                                  color: Colors.blueAccent,
+                                  offset: Offset(2, 1),
+                                  blurRadius: 10)
+                            ])),
                   ),
                   Expanded(
                       child: DropdownButton<String>(
-                        value: dropdownValue,
-                        icon: const Icon(Icons.arrow_downward),
-                        iconSize: 24,
-                        elevation: 16,
-                        style: const TextStyle(color: Colors.deepPurple),
-                        underline: Container(
-                          height: 2,
-                          color: Colors.deepPurpleAccent,
-                        ),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownValue = newValue!;
-                          });
-                        },
-                        items: <String>['One', 'Two', 'Free', 'Four']
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      )
-                  ),
+                    value: dropdownValue,
+                    icon: const Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        dropdownValue = newValue!;
+                      });
+                    },
+                    items: <String>['One', 'Two', 'Free', 'Four']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  )),
                 ],
               ),
             ),
@@ -189,14 +196,14 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                   Card(
                     elevation: 2,
                     child: InkWell(
-                      onTap: () => null,
+                      onTap: () => Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (c) => HomePage())),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Expanded(
                             flex: 4,
-                            child:
-                            Lottie.asset(
+                            child: Lottie.asset(
                               "assets/food.json",
                               width: 200,
                               height: 200,
@@ -211,9 +218,7 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                                     color: Colors.black54,
                                     fontWeight: FontWeight.bold,
                                     fontStyle: FontStyle.italic,
-                                  )
-                              )
-                          )
+                                  )))
                         ],
                       ),
                     ),
@@ -221,14 +226,14 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                   Card(
                     elevation: 2,
                     child: InkWell(
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
+                      onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(builder: (c) => SensorScreen())),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Expanded(
                             flex: 4,
-                            child:
-                            Lottie.asset(
+                            child: Lottie.asset(
                               "assets/health.json",
                               width: 200,
                               height: 200,
@@ -243,9 +248,7 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                                     color: Colors.black54,
                                     fontWeight: FontWeight.bold,
                                     fontStyle: FontStyle.italic,
-                                  )
-                              )
-                          )
+                                  )))
                         ],
                       ),
                     ),
@@ -258,10 +261,9 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
       ),
     );
   }
+
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.of(context).popUntil(
-            (route) => route.isFirst
-    );
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 }

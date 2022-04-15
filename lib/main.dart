@@ -20,10 +20,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // initialRoute: '/login',
-      // routes: {
-      //   '/login' : (context) => LoginScreen(),
-      // },
       title: 'Baby Monitor',
       theme: ThemeData(
         primarySwatch: Colors.blue,

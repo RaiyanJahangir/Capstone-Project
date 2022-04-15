@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_password_login/screens/FeedingList.dart';
+import 'package:email_password_login/screens/Vaccine_Feeding.dart';
 import 'package:email_password_login/screens/map.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,13 +42,14 @@ class guardian_homepageState extends State<guardian_homepage> {
       setState(() {});
     });
   }
+
   @override
   Widget build(BuildContext context) {
     //var size;
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: false,
+        centerTitle: true,
         title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -57,9 +60,11 @@ class guardian_homepageState extends State<guardian_homepage> {
                   Icons.circle_notifications,
                   color: Colors.white,
                   size: 24.0,
-                ), onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (c) => NotificationScreen()));
-              },
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (c) => NotificationScreen()));
+                },
               ),
             ]),
         actions: [
@@ -76,13 +81,14 @@ class guardian_homepageState extends State<guardian_homepage> {
                   ),
                   //title: const Text(size ?? ''),
                   title: Text(
-                    "Profile",
+                    "User Profile",
                   ),
                   subtitle: Text(
                     "${loggedInUser.name}",
                   ),
                   //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => Home())),
+                  onTap: () => Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (c) => Home())),
                 ),
               ),
               PopupMenuItem(
@@ -96,7 +102,7 @@ class guardian_homepageState extends State<guardian_homepage> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: Text("Confirmed Logging Out ?",
+                          title: Text("Confirm Logging Out ?",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -157,20 +163,20 @@ class guardian_homepageState extends State<guardian_homepage> {
                             ])),
                   ),
                   Expanded(
-                      child: Text("${loggedInUser.name}",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.blueGrey,
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic,
-                          )
-                      ),
-                      ),
+                    child: Text("${loggedInUser.name}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.blueGrey,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                        )),
+                  ),
                   Expanded(
                     child: RaisedButton(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (c) => ChildInfoScreen()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (c) => ChildInfoScreen()));
                       },
                       textColor: Colors.white,
                       padding: const EdgeInsets.all(0.0),
@@ -184,9 +190,10 @@ class guardian_homepageState extends State<guardian_homepage> {
                             ],
                           ),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 10),
                         child: Text('Check Info'),
-                    ),
+                      ),
                     ),
                   ),
                 ],
@@ -203,7 +210,8 @@ class guardian_homepageState extends State<guardian_homepage> {
                   Card(
                     elevation: 4,
                     child: InkWell(
-                      onTap: () => null,
+                      onTap: () => Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (c) => HomePage())),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -232,7 +240,8 @@ class guardian_homepageState extends State<guardian_homepage> {
                   Card(
                     elevation: 4,
                     child: InkWell(
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
+                      onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(builder: (c) => SensorScreen())),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -331,8 +340,6 @@ class guardian_homepageState extends State<guardian_homepage> {
 
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.of(context).popUntil(
-            (route) => route.isFirst
-    );
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 }

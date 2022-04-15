@@ -47,43 +47,26 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         centerTitle: false,
         title: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Expanded(child: Text('Profile')),
+              Expanded(child: Text('User Profile')),
               IconButton(
                 icon: Icon(
                   Icons.circle_notifications,
                   color: Colors.white,
                   size: 24.0,
-                ), onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (c) => NotificationScreen()));
-              },
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (c) => NotificationScreen()));
+                },
               ),
             ]),
         actions: [
           PopupMenuButton(
             icon: Icon(Icons.more_vert),
             itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-              PopupMenuItem(
-                child: ListTile(
-                  //var a;
-                  leading: Icon(
-                    Icons.account_circle,
-                    color: Colors.blue,
-                    size: 24.0,
-                  ),
-                  //title: const Text(size ?? ''),
-                  title: Text(
-                    "Profile",
-                  ),
-                  subtitle: Text(
-                    "${loggedInUser.name}",
-                  ),
-                  //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => Home())),
-                ),
-              ),
               PopupMenuItem(
                 child: ListTile(
                   leading: Icon(
@@ -95,7 +78,7 @@ class _HomeState extends State<Home> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: Text("Confirmed Logging Out ?",
+                          title: Text("Confirm Logging Out ?",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -219,6 +202,7 @@ class _HomeState extends State<Home> {
       ],
     );
   }
+
   _fetch() async {
     final firebaseUser = await FirebaseAuth.instance.currentUser;
     if (firebaseUser != null)
@@ -236,10 +220,9 @@ class _HomeState extends State<Home> {
         print(e);
       });
   }
+
   Future<void> log(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.of(context).popUntil(
-            (route) => route.isFirst
-    );
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 }

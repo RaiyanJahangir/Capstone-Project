@@ -28,6 +28,7 @@ class MapSampleState extends State<MapSample> {
       setState(() {});
     });
   }
+
   Completer<GoogleMapController> _controller = Completer();
 
   static final CameraPosition _kGooglePlex = CameraPosition(
@@ -49,7 +50,7 @@ class MapSampleState extends State<MapSample> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
-        centerTitle: false,
+        centerTitle: true,
         title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,9 +61,11 @@ class MapSampleState extends State<MapSample> {
                   Icons.circle_notifications,
                   color: Colors.white,
                   size: 24.0,
-                ), onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (c) => NotificationScreen()));
-              },
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (c) => NotificationScreen()));
+                },
               ),
             ]),
         actions: [
@@ -79,13 +82,14 @@ class MapSampleState extends State<MapSample> {
                   ),
                   //title: const Text(size ?? ''),
                   title: Text(
-                    "Profile",
+                    "User Profile",
                   ),
                   subtitle: Text(
                     "${loggedInUser.name}",
                   ),
                   //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => Home())),
+                  onTap: () => Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (c) => Home())),
                 ),
               ),
               PopupMenuItem(
@@ -99,7 +103,7 @@ class MapSampleState extends State<MapSample> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: Text("Confirmed Logging Out ?",
+                          title: Text("Confirm Logging Out ?",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -156,10 +160,9 @@ class MapSampleState extends State<MapSample> {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
+
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.of(context).popUntil(
-            (route) => route.isFirst
-    );
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 }

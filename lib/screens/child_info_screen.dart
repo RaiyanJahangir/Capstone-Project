@@ -5,6 +5,8 @@ import 'package:email_password_login/screens/notification_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
 import 'package:email_password_login/screens/sensor_screen.dart';
 import 'package:email_password_login/screens/home_screen.dart';
+import 'package:email_password_login/screens/baby_info_as_guardian.dart';
+import 'package:email_password_login/screens/baby_info_as_nurturer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -228,30 +230,22 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          centerTitle: false,
-          leading: IconButton(
-            // ignore: prefer_const_constructors
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
+          centerTitle: true,
           title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Expanded(child: Text('Child Info')),
+                Expanded(child: Text('Child Details')),
                 IconButton(
                   icon: Icon(
                     Icons.circle_notifications,
                     color: Colors.white,
                     size: 24.0,
-                  ), onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (c) => NotificationScreen()));
-                },
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (c) => NotificationScreen()));
+                  },
                 ),
               ]),
           actions: [
@@ -268,13 +262,14 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
                     ),
                     //title: const Text(size ?? ''),
                     title: Text(
-                      "Profile",
+                      "User Profile",
                     ),
                     subtitle: Text(
                       "${loggedInUser.name}",
                     ),
                     //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => Home())),
+                    onTap: () => Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (c) => Home())),
                   ),
                 ),
                 PopupMenuItem(
@@ -288,7 +283,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: Text("Confirmed Logging Out ?",
+                            title: Text("Confirm Logging Out ?",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -333,8 +328,6 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
 
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.of(context).popUntil(
-            (route) => route.isFirst
-    );
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 }
