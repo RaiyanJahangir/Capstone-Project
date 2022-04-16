@@ -167,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Fluttertoast.showToast(msg: "Login Successful"),
                 Navigator.of(context).push(
                     // ignore: prefer_const_constructors
-                    MaterialPageRoute(builder: (context) => HomeScreen())),
+                    MaterialPageRoute(builder: (context) => UserHome())),
               })
           .catchError((e) {
         Fluttertoast.showToast(msg: e!.message);

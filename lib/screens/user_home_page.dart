@@ -69,6 +69,9 @@ class _UserHomeState extends State<UserHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.person),
+          onPressed: (){},),
         centerTitle: true,
         title: Row(
             mainAxisAlignment: MainAxisAlignment.center,

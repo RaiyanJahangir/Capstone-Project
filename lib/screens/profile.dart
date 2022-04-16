@@ -45,6 +45,12 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: (){
+              Navigator.pop(context);
+            }
+        ),
         centerTitle: false,
         title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
