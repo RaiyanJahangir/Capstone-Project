@@ -358,15 +358,15 @@ class _newTaskState extends State<newTask> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Container(
-                                    //child: IconButton(
+                                  //child: IconButton(
 
-                                    //icon: Icon(
-                                    //  Icons.attach_file,
-                                    //  color: Colors.blue,
+                                  //icon: Icon(
+                                  //  Icons.attach_file,
+                                  //  color: Colors.blue,
 
-                                    // ),
-                                    //),
-                                    )
+                                  // ),
+                                  //),
+                                )
                               ],
                             ),
                           ),
@@ -378,7 +378,7 @@ class _newTaskState extends State<newTask> {
                             width: double.infinity,
                             decoration: BoxDecoration(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(15)),
+                                BorderRadius.all(Radius.circular(15)),
                                 color: Color(0xffff90CAF9)),
                             child: Center(
                               child: TextButton(
@@ -397,7 +397,7 @@ class _newTaskState extends State<newTask> {
                                       .collection("vaccines")
                                       .add(data);
 
-                                  print('hello');
+                                  //print('hello');
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -432,6 +432,7 @@ class _newTaskState extends State<newTask> {
     //   },
     //   );
   }
+
 
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();

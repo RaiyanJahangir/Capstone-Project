@@ -28,7 +28,7 @@ class _newTaskState extends State<feedingList> {
   TextEditingController name = new TextEditingController();
   TextEditingController date = new TextEditingController();
   TextEditingController reason = new TextEditingController();
-
+  String colorgrp = '';
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
@@ -295,37 +295,73 @@ class _newTaskState extends State<feedingList> {
                       "Any Medication ?",
                       style: TextStyle(fontSize: 18),
                     ),
-                    CheckboxListTile(
-                      title: Text(
-                        "Yes",
-                      ),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          if (value!) {
-                            medselectedList.add(1);
-                          } else {
-                            medselectedList.remove(1);
-                          }
-                        });
-                      },
-                      value: medselectedList.contains(1),
-                    ),
-                    CheckboxListTile(
-                      title: Text(
-                        "No",
-                      ),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          if (value!) {
-                            medselectedList.add(2);
-                          } else {
-                            medselectedList.remove(2);
-                          }
-                        });
-                      },
-                      value: medselectedList.contains(2),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: [
+                            Radio(
+                              value: '1',
+                              groupValue: colorgrp,
+                              onChanged: (val) {
+                                setState(() {
+                                  colorgrp = val as String;
+                                  if (val != '1') {
+                                    Text('hii');
+                                    // ignore: prefer_const_constructors
+                                    TextField(
+                                      decoration: InputDecoration(
+                                          labelText: 'Medicine Name',
+                                          labelStyle: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.red,
+                                          )),
+                                      enabled: false,
+                                    );
+                                  } else {
+                                    Text('oo');
+                                    TextField(
+                                      enabled: true,
+                                    );
+                                  }
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            Text("Yes"),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Radio(
+                              value: '2',
+                              groupValue: colorgrp,
+                              onChanged: (val) {
+                                setState(() {
+                                  colorgrp = val as String;
+                                  if (val != '2') {
+                                    Text('hello');
+                                    TextField(
+                                      enabled: false,
+                                    );
+                                  } else {
+                                    TextField(
+                                      enabled: true,
+                                    );
+                                  }
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            Text("NO"),
+                          ],
+                        )
+                      ],
                     ),
                     Container(
                       padding: EdgeInsets.all(15),
@@ -340,7 +376,7 @@ class _newTaskState extends State<feedingList> {
                             width: double.infinity,
                             decoration: BoxDecoration(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(15)),
+                                BorderRadius.all(Radius.circular(15)),
                                 color: Color(0xffff90CAF9)),
                             child: Center(
                               child: FlatButton(
