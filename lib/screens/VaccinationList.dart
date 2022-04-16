@@ -56,116 +56,116 @@ class _newTaskState extends State<newTask> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   backgroundColor: Color(0xfff90CAF9),
-      //   elevation: 0,
-      //   title: Text(
-      //     "Vaccination Details",
-      //     style: TextStyle(fontSize: 25),
-      //   ),
-      //   leading: IconButton(
-      //     icon: Icon(
-      //       Icons.arrow_back,
-      //       color: Colors.white,
-      //     ),
-      //     onPressed: () {
-      //       Navigator.push(
-      //           context, MaterialPageRoute(builder: (context) => HomePage()));
-      //     },
-      //   ),
-      // ),
       appBar: AppBar(
-        centerTitle: true,
-        title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Expanded(child: Text('Feeding Time')),
-              IconButton(
-                icon: Icon(
-                  Icons.circle_notifications,
-                  color: Colors.white,
-                  size: 24.0,
-                ),
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (c) => NotificationScreen()));
-                },
-              ),
-            ]),
-        actions: [
-          PopupMenuButton(
-            icon: Icon(Icons.more_vert),
-            itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-              PopupMenuItem(
-                child: ListTile(
-                  //var a;
-                  leading: Icon(
-                    Icons.account_circle,
-                    color: Colors.blue,
-                    size: 24.0,
-                  ),
-                  //title: const Text(size ?? ''),
-                  title: Text(
-                    "User Profile",
-                  ),
-                  subtitle: Text(
-                    "${loggedInUser.name}",
-                  ),
-                  //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
-                  onTap: () => Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (c) => Home())),
-                ),
-              ),
-              PopupMenuItem(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.logout,
-                    color: Colors.blue,
-                  ),
-                  title: Text('Logout'),
-                  onTap: () => showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text("Confirm Logging Out ?",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.blue,
-                                  fontSize: 25)),
-                          actions: <Widget>[
-                            TextButton(
-                                onPressed: () {
-                                  logout(context);
-                                },
-                                child: Text("YES",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic,
-                                        color: Colors.blueAccent,
-                                        fontSize: 20))),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text("NO",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic,
-                                        color: Colors.blueAccent,
-                                        fontSize: 20)))
-                          ],
-                        );
-                      }),
-                ),
-              ),
-            ],
+        backgroundColor: Color(0xfff90CAF9),
+        elevation: 0,
+        title: Text(
+          "Vaccination Details",
+          style: TextStyle(fontSize: 25),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
           ),
-        ],
-        //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => HomePage()));
+          },
+        ),
       ),
+      // appBar: AppBar(
+      //   centerTitle: true,
+      //   title: Row(
+      //       mainAxisAlignment: MainAxisAlignment.center,
+      //       crossAxisAlignment: CrossAxisAlignment.center,
+      //       children: <Widget>[
+      //         Expanded(child: Text('Feeding Time')),
+      //         IconButton(
+      //           icon: Icon(
+      //             Icons.circle_notifications,
+      //             color: Colors.white,
+      //             size: 24.0,
+      //           ),
+      //           onPressed: () {
+      //             Navigator.of(context).push(
+      //                 MaterialPageRoute(builder: (c) => NotificationScreen()));
+      //           },
+      //         ),
+      //       ]),
+      //   actions: [
+      //     PopupMenuButton(
+      //       icon: Icon(Icons.more_vert),
+      //       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+      //         PopupMenuItem(
+      //           child: ListTile(
+      //             //var a;
+      //             leading: Icon(
+      //               Icons.account_circle,
+      //               color: Colors.blue,
+      //               size: 24.0,
+      //             ),
+      //             //title: const Text(size ?? ''),
+      //             title: Text(
+      //               "User Profile",
+      //             ),
+      //             subtitle: Text(
+      //               "${loggedInUser.name}",
+      //             ),
+      //             //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
+      //             onTap: () => Navigator.of(context)
+      //                 .push(MaterialPageRoute(builder: (c) => Home())),
+      //           ),
+      //         ),
+      //         PopupMenuItem(
+      //           child: ListTile(
+      //             leading: Icon(
+      //               Icons.logout,
+      //               color: Colors.blue,
+      //             ),
+      //             title: Text('Logout'),
+      //             onTap: () => showDialog(
+      //                 context: context,
+      //                 builder: (context) {
+      //                   return AlertDialog(
+      //                     title: Text("Confirm Logging Out ?",
+      //                         textAlign: TextAlign.center,
+      //                         style: TextStyle(
+      //                             fontWeight: FontWeight.bold,
+      //                             fontStyle: FontStyle.italic,
+      //                             color: Colors.blue,
+      //                             fontSize: 25)),
+      //                     actions: <Widget>[
+      //                       TextButton(
+      //                           onPressed: () {
+      //                             logout(context);
+      //                           },
+      //                           child: Text("YES",
+      //                               style: TextStyle(
+      //                                   fontWeight: FontWeight.bold,
+      //                                   fontStyle: FontStyle.italic,
+      //                                   color: Colors.blueAccent,
+      //                                   fontSize: 20))),
+      //                       TextButton(
+      //                           onPressed: () {
+      //                             Navigator.pop(context);
+      //                           },
+      //                           child: Text("NO",
+      //                               style: TextStyle(
+      //                                   fontWeight: FontWeight.bold,
+      //                                   fontStyle: FontStyle.italic,
+      //                                   color: Colors.blueAccent,
+      //                                   fontSize: 20)))
+      //                     ],
+      //                   );
+      //                 }),
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   ],
+      //   //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
+      // ),
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: Stack(
@@ -397,7 +397,7 @@ class _newTaskState extends State<newTask> {
                                       .collection("vaccines")
                                       .add(data);
 
-                                  print('hello');
+                                  //print('hello');
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(

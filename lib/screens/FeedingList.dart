@@ -28,7 +28,7 @@ class _newTaskState extends State<feedingList> {
   TextEditingController name = new TextEditingController();
   TextEditingController date = new TextEditingController();
   TextEditingController reason = new TextEditingController();
-
+  String colorgrp = '';
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
@@ -52,96 +52,22 @@ class _newTaskState extends State<feedingList> {
     return new Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        centerTitle: true,
-        title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Expanded(child: Text('Feeding Time')),
-              IconButton(
-                icon: Icon(
-                  Icons.circle_notifications,
-                  color: Colors.white,
-                  size: 24.0,
-                ),
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (c) => NotificationScreen()));
-                },
-              ),
-            ]),
-        actions: [
-          PopupMenuButton(
-            icon: Icon(Icons.more_vert),
-            itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-              PopupMenuItem(
-                child: ListTile(
-                  //var a;
-                  leading: Icon(
-                    Icons.account_circle,
-                    color: Colors.blue,
-                    size: 24.0,
-                  ),
-                  //title: const Text(size ?? ''),
-                  title: Text(
-                    "User Profile",
-                  ),
-                  subtitle: Text(
-                    "${loggedInUser.name}",
-                  ),
-                  //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
-                  onTap: () => Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (c) => Home())),
-                ),
-              ),
-              PopupMenuItem(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.logout,
-                    color: Colors.blue,
-                  ),
-                  title: Text('Logout'),
-                  onTap: () => showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text("Confirm Logging Out ?",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.blue,
-                                  fontSize: 25)),
-                          actions: <Widget>[
-                            TextButton(
-                                onPressed: () {
-                                  logout(context);
-                                },
-                                child: Text("YES",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic,
-                                        color: Colors.blueAccent,
-                                        fontSize: 20))),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text("NO",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic,
-                                        color: Colors.blueAccent,
-                                        fontSize: 20)))
-                          ],
-                        );
-                      }),
-                ),
-              ),
-            ],
+        backgroundColor: Color(0xfff90CAF9),
+        elevation: 0,
+        title: Text(
+          "Fedding Details",
+          style: TextStyle(fontSize: 25),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
           ),
-        ],
-        //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => HomePage()));
+          },
+        ),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -295,37 +221,73 @@ class _newTaskState extends State<feedingList> {
                       "Any Medication ?",
                       style: TextStyle(fontSize: 18),
                     ),
-                    CheckboxListTile(
-                      title: Text(
-                        "Yes",
-                      ),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          if (value!) {
-                            medselectedList.add(1);
-                          } else {
-                            medselectedList.remove(1);
-                          }
-                        });
-                      },
-                      value: medselectedList.contains(1),
-                    ),
-                    CheckboxListTile(
-                      title: Text(
-                        "No",
-                      ),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          if (value!) {
-                            medselectedList.add(2);
-                          } else {
-                            medselectedList.remove(2);
-                          }
-                        });
-                      },
-                      value: medselectedList.contains(2),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: [
+                            Radio(
+                              value: '1',
+                              groupValue: colorgrp,
+                              onChanged: (val) {
+                                setState(() {
+                                  colorgrp = val as String;
+                                  if (val != '1') {
+                                    Text('hii');
+                                    // ignore: prefer_const_constructors
+                                    TextField(
+                                      decoration: InputDecoration(
+                                          labelText: 'Medicine Name',
+                                          labelStyle: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.red,
+                                          )),
+                                      enabled: false,
+                                    );
+                                  } else {
+                                    Text('oo');
+                                    TextField(
+                                      enabled: true,
+                                    );
+                                  }
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            Text("Yes"),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Radio(
+                              value: '2',
+                              groupValue: colorgrp,
+                              onChanged: (val) {
+                                setState(() {
+                                  colorgrp = val as String;
+                                  if (val != '2') {
+                                    Text('hello');
+                                    TextField(
+                                      enabled: false,
+                                    );
+                                  } else {
+                                    TextField(
+                                      enabled: true,
+                                    );
+                                  }
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            Text("NO"),
+                          ],
+                        )
+                      ],
                     ),
                     Container(
                       padding: EdgeInsets.all(15),

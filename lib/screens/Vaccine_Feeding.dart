@@ -90,96 +90,23 @@ class _homePageState extends State<homePage> {
 
           return Scaffold(
             appBar: AppBar(
-              centerTitle: true,
-              title: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(child: Text('Feeding Time')),
-                    IconButton(
-                      icon: Icon(
-                        Icons.circle_notifications,
-                        color: Colors.white,
-                        size: 24.0,
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (c) => NotificationScreen()));
-                      },
-                    ),
-                  ]),
-              actions: [
-                PopupMenuButton(
-                  icon: Icon(Icons.more_vert),
-                  itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                    PopupMenuItem(
-                      child: ListTile(
-                        //var a;
-                        leading: Icon(
-                          Icons.account_circle,
-                          color: Colors.blue,
-                          size: 24.0,
-                        ),
-                        //title: const Text(size ?? ''),
-                        title: Text(
-                          "User Profile",
-                        ),
-                        subtitle: Text(
-                          "${loggedInUser.name}",
-                        ),
-                        //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
-                        onTap: () => Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (c) => Home())),
-                      ),
-                    ),
-                    PopupMenuItem(
-                      child: ListTile(
-                        leading: Icon(
-                          Icons.logout,
-                          color: Colors.blue,
-                        ),
-                        title: Text('Logout'),
-                        onTap: () => showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text("Confirm Logging Out ?",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic,
-                                        color: Colors.blue,
-                                        fontSize: 25)),
-                                actions: <Widget>[
-                                  TextButton(
-                                      onPressed: () {
-                                        logout(context);
-                                      },
-                                      child: Text("YES",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontStyle: FontStyle.italic,
-                                              color: Colors.blueAccent,
-                                              fontSize: 20))),
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text("NO",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontStyle: FontStyle.italic,
-                                              color: Colors.blueAccent,
-                                              fontSize: 20)))
-                                ],
-                              );
-                            }),
-                      ),
-                    ),
-                  ],
+              //backgroundColor: Color(0xfff90CAF9),
+              backgroundColor: Colors.blue,
+              elevation: 0,
+              title: Text(
+                "Baby Schedule",
+                style: TextStyle(fontSize: 25),
+              ),
+              leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
                 ),
-              ],
-              //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                },
+              ),
             ),
             body: Stack(
               children: [
@@ -391,7 +318,7 @@ class _homePageState extends State<homePage> {
                                       children: [
                                         taskWidget(
                                           Color(0xfff90CAF9),
-                                          "${i['date']}",
+                                          "${i['name']}",
                                           "${i['reason']}",
                                         ),
                                       ],
@@ -423,100 +350,100 @@ class _homePageState extends State<homePage> {
                       height: 110,
                       child: Stack(
                         children: [
-                          Positioned(
-                            bottom: 0,
-                            child: Container(
-                              height: 90,
-                              width: MediaQuery.of(context).size.width,
-                              color: Colors.blue,
-                              padding: EdgeInsets.all(20),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Container(
-                                    child: Column(
-                                      children: [
-                                        Icon(
-                                          Icons.check_circle,
-                                          color: Colors.white,
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          "Vaccines",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Column(
-                                      children: [
-                                        Icon(
-                                          Icons.menu,
-                                          color: Colors.white,
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          "List",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 80,
-                                  ),
-                                  Container(
-                                    child: Column(
-                                      children: [
-                                        Icon(
-                                          Icons.content_paste,
-                                          color: Colors.white,
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          "Chart",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Column(
-                                      children: [
-                                        Icon(
-                                          Icons.account_circle,
-                                          color: Colors.white,
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          "Profile",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                          // Positioned(
+                          //   bottom: 0,
+                          //   child: Container(
+                          //     height: 90,
+                          //     width: MediaQuery.of(context).size.width,
+                          //     color: Colors.blue,
+                          //     padding: EdgeInsets.all(20),
+                          //     child: Row(
+                          //       mainAxisAlignment:
+                          //           MainAxisAlignment.spaceAround,
+                          //       children: [
+                          //         Container(
+                          //           child: Column(
+                          //             children: [
+                          //               Icon(
+                          //                 Icons.check_circle,
+                          //                 color: Colors.white,
+                          //               ),
+                          //               SizedBox(
+                          //                 height: 5,
+                          //               ),
+                          //               Text(
+                          //                 "Vaccines",
+                          //                 style: TextStyle(
+                          //                     color: Colors.white,
+                          //                     fontSize: 15),
+                          //               )
+                          //             ],
+                          //           ),
+                          //         ),
+                          //         Container(
+                          //           child: Column(
+                          //             children: [
+                          //               Icon(
+                          //                 Icons.menu,
+                          //                 color: Colors.white,
+                          //               ),
+                          //               SizedBox(
+                          //                 height: 5,
+                          //               ),
+                          //               Text(
+                          //                 "List",
+                          //                 style: TextStyle(
+                          //                     color: Colors.white,
+                          //                     fontSize: 15),
+                          //               )
+                          //             ],
+                          //           ),
+                          //         ),
+                          //         Container(
+                          //           width: 80,
+                          //         ),
+                          //         Container(
+                          //           child: Column(
+                          //             children: [
+                          //               Icon(
+                          //                 Icons.content_paste,
+                          //                 color: Colors.white,
+                          //               ),
+                          //               SizedBox(
+                          //                 height: 5,
+                          //               ),
+                          //               Text(
+                          //                 "Chart",
+                          //                 style: TextStyle(
+                          //                     color: Colors.white,
+                          //                     fontSize: 15),
+                          //               )
+                          //             ],
+                          //           ),
+                          //         ),
+                          //         Container(
+                          //           child: Column(
+                          //             children: [
+                          //               Icon(
+                          //                 Icons.account_circle,
+                          //                 color: Colors.white,
+                          //               ),
+                          //               SizedBox(
+                          //                 height: 5,
+                          //               ),
+                          //               Text(
+                          //                 "Profile",
+                          //                 style: TextStyle(
+                          //                     color: Colors.white,
+                          //                     fontSize: 15),
+                          //               )
+                          //             ],
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
                           Positioned(
                             bottom: 25,
                             left: 0,
@@ -531,7 +458,8 @@ class _homePageState extends State<homePage> {
                                       begin: Alignment.topRight,
                                       end: Alignment.bottomLeft,
                                       colors: [
-                                        Color.fromARGB(255, 6, 55, 95),
+                                        Colors.blue,
+                                        //Color.fromARGB(255, 86, 161, 223),
                                         Color.fromARGB(255, 109, 162, 204)
                                       ],
                                     ),
@@ -705,6 +633,13 @@ class _homePageState extends State<homePage> {
   openFeedingList() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => FeedingList()));
+
+    //context, MaterialPageRoute(builder: (context) => openFeedingList()));
+  }
+
+  openHomeList() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => HomePage()));
 
     //context, MaterialPageRoute(builder: (context) => openFeedingList()));
   }
