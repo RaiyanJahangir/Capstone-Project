@@ -350,100 +350,6 @@ class _homePageState extends State<homePage> {
                       height: 110,
                       child: Stack(
                         children: [
-                          // Positioned(
-                          //   bottom: 0,
-                          //   child: Container(
-                          //     height: 90,
-                          //     width: MediaQuery.of(context).size.width,
-                          //     color: Colors.blue,
-                          //     padding: EdgeInsets.all(20),
-                          //     child: Row(
-                          //       mainAxisAlignment:
-                          //           MainAxisAlignment.spaceAround,
-                          //       children: [
-                          //         Container(
-                          //           child: Column(
-                          //             children: [
-                          //               Icon(
-                          //                 Icons.check_circle,
-                          //                 color: Colors.white,
-                          //               ),
-                          //               SizedBox(
-                          //                 height: 5,
-                          //               ),
-                          //               Text(
-                          //                 "Vaccines",
-                          //                 style: TextStyle(
-                          //                     color: Colors.white,
-                          //                     fontSize: 15),
-                          //               )
-                          //             ],
-                          //           ),
-                          //         ),
-                          //         Container(
-                          //           child: Column(
-                          //             children: [
-                          //               Icon(
-                          //                 Icons.menu,
-                          //                 color: Colors.white,
-                          //               ),
-                          //               SizedBox(
-                          //                 height: 5,
-                          //               ),
-                          //               Text(
-                          //                 "List",
-                          //                 style: TextStyle(
-                          //                     color: Colors.white,
-                          //                     fontSize: 15),
-                          //               )
-                          //             ],
-                          //           ),
-                          //         ),
-                          //         Container(
-                          //           width: 80,
-                          //         ),
-                          //         Container(
-                          //           child: Column(
-                          //             children: [
-                          //               Icon(
-                          //                 Icons.content_paste,
-                          //                 color: Colors.white,
-                          //               ),
-                          //               SizedBox(
-                          //                 height: 5,
-                          //               ),
-                          //               Text(
-                          //                 "Chart",
-                          //                 style: TextStyle(
-                          //                     color: Colors.white,
-                          //                     fontSize: 15),
-                          //               )
-                          //             ],
-                          //           ),
-                          //         ),
-                          //         Container(
-                          //           child: Column(
-                          //             children: [
-                          //               Icon(
-                          //                 Icons.account_circle,
-                          //                 color: Colors.white,
-                          //               ),
-                          //               SizedBox(
-                          //                 height: 5,
-                          //               ),
-                          //               Text(
-                          //                 "Profile",
-                          //                 style: TextStyle(
-                          //                     color: Colors.white,
-                          //                     fontSize: 15),
-                          //               )
-                          //             ],
-                          //           ),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
                           Positioned(
                             bottom: 25,
                             left: 0,
@@ -485,6 +391,15 @@ class _homePageState extends State<homePage> {
                           height: MediaQuery.of(context).size.height,
                           width: MediaQuery.of(context).size.width,
                           color: Colors.black.withOpacity(0.3),
+                          // InkWell(
+                          //             onTap: openVaccinationList,
+                          //             child: Container(
+                          //               child: Text(
+                          //                 "Add Vaccination",
+                          //                 style: TextStyle(fontSize: 18),
+                          //               ),
+                          //             ),
+                          //           ),
                           child: Center(
                             child: InkWell(
                               onTap: openTaskPop,
