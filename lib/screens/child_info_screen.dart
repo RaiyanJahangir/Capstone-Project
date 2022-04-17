@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_password_login/model/babies_model.dart';
 import 'package:email_password_login/model/user_model.dart';
 import 'package:email_password_login/screens/login_screen.dart';
 import 'package:email_password_login/screens/notification_screen.dart';
@@ -22,7 +23,12 @@ class ChildInfoScreen extends StatefulWidget {
 
 class ChildInfoScreenState extends State<ChildInfoScreen> {
   User? user = FirebaseAuth.instance.currentUser;
+  String? child = FirebaseFirestore.instance.collection("Babies").id;
   UserModel loggedInUser = UserModel();
+  ChildModel childInfo = ChildModel();
+  //late final String documentId;
+  // DocumentReference docRef =
+  //     FirebaseFirestore.instance.collection('Babies').doc();
 
   @override
   void initState() {
@@ -33,6 +39,16 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
         .get()
         .then((value) {
       this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("Babies")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.childInfo = ChildModel.fromMap(value.data());
       setState(() {});
     });
   }
@@ -47,7 +63,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
     var baby_weight = "5kg";
     var blood_group = "A+";
     var baby_age = "5mo";
-    var bbc = "234678909";
+    //var bbc = "234678909";
     var guardians = ["Jack Cameron", "Nasif Shahriar", "Mahapara Naim"];
 
     var wo = MediaQuery.of(context).size.width;
@@ -77,7 +93,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
                 color: Colors.blue,
                 fontSize: wh * 0.02,
                 height: 2)),
-        Text(baby_name,
+        Text("${childInfo.name}",
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
       ]),
@@ -91,7 +107,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
                 color: Colors.blue,
                 fontSize: wh * 0.02,
                 height: 2)),
-        Text(dob,
+        Text("${childInfo.dob}",
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
       ]),
@@ -105,7 +121,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
                 color: Colors.blue,
                 fontSize: wh * 0.02,
                 height: 2)),
-        Text(gender,
+        Text("${childInfo.gender}",
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
       ]),
@@ -119,7 +135,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
                 color: Colors.blue,
                 fontSize: wh * 0.02,
                 height: 2)),
-        Text(baby_height,
+        Text("${childInfo.h8}",
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
       ]),
@@ -133,7 +149,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
                 color: Colors.blue,
                 fontSize: wh * 0.02,
                 height: 2)),
-        Text(baby_weight,
+        Text("${childInfo.w8}",
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
       ]),
@@ -147,7 +163,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
                 color: Colors.blue,
                 fontSize: wh * 0.02,
                 height: 2)),
-        Text(blood_group,
+        Text("${childInfo.bloodGrp}",
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
       ]),
@@ -161,7 +177,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
                 color: Colors.blue,
                 fontSize: wh * 0.02,
                 height: 2)),
-        Text(baby_age,
+        Text("${childInfo.age}",
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
       ]),
@@ -175,7 +191,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
                 color: Colors.blue,
                 fontSize: wh * 0.02,
                 height: 1.5)),
-        Text(bbc,
+        Text("${childInfo.birthCertNo}",
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
       ]),
@@ -193,7 +209,29 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
       ]),
+      // StreamBuilder(
+      //   stream: FirebaseFirestore.instance.collection("Babies").snapshots(),
+      //   builder: (BuildContext,
+      //       AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+      //     //Error Handling conditions
+      //     if (snapshot.hasError) {
+      //       return Text("Something went wrong");
+      //     }
 
+      //     if (snapshot.hasData && snapshot.data != null) {
+      //       return Text("Document does not exist");
+      //     }
+
+      //     // //Data is output to the user
+      //     // if (snapshot.connectionState == ConnectionState.done) {
+      //     //   Map<String, dynamic> data =
+      //     //       snapshot.data!.data() as Map<String, dynamic>;
+      //     //   return Text("Full Name: ${data['full_name']} ${data['last_name']}");
+      //     // }
+
+      //     return Text("loading");
+      //   },
+      // ),
       //taking for a row
     ];
     //entire list
@@ -232,10 +270,9 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
         appBar: AppBar(
           leading: IconButton(
               icon: Icon(Icons.arrow_back),
-              onPressed: (){
+              onPressed: () {
                 Navigator.pop(context);
-              }
-          ),
+              }),
           centerTitle: true,
           title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -327,7 +364,9 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
           ],
           //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
         ),
-        body: Container(child: Column(children: bd)),
+        body: Container(
+          child: Column(children: bd),
+        ),
       ),
     );
   }

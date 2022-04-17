@@ -3,10 +3,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChildModel {
+  // DocumentReference documentReference =
+  //     FirebaseFirestore.instance.collection('Babies').doc();
   String? uid;
   String? name;
   String? dob;
   String? gender;
+  String? age;
   String? h8;
   String? w8;
   String? bloodGrp;
@@ -15,6 +18,7 @@ class ChildModel {
   String? mothersName;
   String? childsReltn;
   String? guard;
+  String? child_uid;
   List? Guardians;
 
   ChildModel({
@@ -29,6 +33,8 @@ class ChildModel {
     this.bloodGrp,
     this.birthCertNo,
     this.childsReltn,
+    this.child_uid,
+    this.age,
   });
 
   ///Receiving data from server
@@ -38,6 +44,7 @@ class ChildModel {
       name: map['name'],
       dob: map['dob'],
       gender: map['gender'],
+      age: map['age'],
       h8: map['height'],
       w8: map['weight'],
       bloodGrp: map['blood_grp'],
@@ -45,16 +52,18 @@ class ChildModel {
       fathersName: map['fathers name'],
       mothersName: map['mothers name'],
       childsReltn: map['childs relation to you'],
+      child_uid: map['child uid'],
     );
   }
 
   //sending data to our server
   Map<String, dynamic> toMap() {
     return {
-      'uid': uid,
+      'child_uid': child_uid,
       'name': name,
       'dob': dob,
       'gender': gender,
+      'age': age,
       'height': h8,
       'weight': w8,
       'blood_grp': bloodGrp,

@@ -684,8 +684,32 @@ class _RegisterChildState extends State<RegisterChild> {
       String mothersname,
       String birthCertNo,
       String childsRltn) async {
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = auth.currentUser;
+
+    //ChildModel? babies = auth.currentUser;
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('Babies').doc();
+    String? docId = documentReference.id;
+    // documentReference.set({
+    //   'child_uid': documentReference.id,
+    //   'name': nameEditingController.text,
+    //   'dob': dobEditingController.text,
+    //   'gender': genderEditingController.text,
+    //   'height': h8EditingController.text,
+    //   'weight': w8EditingController.text,
+    //   'blood_grp': bldgrpEditingController.text,
+    //   'birth_cert_no': birthCertNo,
+    //   'fathers_name': birthCertEditingController.text,
+    //   'mothers_name': mothersnameEditingController.text,
+    //   'childs_rltn': relationEditingController.text,
+    //   'guardian': FieldValue.arrayUnion([
+    //     {
+    //       "uid": user!.uid,
+    //     }
+    //   ]),
+    // });
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     ChildModel childModel = ChildModel();
     childModel.uid = user!.uid;
     childModel.name = nameEditingController.text;
@@ -698,6 +722,8 @@ class _RegisterChildState extends State<RegisterChild> {
     childModel.fathersName = fathersnameEditingController.text;
     childModel.mothersName = mothersnameEditingController.text;
     childModel.childsReltn = relationEditingController.text;
+    childModel.child_uid = docId;
+    childModel.age = ageEditingController.text;
 
     await firebaseFirestore
         .collection("Babies")

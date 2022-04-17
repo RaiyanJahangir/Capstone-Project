@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/screens/FeedingList.dart';
 import 'package:email_password_login/screens/Vaccine_Feeding.dart';
@@ -173,13 +175,11 @@ class guardian_homepageState extends State<guardian_homepage> {
                         )),
                   ),
                   Expanded(
-                    child: RaisedButton(
+                    child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (c) => ChildInfoScreen()));
                       },
-                      textColor: Colors.white,
-                      padding: const EdgeInsets.all(0.0),
                       child: Container(
                         decoration: const BoxDecoration(
                           gradient: LinearGradient(
@@ -192,7 +192,14 @@ class guardian_homepageState extends State<guardian_homepage> {
                         ),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 30, vertical: 10),
-                        child: Text('Check Info'),
+                        child: Text(
+                          'Check Info',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),
