@@ -6,7 +6,7 @@ import 'package:email_password_login/screens/user_home_page.dart';
 import 'package:email_password_login/screens/login_screen.dart';
 import 'package:email_password_login/screens/sensor_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
-import 'package:email_password_login/screens/notification_screen.dart';
+import 'package:email_password_login/screens/notification_ui.dart';
 import 'package:email_password_login/screens/child_info_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -218,6 +218,13 @@ class HomeScreenState extends State<HomeScreen> {
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (c) => ChildInfoScreen()));
+                      }),
+                  SizedBox(height: 5),
+                  ActionChip(
+                      label: Text("Notification"),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (c) => Notificationview()));
                       }),
                   SizedBox(height: 15),
                   ActionChip(
