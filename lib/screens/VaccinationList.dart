@@ -9,23 +9,24 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:email_password_login/screens/Vaccine_Feeding.dart';
 
-class NewTask extends StatelessWidget {
+class NewTask extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'avenir'),
-      home: newTask(),
-    );
-  }
-}
-
-class newTask extends StatefulWidget {
-  @override
+  // Widget build(BuildContext context) {
+  //   return MaterialApp(
+  //     debugShowCheckedModeBanner: false,
+  //     theme: ThemeData(fontFamily: 'avenir'),
+  //     home: newTask(),
+  //   );
+  // }
   _newTaskState createState() => _newTaskState();
 }
 
-class _newTaskState extends State<newTask> {
+// class newTask extends StatefulWidget {
+//   @override
+//   _newTaskState createState() => _newTaskState();
+// }
+
+class _newTaskState extends State<NewTask> {
   CollectionReference users = FirebaseFirestore.instance.collection("vaccines");
   TextEditingController name = new TextEditingController();
   TextEditingController date = new TextEditingController();
@@ -75,12 +76,17 @@ class _newTaskState extends State<newTask> {
       //   ),
       // ),
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
         centerTitle: true,
         title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Expanded(child: Text('Feeding Time')),
+              Expanded(child: Text('Vaccination List')),
               IconButton(
                 icon: Icon(
                   Icons.circle_notifications,
@@ -358,15 +364,15 @@ class _newTaskState extends State<newTask> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Container(
-                                  //child: IconButton(
+                                    //child: IconButton(
 
-                                  //icon: Icon(
-                                  //  Icons.attach_file,
-                                  //  color: Colors.blue,
+                                    //icon: Icon(
+                                    //  Icons.attach_file,
+                                    //  color: Colors.blue,
 
-                                  // ),
-                                  //),
-                                )
+                                    // ),
+                                    //),
+                                    )
                               ],
                             ),
                           ),
@@ -378,7 +384,7 @@ class _newTaskState extends State<newTask> {
                             width: double.infinity,
                             decoration: BoxDecoration(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(15)),
+                                    BorderRadius.all(Radius.circular(15)),
                                 color: Color(0xffff90CAF9)),
                             child: Center(
                               child: TextButton(
@@ -432,7 +438,6 @@ class _newTaskState extends State<newTask> {
     //   },
     //   );
   }
-
 
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
