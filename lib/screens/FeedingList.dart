@@ -7,23 +7,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class FeedingList extends StatelessWidget {
+class FeedingList extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'avenir'),
-      home: feedingList(),
-    );
-  }
-}
-
-class feedingList extends StatefulWidget {
-  @override
+  // Widget build(BuildContext context) {
+  //   return MaterialApp(
+  //     debugShowCheckedModeBanner: false,
+  //     theme: ThemeData(fontFamily: 'avenir'),
+  //     home: feedingList(),
+  //   );
+  // }
   _newTaskState createState() => _newTaskState();
 }
 
-class _newTaskState extends State<feedingList> {
+// class feedingList extends StatefulWidget {
+//   @override
+//   _newTaskState createState() => _newTaskState();
+// }
+
+class _newTaskState extends State<FeedingList> {
   // CollectionReference users = FirebaseFirestore.instance.collection("users");
   TextEditingController name = new TextEditingController();
   TextEditingController date = new TextEditingController();
@@ -52,12 +53,17 @@ class _newTaskState extends State<feedingList> {
     return new Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
         centerTitle: true,
         title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Expanded(child: Text('Feeding Time')),
+              Expanded(child: Text('Feeding List')),
               IconButton(
                 icon: Icon(
                   Icons.circle_notifications,
@@ -376,7 +382,7 @@ class _newTaskState extends State<feedingList> {
                             width: double.infinity,
                             decoration: BoxDecoration(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(15)),
+                                    BorderRadius.all(Radius.circular(15)),
                                 color: Color(0xffff90CAF9)),
                             child: Center(
                               child: FlatButton(
