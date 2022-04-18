@@ -1,54 +1,86 @@
+import 'package:email_password_login/screens/notification_screen.dart';
+import 'package:email_password_login/screens/profile.dart';
 import 'package:flutter/material.dart';
-import 'HomePage.dart';
+import 'Vaccine_Feeding.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_password_login/model/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class FeedingList extends StatelessWidget {
+class FeedingList extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'avenir'),
-      home: feedingList(),
-    );
-  }
-}
-
-class feedingList extends StatefulWidget {
-  @override
+  // Widget build(BuildContext context) {
+  //   return MaterialApp(
+  //     debugShowCheckedModeBanner: false,
+  //     theme: ThemeData(fontFamily: 'avenir'),
+  //     home: feedingList(),
+  //   );
+  // }
   _newTaskState createState() => _newTaskState();
 }
 
-class _newTaskState extends State<feedingList> {
+// class feedingList extends StatefulWidget {
+//   @override
+//   _newTaskState createState() => _newTaskState();
+// }
+
+class _newTaskState extends State<FeedingList> {
   // CollectionReference users = FirebaseFirestore.instance.collection("users");
   TextEditingController name = new TextEditingController();
   TextEditingController date = new TextEditingController();
   TextEditingController reason = new TextEditingController();
+  String colorgrp = '';
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
 
   List<int> selectedList = [];
   List<int> medselectedList = [];
+
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        centerTitle: false,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+        centerTitle: true,
         title: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(child: Text('Feeding List')),
-              Icon(
-                Icons.circle_notifications,
-                color: Colors.white,
-                size: 24.0,
-                semanticLabel: 'Text to announce in accessibility modes',
+              IconButton(
+                icon: Icon(
+                  Icons.circle_notifications,
+                  color: Colors.white,
+                  size: 24.0,
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (c) => NotificationScreen()));
+                },
               ),
             ]),
         actions: [
           PopupMenuButton(
             icon: Icon(Icons.more_vert),
             itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-              const PopupMenuItem(
+              PopupMenuItem(
                 child: ListTile(
                   //var a;
                   leading: Icon(
@@ -58,40 +90,60 @@ class _newTaskState extends State<feedingList> {
                   ),
                   //title: const Text(size ?? ''),
                   title: Text(
-                    "Baby Feeding List",
+                    "User Profile",
                   ),
-                  // subtitle: Text(
-                  //   a,
-                  //   style: TextStyle(
-                  //       color: Colors.black54, fontWeight: FontWeight.w500),
-                  // ),
-                  onTap: null,
+                  subtitle: Text(
+                    "${loggedInUser.name}",
+                  ),
+                  //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
+                  onTap: () => Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (c) => Home())),
                 ),
               ),
-              const PopupMenuItem(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.circle_notifications,
-                    color: Colors.blue,
-                    size: 24.0,
-                  ),
-                  title: Text('Notification'),
-                  onTap: null,
-                ),
-              ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 child: ListTile(
                   leading: Icon(
                     Icons.logout,
                     color: Colors.blue,
                   ),
                   title: Text('Logout'),
-                  onTap: null,
+                  onTap: () => showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("Confirm Logging Out ?",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.blue,
+                                  fontSize: 25)),
+                          actions: <Widget>[
+                            TextButton(
+                                onPressed: () {
+                                  logout(context);
+                                },
+                                child: Text("YES",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                        color: Colors.blueAccent,
+                                        fontSize: 20))),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("NO",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                        color: Colors.blueAccent,
+                                        fontSize: 20)))
+                          ],
+                        );
+                      }),
                 ),
               ),
-              // const PopupMenuDivider(),
-              // const PopupMenuItem(child: Text('Item A')),
-              // const PopupMenuItem(child: Text('Item B')),
             ],
           ),
         ],
@@ -249,37 +301,73 @@ class _newTaskState extends State<feedingList> {
                       "Any Medication ?",
                       style: TextStyle(fontSize: 18),
                     ),
-                    CheckboxListTile(
-                      title: Text(
-                        "Yes",
-                      ),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          if (value!) {
-                            medselectedList.add(1);
-                          } else {
-                            medselectedList.remove(1);
-                          }
-                        });
-                      },
-                      value: medselectedList.contains(1),
-                    ),
-                    CheckboxListTile(
-                      title: Text(
-                        "No",
-                      ),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          if (value!) {
-                            medselectedList.add(2);
-                          } else {
-                            medselectedList.remove(2);
-                          }
-                        });
-                      },
-                      value: medselectedList.contains(2),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: [
+                            Radio(
+                              value: '1',
+                              groupValue: colorgrp,
+                              onChanged: (val) {
+                                setState(() {
+                                  colorgrp = val as String;
+                                  if (val != '1') {
+                                    Text('hii');
+                                    // ignore: prefer_const_constructors
+                                    TextField(
+                                      decoration: InputDecoration(
+                                          labelText: 'Medicine Name',
+                                          labelStyle: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.red,
+                                          )),
+                                      enabled: false,
+                                    );
+                                  } else {
+                                    Text('oo');
+                                    TextField(
+                                      enabled: true,
+                                    );
+                                  }
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            Text("Yes"),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Radio(
+                              value: '2',
+                              groupValue: colorgrp,
+                              onChanged: (val) {
+                                setState(() {
+                                  colorgrp = val as String;
+                                  if (val != '2') {
+                                    Text('hello');
+                                    TextField(
+                                      enabled: false,
+                                    );
+                                  } else {
+                                    TextField(
+                                      enabled: true,
+                                    );
+                                  }
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            Text("NO"),
+                          ],
+                        )
+                      ],
                     ),
                     Container(
                       padding: EdgeInsets.all(15),
@@ -338,5 +426,10 @@ class _newTaskState extends State<feedingList> {
         ),
       ),
     );
+  }
+
+  Future<void> logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 }

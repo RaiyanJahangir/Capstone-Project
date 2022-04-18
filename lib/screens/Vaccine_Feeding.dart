@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/screens/home_screen.dart';
+import 'package:email_password_login/screens/notification_screen.dart';
+import 'package:email_password_login/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:email_password_login/screens/login_screen.dart';
 import 'package:email_password_login/screens/VaccinationList.dart';
@@ -9,25 +11,26 @@ import 'package:email_password_login/screens/FeedingList.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_password_login/model/user_model.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'avenir'),
-      home: homePage(),
-    );
-  }
-}
-
-class homePage extends StatefulWidget {
-  @override
+  // Widget build(BuildContext context) {
+  //   return MaterialApp(
+  //     debugShowCheckedModeBanner: false,
+  //     theme: ThemeData(fontFamily: 'avenir'),
+  //     home: homePage(),
+  //   );
+  // }
   _homePageState createState() => _homePageState();
 }
 
-class _homePageState extends State<homePage> {
+// class homePage extends StatefulWidget {
+//   @override
+//   _homePageState createState() => _homePageState();
+// }
+
+class _homePageState extends State<HomePage> {
   final Stream<QuerySnapshot> vaccinestream =
       FirebaseFirestore.instance.collection('vaccines').snapshots();
 
@@ -88,24 +91,34 @@ class _homePageState extends State<homePage> {
 
           return Scaffold(
             appBar: AppBar(
-              centerTitle: false,
+              leading: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+              centerTitle: true,
               title: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Expanded(child: Text('Baby Schedule')),
-                    Icon(
-                      Icons.circle_notifications,
-                      color: Colors.white,
-                      size: 24.0,
-                      semanticLabel: 'Text to announce in accessibility modes',
+                    IconButton(
+                      icon: Icon(
+                        Icons.circle_notifications,
+                        color: Colors.white,
+                        size: 24.0,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (c) => NotificationScreen()));
+                      },
                     ),
                   ]),
               actions: [
                 PopupMenuButton(
                   icon: Icon(Icons.more_vert),
                   itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                    const PopupMenuItem(
+                    PopupMenuItem(
                       child: ListTile(
                         //var a;
                         leading: Icon(
@@ -115,40 +128,60 @@ class _homePageState extends State<homePage> {
                         ),
                         //title: const Text(size ?? ''),
                         title: Text(
-                          "Profile",
+                          "User Profile",
                         ),
-                        // subtitle: Text(
-                        //   a,
-                        //   style: TextStyle(
-                        //       color: Colors.black54, fontWeight: FontWeight.w500),
-                        // ),
-                        onTap: null,
+                        subtitle: Text(
+                          "${loggedInUser.name}",
+                        ),
+                        //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
+                        onTap: () => Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (c) => Home())),
                       ),
                     ),
-                    const PopupMenuItem(
-                      child: ListTile(
-                        leading: Icon(
-                          Icons.circle_notifications,
-                          color: Colors.blue,
-                          size: 24.0,
-                        ),
-                        title: Text('Notification'),
-                        onTap: null,
-                      ),
-                    ),
-                    const PopupMenuItem(
+                    PopupMenuItem(
                       child: ListTile(
                         leading: Icon(
                           Icons.logout,
                           color: Colors.blue,
                         ),
                         title: Text('Logout'),
-                        onTap: null,
+                        onTap: () => showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text("Confirm Logging Out ?",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                        color: Colors.blue,
+                                        fontSize: 25)),
+                                actions: <Widget>[
+                                  TextButton(
+                                      onPressed: () {
+                                        logout(context);
+                                      },
+                                      child: Text("YES",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontStyle: FontStyle.italic,
+                                              color: Colors.blueAccent,
+                                              fontSize: 20))),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text("NO",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontStyle: FontStyle.italic,
+                                              color: Colors.blueAccent,
+                                              fontSize: 20)))
+                                ],
+                              );
+                            }),
                       ),
                     ),
-                    // const PopupMenuDivider(),
-                    // const PopupMenuItem(child: Text('Item A')),
-                    // const PopupMenuItem(child: Text('Item B')),
                   ],
                 ),
               ],
@@ -364,7 +397,7 @@ class _homePageState extends State<homePage> {
                                       children: [
                                         taskWidget(
                                           Color(0xfff90CAF9),
-                                          "${i['date']}",
+                                          "${i['name']}",
                                           "${i['reason']}",
                                         ),
                                       ],
@@ -397,100 +430,6 @@ class _homePageState extends State<homePage> {
                       child: Stack(
                         children: [
                           Positioned(
-                            bottom: 0,
-                            child: Container(
-                              height: 90,
-                              width: MediaQuery.of(context).size.width,
-                              color: Colors.blue,
-                              padding: EdgeInsets.all(20),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Container(
-                                    child: Column(
-                                      children: [
-                                        Icon(
-                                          Icons.check_circle,
-                                          color: Colors.white,
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          "Vaccines",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Column(
-                                      children: [
-                                        Icon(
-                                          Icons.menu,
-                                          color: Colors.white,
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          "List",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 80,
-                                  ),
-                                  Container(
-                                    child: Column(
-                                      children: [
-                                        Icon(
-                                          Icons.content_paste,
-                                          color: Colors.white,
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          "Chart",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Column(
-                                      children: [
-                                        Icon(
-                                          Icons.account_circle,
-                                          color: Colors.white,
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          "Profile",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Positioned(
                             bottom: 25,
                             left: 0,
                             right: 0,
@@ -504,7 +443,8 @@ class _homePageState extends State<homePage> {
                                       begin: Alignment.topRight,
                                       end: Alignment.bottomLeft,
                                       colors: [
-                                        Color.fromARGB(255, 6, 55, 95),
+                                        Colors.blue,
+                                        //Color.fromARGB(255, 86, 161, 223),
                                         Color.fromARGB(255, 109, 162, 204)
                                       ],
                                     ),
@@ -530,6 +470,15 @@ class _homePageState extends State<homePage> {
                           height: MediaQuery.of(context).size.height,
                           width: MediaQuery.of(context).size.width,
                           color: Colors.black.withOpacity(0.3),
+                          // InkWell(
+                          //             onTap: openVaccinationList,
+                          //             child: Container(
+                          //               child: Text(
+                          //                 "Add Vaccination",
+                          //                 style: TextStyle(fontSize: 18),
+                          //               ),
+                          //             ),
+                          //           ),
                           child: Center(
                             child: InkWell(
                               onTap: openTaskPop,
@@ -682,6 +631,13 @@ class _homePageState extends State<homePage> {
     //context, MaterialPageRoute(builder: (context) => openFeedingList()));
   }
 
+  openHomeList() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => HomePage()));
+
+    //context, MaterialPageRoute(builder: (context) => openFeedingList()));
+  }
+
   openNewCheckList() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => HomePage()));
@@ -689,7 +645,6 @@ class _homePageState extends State<homePage> {
 
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => LoginScreen()));
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 }

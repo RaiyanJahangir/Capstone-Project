@@ -3,6 +3,7 @@ import 'package:email_password_login/model/user_model.dart';
 import 'package:email_password_login/screens/home_screen.dart';
 import 'package:email_password_login/screens/login_screen.dart';
 import 'package:email_password_login/screens/notification_screen.dart';
+import 'package:email_password_login/screens/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
@@ -115,66 +116,93 @@ class SensorScreenState extends State<SensorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar:AppBar(
-          centerTitle: false,
+        appBar: AppBar(
+          centerTitle: true,
           title: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Expanded(child: Text('Check Health Parameters')),
-                Icon(
-                  Icons.circle_notifications,
-                  color: Colors.white,
-                  size: 24.0,
-                  semanticLabel: 'Text to announce in accessibility modes',
+                Expanded(child: Text('Health Data')),
+                IconButton(
+                  icon: Icon(
+                    Icons.circle_notifications,
+                    color: Colors.white,
+                    size: 24.0,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (c) => NotificationScreen()));
+                  },
                 ),
-              ]
-          ),
+              ]),
           actions: [
             PopupMenuButton(
               icon: Icon(Icons.more_vert),
               itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                const PopupMenuItem(
+                PopupMenuItem(
                   child: ListTile(
                     //var a;
                     leading: Icon(
                       Icons.account_circle,
                       color: Colors.blue,
-                      size: 24.0,),
-                    //title: const Text(size ?? ''),
-                    title: Text("Profile",),
-                    // subtitle: Text(
-                    //   a,
-                    //   style: TextStyle(
-                    //       color: Colors.black54, fontWeight: FontWeight.w500),
-                    // ),
-                    onTap: null,
-                  ),
-                ),
-                const PopupMenuItem(
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.circle_notifications,
-                      color: Colors.blue,
                       size: 24.0,
                     ),
-                    title: Text('Notification'),
-                    onTap: null,
+                    //title: const Text(size ?? ''),
+                    title: Text(
+                      "User Profile",
+                    ),
+                    subtitle: Text(
+                      "${loggedInUser.name}",
+                    ),
+                    //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
+                    onTap: () => Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (c) => Home())),
                   ),
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
                   child: ListTile(
                     leading: Icon(
                       Icons.logout,
                       color: Colors.blue,
                     ),
                     title: Text('Logout'),
-                    onTap: null,
+                    onTap: () => showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Confirm Logging Out ?",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.blue,
+                                    fontSize: 25)),
+                            actions: <Widget>[
+                              TextButton(
+                                  onPressed: () {
+                                    logout(context);
+                                  },
+                                  child: Text("YES",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.blueAccent,
+                                          fontSize: 20))),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("NO",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.blueAccent,
+                                          fontSize: 20)))
+                            ],
+                          );
+                        }),
                   ),
                 ),
-                // const PopupMenuDivider(),
-                // const PopupMenuItem(child: Text('Item A')),
-                // const PopupMenuItem(child: Text('Item B')),
               ],
             ),
           ],
@@ -325,10 +353,15 @@ class SensorScreenState extends State<SensorScreen> {
   }
 
   //Logout function
+  // Future<void> logout(BuildContext context) async {
+  //   await FirebaseAuth.instance.signOut();
+  //   Navigator.of(context).pushReplacement(
+  //       MaterialPageRoute(builder: (context) => LoginScreen()));
+  // }
+
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => LoginScreen()));
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 }
 

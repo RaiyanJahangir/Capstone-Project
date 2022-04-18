@@ -1,9 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_password_login/screens/FeedingList.dart';
+import 'package:email_password_login/screens/Vaccine_Feeding.dart';
 import 'package:email_password_login/screens/map.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:email_password_login/screens/sensor_screen.dart';
+import 'package:email_password_login/screens/give_auth_page.dart';
+import 'package:email_password_login/screens/child_info_screen.dart';
+import 'package:email_password_login/screens/profile.dart';
+import 'package:email_password_login/screens/notification_screen.dart';
+import '../model/user_model.dart';
 
 enum _MenuValues {
   logout,
@@ -11,8 +19,29 @@ enum _MenuValues {
 String? myEmail;
 String? myName;
 
-class guardian_homepage extends StatelessWidget {
+class guardian_homepage extends StatefulWidget {
   const guardian_homepage({Key? key}) : super(key: key);
+
+  @override
+  guardian_homepageState createState() => guardian_homepageState();
+}
+
+class guardian_homepageState extends State<guardian_homepage> {
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,24 +49,29 @@ class guardian_homepage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: false,
+        centerTitle: true,
         title: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(child: Text('Baby Info Page')),
-              Icon(
-                Icons.circle_notifications,
-                color: Colors.white,
-                size: 24.0,
-                semanticLabel: 'Text to announce in accessibility modes',
+              IconButton(
+                icon: Icon(
+                  Icons.circle_notifications,
+                  color: Colors.white,
+                  size: 24.0,
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (c) => NotificationScreen()));
+                },
               ),
             ]),
         actions: [
           PopupMenuButton(
             icon: Icon(Icons.more_vert),
             itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-              const PopupMenuItem(
+              PopupMenuItem(
                 child: ListTile(
                   //var a;
                   leading: Icon(
@@ -47,40 +81,60 @@ class guardian_homepage extends StatelessWidget {
                   ),
                   //title: const Text(size ?? ''),
                   title: Text(
-                    "Profile",
+                    "User Profile",
                   ),
-                  // subtitle: Text(
-                  //   a,
-                  //   style: TextStyle(
-                  //       color: Colors.black54, fontWeight: FontWeight.w500),
-                  // ),
-                  onTap: null,
+                  subtitle: Text(
+                    "${loggedInUser.name}",
+                  ),
+                  //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
+                  onTap: () => Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (c) => Home())),
                 ),
               ),
-              const PopupMenuItem(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.circle_notifications,
-                    color: Colors.blue,
-                    size: 24.0,
-                  ),
-                  title: Text('Notification'),
-                  onTap: null,
-                ),
-              ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 child: ListTile(
                   leading: Icon(
                     Icons.logout,
                     color: Colors.blue,
                   ),
                   title: Text('Logout'),
-                  onTap: null,
+                  onTap: () => showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("Confirm Logging Out ?",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.blue,
+                                  fontSize: 25)),
+                          actions: <Widget>[
+                            TextButton(
+                                onPressed: () {
+                                  logout(context);
+                                },
+                                child: Text("YES",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                        color: Colors.blueAccent,
+                                        fontSize: 20))),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("NO",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                        color: Colors.blueAccent,
+                                        fontSize: 20)))
+                          ],
+                        );
+                      }),
                 ),
               ),
-              // const PopupMenuDivider(),
-              // const PopupMenuItem(child: Text('Item A')),
-              // const PopupMenuItem(child: Text('Item B')),
             ],
           ),
         ],
@@ -109,26 +163,37 @@ class guardian_homepage extends StatelessWidget {
                             ])),
                   ),
                   Expanded(
-                    child: FutureBuilder(
-                      future: _fetch(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState != ConnectionState.done)
-                          return Text("Loading data...Please wait");
-                        return Text("$myName");
-                      },
-                    ),
+                    child: Text("${loggedInUser.name}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.blueGrey,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                        )),
                   ),
                   Expanded(
                     child: RaisedButton(
-                      //     disabledColor: Colors.red,
-                      // disabledTextColor: Colors.black,
-                      padding: const EdgeInsets.all(20),
-                      textColor: Colors.white,
-                      color: Colors.green,
                       onPressed: () {
-                        //selectf();
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (c) => ChildInfoScreen()));
                       },
-                      child: Text('Check Info'),
+                      textColor: Colors.white,
+                      padding: const EdgeInsets.all(0.0),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: <Color>[
+                              Color(0xFF0D47A1),
+                              Color(0xFF1976D2),
+                              Color(0xFF42A5F5),
+                            ],
+                          ),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 10),
+                        child: Text('Check Info'),
+                      ),
                     ),
                   ),
                 ],
@@ -145,7 +210,8 @@ class guardian_homepage extends StatelessWidget {
                   Card(
                     elevation: 4,
                     child: InkWell(
-                      onTap: () => null,
+                      onTap: () => Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (c) => HomePage())),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -174,7 +240,8 @@ class guardian_homepage extends StatelessWidget {
                   Card(
                     elevation: 4,
                     child: InkWell(
-                      onTap: () => null,
+                      onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(builder: (c) => SensorScreen())),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -235,7 +302,8 @@ class guardian_homepage extends StatelessWidget {
                   Card(
                     elevation: 4,
                     child: InkWell(
-                      onTap: () => null,
+                      onTap: () => Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (c) => auth())),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -270,20 +338,8 @@ class guardian_homepage extends StatelessWidget {
     );
   }
 
-  _fetch() async {
-    final firebaseUser = await FirebaseAuth.instance.currentUser!;
-    if (firebaseUser != null) {
-      await FirebaseFirestore.instance
-          .collection('Users')
-          .doc(firebaseUser.uid)
-          .get()
-          .then((ds) {
-        myEmail = ds.data()!['Email'];
-        myName = ds.data()!['Name'];
-        print(myEmail);
-      }).catchError((e) {
-        print(e);
-      });
-    }
+  Future<void> logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 }

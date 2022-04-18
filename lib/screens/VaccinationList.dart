@@ -1,57 +1,176 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_password_login/screens/notification_screen.dart';
+import 'package:email_password_login/screens/profile.dart';
 import 'package:firebase_database/ui/firebase_sorted_list.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_password_login/model/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:email_password_login/screens/HomePage.dart';
+import 'package:email_password_login/screens/Vaccine_Feeding.dart';
 
-class NewTask extends StatelessWidget {
+class NewTask extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'avenir'),
-      home: newTask(),
-    );
-  }
-}
-
-class newTask extends StatefulWidget {
-  @override
+  // Widget build(BuildContext context) {
+  //   return MaterialApp(
+  //     debugShowCheckedModeBanner: false,
+  //     theme: ThemeData(fontFamily: 'avenir'),
+  //     home: newTask(),
+  //   );
+  // }
   _newTaskState createState() => _newTaskState();
 }
 
-class _newTaskState extends State<newTask> {
+// class newTask extends StatefulWidget {
+//   @override
+//   _newTaskState createState() => _newTaskState();
+// }
+
+class _newTaskState extends State<NewTask> {
   CollectionReference users = FirebaseFirestore.instance.collection("vaccines");
   TextEditingController name = new TextEditingController();
   TextEditingController date = new TextEditingController();
   TextEditingController reason = new TextEditingController();
+
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
 
   bool first = false;
   bool second = false;
   bool third = false;
 
   List<int> selectedList = [];
+
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      // appBar: AppBar(
+      //   backgroundColor: Color(0xfff90CAF9),
+      //   elevation: 0,
+      //   title: Text(
+      //     "Vaccination Details",
+      //     style: TextStyle(fontSize: 25),
+      //   ),
+      //   leading: IconButton(
+      //     icon: Icon(
+      //       Icons.arrow_back,
+      //       color: Colors.white,
+      //     ),
+      //     onPressed: () {
+      //       Navigator.push(
+      //           context, MaterialPageRoute(builder: (context) => HomePage()));
+      //     },
+      //   ),
+      // ),
       appBar: AppBar(
-        backgroundColor: Color(0xfff90CAF9),
-        elevation: 0,
-        title: Text(
-          "Vaccination Details",
-          style: TextStyle(fontSize: 25),
-        ),
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+        centerTitle: true,
+        title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(child: Text('Vaccination List')),
+              IconButton(
+                icon: Icon(
+                  Icons.circle_notifications,
+                  color: Colors.white,
+                  size: 24.0,
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (c) => NotificationScreen()));
+                },
+              ),
+            ]),
+        actions: [
+          PopupMenuButton(
+            icon: Icon(Icons.more_vert),
+            itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+              PopupMenuItem(
+                child: ListTile(
+                  //var a;
+                  leading: Icon(
+                    Icons.account_circle,
+                    color: Colors.blue,
+                    size: 24.0,
+                  ),
+                  //title: const Text(size ?? ''),
+                  title: Text(
+                    "User Profile",
+                  ),
+                  subtitle: Text(
+                    "${loggedInUser.name}",
+                  ),
+                  //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
+                  onTap: () => Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (c) => Home())),
+                ),
+              ),
+              PopupMenuItem(
+                child: ListTile(
+                  leading: Icon(
+                    Icons.logout,
+                    color: Colors.blue,
+                  ),
+                  title: Text('Logout'),
+                  onTap: () => showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("Confirm Logging Out ?",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.blue,
+                                  fontSize: 25)),
+                          actions: <Widget>[
+                            TextButton(
+                                onPressed: () {
+                                  logout(context);
+                                },
+                                child: Text("YES",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                        color: Colors.blueAccent,
+                                        fontSize: 20))),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("NO",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                        color: Colors.blueAccent,
+                                        fontSize: 20)))
+                          ],
+                        );
+                      }),
+                ),
+              ),
+            ],
           ),
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomePage()));
-          },
-        ),
+        ],
+        //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -284,7 +403,7 @@ class _newTaskState extends State<newTask> {
                                       .collection("vaccines")
                                       .add(data);
 
-                                  print('hello');
+                                  //print('hello');
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -318,5 +437,10 @@ class _newTaskState extends State<newTask> {
 
     //   },
     //   );
+  }
+
+  Future<void> logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 }
