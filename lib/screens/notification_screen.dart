@@ -24,11 +24,13 @@ class NotificationScreenState extends State<NotificationScreen> {
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
+
   // _getToken() {
   //   _firebaseMessaging.getToken().then((token) {
   //     print("Device Token: $token");
   //   });
   // }
+
 
   @override
   void initState() {
@@ -42,6 +44,47 @@ class NotificationScreenState extends State<NotificationScreen> {
       setState(() {});
     });
 
+    _getToken();
+    _configureFirebaseListeners();
+  }
+
+  late List<Message> messagesList;
+
+  _configureFirebaseListeners() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      try {
+        final data = message.data;
+        print(message.notification);
+      } catch (e) {
+        print(e);
+      }
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+      try {
+        print('onResume: $message');
+        final data = message.data;
+        print(message.notification);
+      } catch (e) {
+        print(e);
+      }
+    });
+    // _firebaseMessaging.requestNotificationPermissions(
+    //   const IosNotificationSettings(sound: true, badge: true, alert: true),
+    // );
+  }
+
+  _setMessage(Map<String, dynamic> message) {
+    final notification = message['notification'];
+    final data = message['data'];
+    final String title = notification['title'];
+    final String body = notification['body'];
+    String mMessage = data['message'];
+    print("Title: $title, body: $body, message: $mMessage");
+    setState(() {
+      Message msg = Message(title, body, mMessage);
+      messagesList.add(msg);
+    });
+  }
     //_getToken();
     //_configureFirebaseListeners();
   }
@@ -86,48 +129,34 @@ class NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: (){
+              Navigator.pop(context);
+            }
+        ),
+        centerTitle: false,
         title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Expanded(child: Text('Notifications')),
-              // IconButton(
-              //   icon: Icon(
-              //     Icons.circle_notifications,
-              //     color: Colors.white,
-              //     size: 24.0,
-              //   ),
-              //   onPressed: () {
-              //     Navigator.of(context).push(
-              //         MaterialPageRoute(builder: (c) => NotificationScreen()));
-              //   },
-              // ),
+              Expanded(child: Text('User Profile')),
+              IconButton(
+                icon: Icon(
+                  Icons.circle_notifications,
+                  color: Colors.white,
+                  size: 24.0,
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (c) => NotificationScreen()));
+                },
+              ),
             ]),
         actions: [
           PopupMenuButton(
             icon: Icon(Icons.more_vert),
             itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-              PopupMenuItem(
-                child: ListTile(
-                  //var a;
-                  leading: Icon(
-                    Icons.account_circle,
-                    color: Colors.blue,
-                    size: 24.0,
-                  ),
-                  //title: const Text(size ?? ''),
-                  title: Text(
-                    "User Profile",
-                  ),
-                  subtitle: Text(
-                    "${loggedInUser.name}",
-                  ),
-                  //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
-                  onTap: () => Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (c) => Home())),
-                ),
-              ),
               PopupMenuItem(
                 child: ListTile(
                   leading: Icon(
@@ -149,7 +178,7 @@ class NotificationScreenState extends State<NotificationScreen> {
                           actions: <Widget>[
                             TextButton(
                                 onPressed: () {
-                                  logout(context);
+                                  log(context);
                                 },
                                 child: Text("YES",
                                     style: TextStyle(
@@ -177,6 +206,26 @@ class NotificationScreenState extends State<NotificationScreen> {
         ],
         //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
       ),
+      body: ListView.builder(
+        itemCount: null == messagesList ? 0 : messagesList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Card(
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Text(
+                messagesList[index].message,
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
       // body: ListView.builder(
       //   itemCount: null == messagesList ? 0 : messagesList.length,
       //   itemBuilder: (BuildContext context, int index) {

@@ -137,75 +137,222 @@ class _HomeState extends State<Home> {
 
   Widget displayUserInformation(context, snapshot) {
     final user = snapshot.data;
-
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Email : $myEmail",
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.grey[800],
-              fontFamily: 'Open Sans',
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w900,
-            ),
+    return Scaffold(
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              Expanded(
+                flex: 5,
+                child: Container(
+                  color: Colors.grey[200],
+                  child: Center(
+                      child: Card(
+                          margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                          child: Container(
+                              width: 400.0,
+                              height: 350.0,
+                              child: Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Profile",
+                                      style: TextStyle(
+                                        fontSize: 17.0,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                    ),
+                                    Divider(
+                                      color: Colors.grey[300],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.people,
+                                          color: Colors.blueAccent[400],
+                                          size: 35,
+                                        ),
+                                        SizedBox(
+                                          width: 20.0,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Name",
+                                              style: TextStyle(
+                                                fontSize: 15.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              "nasif Shahriar",
+                                              style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.grey[400],
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.email,
+                                          color: Colors.yellowAccent[400],
+                                          size: 35,
+                                        ),
+                                        SizedBox(
+                                          width: 20.0,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Email",
+                                              style: TextStyle(
+                                                fontSize: 15.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              "nasifshahriar5@gmail.com",
+                                              style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.grey[400],
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.work,
+                                          color: Colors.pinkAccent[400],
+                                          size: 35,
+                                        ),
+                                        SizedBox(
+                                          width: 20.0,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Occupation",
+                                              style: TextStyle(
+                                                fontSize: 15.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              "Banker",
+                                              style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.grey[400],
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.man,
+                                          color: Colors.pinkAccent[400],
+                                          size: 35,
+                                        ),
+                                        SizedBox(
+                                          width: 20.0,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Gender",
+                                              style: TextStyle(
+                                                fontSize: 15.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              "Male",
+                                              style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.grey[400],
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.confirmation_number_sharp,
+                                          color: Colors.lightGreen[400],
+                                          size: 35,
+                                        ),
+                                        SizedBox(
+                                          width: 20.0,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Age",
+                                              style: TextStyle(
+                                                fontSize: 15.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              "25",
+                                              style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.grey[400],
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )))),
+                ),
+              ),
+            ],
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Name : $name",
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.orange[800],
-              fontFamily: 'Open Sans',
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Gender : $gender",
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.deepPurple[800],
-              fontFamily: 'Open Sans',
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Age : $age",
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.lightBlue[800],
-              fontFamily: 'Open Sans',
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Occupation : $occupation",
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.pink[800],
-              fontFamily: 'Open Sans',
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

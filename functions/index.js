@@ -1,10 +1,33 @@
 // The Cloud Functions for Firebase SDK to create Cloud Functions and set up triggers.
-const functions = require('firebase-functions');
+
 
 // The Firebase Admin SDK to access Firestore.
 const admin = require('firebase-admin');
-admin.initializeApp();
 
+const functions = require('firebase-functions');
+
+admin.initializeApp(functions.config().firebase);
+
+exports.helloWorld = functions.database.ref('Sensor Data/Pulse Rate').onUpdate(evt => {
+    const payload = {
+        notification:{
+            title : 'VISITOR ALERT',
+            body : 'Someone is standing infront of your door',
+            badge : '1',
+            sound : 'default'
+        }
+    };
+
+    return admin.database().ref('fcm-token').once('value').then(allToken => {
+        if(allToken.val() && evt.after.val() >75){
+            console.log('token available');
+            const token = Object.keys(allToken.val());
+            return admin.messaging().sendToDevice(token,payload);
+        }else{
+            console.log('No token available');
+        }
+    });
+});
 // Take the text parameter passed to this HTTP endpoint and insert it into 
 // Firestore under the path /messages/:documentId/original
 exports.addMessage = functions.https.onRequest(async (req, res) => {
