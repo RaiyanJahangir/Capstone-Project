@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   String? uid;
   String? email;
@@ -5,6 +7,13 @@ class UserModel {
   String? gender;
   int? age;
   String? occupation;
+
+  ///for authentication
+  String? auth_name;
+  String? auth_email;
+  String? auth_child;
+  String? auth_relation;
+  List? Babies;
 
   UserModel(
       {this.uid,
@@ -35,6 +44,19 @@ class UserModel {
       'Gender': gender,
       'Age': age,
       'Occupation': occupation,
+    };
+  }
+
+  Map<String, dynamic> authItems(String name, String email, String relation) {
+    return {
+      'Babies': FieldValue.arrayUnion([
+        {
+          'username': auth_name,
+          'email': auth_email,
+          'child': auth_child,
+          'relation': auth_relation,
+        }
+      ]),
     };
   }
 }
