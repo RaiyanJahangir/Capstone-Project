@@ -163,7 +163,9 @@ class guardian_homepageState extends State<guardian_homepage> {
                             ])),
                   ),
                   Expanded(
-                    child: Text("${loggedInUser.name}",
+                    child: Text(
+                        //"${loggedInUser.name}",
+                      "John Cameron",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,

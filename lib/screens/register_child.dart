@@ -432,7 +432,7 @@ class _RegisterChildState extends State<RegisterChild> {
       decoration: InputDecoration(
           prefixIcon: Icon(Icons.account_circle),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Child's Relation to you",
+          hintText: "Baby's Relation to you",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
             10,
@@ -512,7 +512,7 @@ class _RegisterChildState extends State<RegisterChild> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Expanded(child: Text('Child Registration')),
+              Expanded(child: Text('Baby Registration')),
               IconButton(
                 icon: Icon(
                   Icons.circle_notifications,
@@ -703,7 +703,7 @@ class _RegisterChildState extends State<RegisterChild> {
         .collection("Babies")
         .doc(user.uid)
         .set(childModel.toMap());
-    Fluttertoast.showToast(msg: "Child Registered");
+    Fluttertoast.showToast(msg: "Baby Registered");
 
     // Navigator.pushAndRemoveUntil(
     //     (context),

@@ -279,21 +279,23 @@ class _homePageState extends State<HomePage> {
                                       ],
                                     ),
                                   ),
-                                  for (var i in storedocs)
-                                    Column(
-                                      children: [
-                                        taskWidget(
-                                          Color(0xfff90CAF9),
-                                          "${i['name']}",
-                                          "${i['date']}",
-                                        ),
-                                      ],
-                                    ),
+                                  // for (var i in storedocs)
+                                  //   Column(
+                                  //     children: [
+                                  //       taskWidget(
+                                  //         Color(0xfff90CAF9),
+                                  //         "${i['name']}",
+                                  //         "${i['date']}",
+                                  //       ),
+                                  //     ],
+                                  //   ),
 
-                                  // taskWidget(
-                                  //     Colors.blue, "Meeting with someone", "9:00 AM"),
-                                  // taskWidget(
-                                  //     Colors.green, "Take your medicines", "9:00 AM"),
+                                  taskWidget(
+                                      Colors.blue, "Breakfast", "9:00 AM"),
+                                  taskWidget(
+                                      Colors.blue, "Lunch ", "1:00 PM"),
+                                  taskWidget(
+                                      Colors.blue, "Dinner ", "9:00 PM"),
                                   // Container(
                                   //   child: ListView.builder(
                                   //     itemCount: 1,

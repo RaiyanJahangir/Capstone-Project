@@ -241,7 +241,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Expanded(child: Text('Child Details')),
+                Expanded(child: Text('Baby Details')),
                 IconButton(
                   icon: Icon(
                     Icons.circle_notifications,
