@@ -41,7 +41,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
   Widget build(BuildContext context) {
     //var nm="Nasif Shahriar";
     var baby_name = "John Cameron";
-    var dob = "25/03/1999";
+    var dob = "25/03/2021";
     var gender = "Male";
     var baby_height = "75.2cm";
     var baby_weight = "5kg";
@@ -232,10 +232,9 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
         appBar: AppBar(
           leading: IconButton(
               icon: Icon(Icons.arrow_back),
-              onPressed: (){
+              onPressed: () {
                 Navigator.pop(context);
-              }
-          ),
+              }),
           centerTitle: true,
           title: Row(
               mainAxisAlignment: MainAxisAlignment.center,

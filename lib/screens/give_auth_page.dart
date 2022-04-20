@@ -116,7 +116,7 @@ class _authState extends State<auth> {
     return DropdownButton<String>(
       value: _box,
       icon: const Icon(
-          Icons.arrow_downward,
+        Icons.arrow_downward,
         color: Colors.blue,
       ),
       iconSize: 24,
@@ -143,7 +143,7 @@ class _authState extends State<auth> {
 
   Widget _builduser() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Child Relation to the User'),
+      decoration: InputDecoration(labelText: 'Baby\'s Relation to the User'),
       maxLength: 30,
       validator: (value) {
         if (value!.isEmpty) return 'Required';
