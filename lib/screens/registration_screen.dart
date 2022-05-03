@@ -6,6 +6,9 @@ import 'package:email_password_login/screens/notification_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -25,6 +28,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final emailEditingController = TextEditingController();
   final passwordEditingController = TextEditingController();
   final confirmPasswordEditingController = TextEditingController();
+
+  // initializing some values for image upload
+  File? _image;
+  final imagePicker = ImagePicker();
+  String? downloadURL;
 
   String dropdownValue = 'Male';
   String? holder;
@@ -46,6 +54,40 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       }
     }
     return value;
+  }
+
+  // picking the image
+
+  Future imagePickerMethod() async {
+    final pick = await imagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pick != null) {
+        _image = File(pick.path);
+      } else {
+        showSnackBar("No File selected", Duration(milliseconds: 400));
+      }
+    });
+  }
+
+  //uploading the image to firebase cloudstore
+  Future uploadImage(File _image, User user) async {
+    final imgId = DateTime.now().millisecondsSinceEpoch.toString();
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    Reference reference = FirebaseStorage.instance
+        .ref()
+        .child('${user.uid}/images')
+        .child("post_$imgId");
+
+    await reference.putFile(_image);
+    downloadURL = await reference.getDownloadURL();
+
+    // cloud firestore
+    await firebaseFirestore
+        .collection("Users")
+        .doc(user.uid)
+        .collection("images")
+        .add({'downloadURL': downloadURL}).whenComplete(
+            () => showSnackBar("Image Uploaded", Duration(seconds: 2)));
   }
 
   @override
@@ -257,43 +299,47 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text("Confirm Account Registration ?",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic,
-                            color: Colors.blue,
-                            fontSize: 25)),
-                    actions: <Widget>[
-                      TextButton(
-                          onPressed: () {
-                            signUp(emailEditingController.text,
-                                passwordEditingController.text);
-                            getDropDownItem();
-                          },
-                          child: const Text("YES",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.blueAccent,
-                                  fontSize: 20))),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text("NO",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.blueAccent,
-                                  fontSize: 20)))
-                    ],
-                  );
-                });
+            if (_image != null) {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Confirm Account Registration ?",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.blue,
+                              fontSize: 25)),
+                      actions: <Widget>[
+                        TextButton(
+                            onPressed: () {
+                              signUp(emailEditingController.text,
+                                  passwordEditingController.text);
+                              getDropDownItem();
+                            },
+                            child: const Text("YES",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.blueAccent,
+                                    fontSize: 20))),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text("NO",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.blueAccent,
+                                    fontSize: 20)))
+                      ],
+                    );
+                  });
+            } else {
+              showSnackBar("Select Image first", Duration(milliseconds: 400));
+            }
           },
           child: const Text(
             "SignUp",
@@ -349,6 +395,66 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             const SizedBox(height: 20),
                             confirmPasswordField,
                             const SizedBox(height: 20),
+                            ClipRRect(
+                                borderRadius: BorderRadius.circular(30),
+                                child: SizedBox(
+                                    height: 100,
+                                    width: double.infinity,
+                                    child: Column(children: [
+                                      const Text("Upload Image"),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Expanded(
+                                        flex: 4,
+                                        child: Container(
+                                          width: 310,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(22),
+                                            border: Border.all(
+                                                color: Colors.blueAccent),
+                                          ),
+                                          child: Center(
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                // the image that we wanted to upload
+                                                Expanded(
+                                                    child: _image == null
+                                                        ? const Center(
+                                                            child: Text(
+                                                                "No image selected"))
+                                                        : Image.file(_image!)),
+                                                ElevatedButton(
+                                                    onPressed: () {
+                                                      imagePickerMethod();
+                                                    },
+                                                    child: const Text(
+                                                        "Select Image")),
+                                                // ElevatedButton(
+                                                //     onPressed: () {
+                                                //       if (_image != null) {
+                                                //         //uploadImage(_image!);
+                                                //       } else {
+                                                //         showSnackBar(
+                                                //             "Select Image first",
+                                                //             Duration(
+                                                //                 milliseconds:
+                                                //                     400));
+                                                //       }
+                                                //     },
+                                                //     child: const Text(
+                                                //         "Upload Image")),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ]))),
+                            const SizedBox(height: 20),
                             signUpButton,
                             const SizedBox(height: 10),
                           ])))),
@@ -392,11 +498,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");
 
+    uploadImage(_image!, user);
+
     // Navigator.pushAndRemoveUntil(
     //     (context),
     //     MaterialPageRoute(builder: (context) => const UserHome()),
     //     (route) => false);
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (context) => UserHome()));
+  }
+
+  showSnackBar(String snackText, Duration d) {
+    final snackBar = SnackBar(content: Text(snackText), duration: d);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

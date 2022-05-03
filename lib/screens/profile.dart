@@ -47,10 +47,9 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: (){
+            onPressed: () {
               Navigator.pop(context);
-            }
-        ),
+            }),
         centerTitle: false,
         title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -190,7 +189,7 @@ class _HomeState extends State<Home> {
                                               ),
                                             ),
                                             Text(
-                                              "nasif Shahriar",
+                                              name,
                                               style: TextStyle(
                                                 fontSize: 12.0,
                                                 color: Colors.grey[400],
@@ -226,7 +225,7 @@ class _HomeState extends State<Home> {
                                               ),
                                             ),
                                             Text(
-                                              "nasifshahriar5@gmail.com",
+                                              myEmail,
                                               style: TextStyle(
                                                 fontSize: 12.0,
                                                 color: Colors.grey[400],
@@ -262,7 +261,7 @@ class _HomeState extends State<Home> {
                                               ),
                                             ),
                                             Text(
-                                              "Banker",
+                                              occupation,
                                               style: TextStyle(
                                                 fontSize: 12.0,
                                                 color: Colors.grey[400],
@@ -298,7 +297,7 @@ class _HomeState extends State<Home> {
                                               ),
                                             ),
                                             Text(
-                                              "Male",
+                                              gender,
                                               style: TextStyle(
                                                 fontSize: 12.0,
                                                 color: Colors.grey[400],
@@ -334,7 +333,7 @@ class _HomeState extends State<Home> {
                                               ),
                                             ),
                                             Text(
-                                              "25",
+                                              age.toString(),
                                               style: TextStyle(
                                                 fontSize: 12.0,
                                                 color: Colors.grey[400],

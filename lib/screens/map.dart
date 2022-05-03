@@ -55,7 +55,7 @@ class MapSampleState extends State<MapSample> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Expanded(child: Text('Child Location')),
+              Expanded(child: Text('Baby Location')),
               IconButton(
                 icon: Icon(
                   Icons.circle_notifications,
