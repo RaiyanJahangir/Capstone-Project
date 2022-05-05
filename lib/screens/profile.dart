@@ -141,6 +141,33 @@ class _HomeState extends State<Home> {
         children: [
           Column(
             children: [
+              StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("Users")
+                    .doc(loggedInUser.uid)
+                    .collection("images")
+                    .snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (!snapshot.hasData) {
+                    return (const Center(child: Text("No Images Found")));
+                  } else {
+                    return ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        String url = snapshot.data!.docs[index]['downloadURL'];
+                        return Image.network(
+                          url,
+                          height: 300,
+                          fit: BoxFit.fitWidth,
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
               Expanded(
                 flex: 5,
                 child: Container(

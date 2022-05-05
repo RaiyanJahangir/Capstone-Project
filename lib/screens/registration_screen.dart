@@ -434,20 +434,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                                     },
                                                     child: const Text(
                                                         "Select Image")),
-                                                // ElevatedButton(
-                                                //     onPressed: () {
-                                                //       if (_image != null) {
-                                                //         //uploadImage(_image!);
-                                                //       } else {
-                                                //         showSnackBar(
-                                                //             "Select Image first",
-                                                //             Duration(
-                                                //                 milliseconds:
-                                                //                     400));
-                                                //       }
-                                                //     },
-                                                //     child: const Text(
-                                                //         "Upload Image")),
                                               ],
                                             ),
                                           ),
