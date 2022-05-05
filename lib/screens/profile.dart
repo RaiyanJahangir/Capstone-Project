@@ -41,11 +41,7 @@ class _HomeState extends State<Home> {
     });
   }
 
-  String myEmail = '';
-  int age = 0;
-  String gender = '';
-  String name = '';
-  String occupation = '';
+  
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushReplacement(
