@@ -7,6 +7,17 @@ import 'package:email_password_login/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:email_password_login/screens/info_card.dart';
+
+String myEmail = '';
+int age = 0;
+String gender = '';
+String name = '';
+String occupation = '';
+const occu = "Banker";
+const email = "nasifshahriar4@gmail.com";
+const gen = "Male"; // not real number :)
+String ag = "25";
 
 class Home extends StatefulWidget {
   @override
@@ -47,10 +58,9 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: (){
+            onPressed: () {
               Navigator.pop(context);
-            }
-        ),
+            }),
         centerTitle: false,
         title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -138,244 +148,67 @@ class _HomeState extends State<Home> {
   Widget displayUserInformation(context, snapshot) {
     final user = snapshot.data;
     return Scaffold(
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              Expanded(
-                flex: 5,
-                child: Container(
-                  color: Colors.grey[200],
-                  child: Center(
-                      child: Card(
-                          margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                          child: Container(
-                              width: 400.0,
-                              height: 350.0,
-                              child: Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Profile",
-                                      style: TextStyle(
-                                        fontSize: 17.0,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                    Divider(
-                                      color: Colors.grey[300],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Icon(
-                                          Icons.people,
-                                          color: Colors.blueAccent[400],
-                                          size: 35,
-                                        ),
-                                        SizedBox(
-                                          width: 20.0,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Name",
-                                              style: TextStyle(
-                                                fontSize: 15.0,
-                                              ),
-                                            ),
-                                            Text(
-                                              "nasif Shahriar",
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                color: Colors.grey[400],
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Icon(
-                                          Icons.email,
-                                          color: Colors.yellowAccent[400],
-                                          size: 35,
-                                        ),
-                                        SizedBox(
-                                          width: 20.0,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Email",
-                                              style: TextStyle(
-                                                fontSize: 15.0,
-                                              ),
-                                            ),
-                                            Text(
-                                              "nasifshahriar5@gmail.com",
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                color: Colors.grey[400],
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Icon(
-                                          Icons.work,
-                                          color: Colors.pinkAccent[400],
-                                          size: 35,
-                                        ),
-                                        SizedBox(
-                                          width: 20.0,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Occupation",
-                                              style: TextStyle(
-                                                fontSize: 15.0,
-                                              ),
-                                            ),
-                                            Text(
-                                              "Banker",
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                color: Colors.grey[400],
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Icon(
-                                          Icons.man,
-                                          color: Colors.pinkAccent[400],
-                                          size: 35,
-                                        ),
-                                        SizedBox(
-                                          width: 20.0,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Gender",
-                                              style: TextStyle(
-                                                fontSize: 15.0,
-                                              ),
-                                            ),
-                                            Text(
-                                              "Male",
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                color: Colors.grey[400],
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Icon(
-                                          Icons.confirmation_number_sharp,
-                                          color: Colors.lightGreen[400],
-                                          size: 35,
-                                        ),
-                                        SizedBox(
-                                          width: 20.0,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Age",
-                                              style: TextStyle(
-                                                fontSize: 15.0,
-                                              ),
-                                            ),
-                                            Text(
-                                              "25",
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                color: Colors.grey[400],
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              )))),
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          minimum: const EdgeInsets.only(top: 100),
+          child: Column(
+            children: <Widget>[
+              CircleAvatar(
+                radius: 200,
+                backgroundImage: AssetImage('assets/avatar.jpg'),
+              ),
+              Text(
+                "Nasif Shahriar",
+                style: TextStyle(
+                  fontSize: 40.0,
+                  color: Colors.blueGrey[800],
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Pacifico",
                 ),
               ),
+
+              SizedBox(
+                height: 20,
+                width: 200,
+                child: Divider(
+                  color: Colors.blueGrey[1000],
+                ),
+              ),
+
+              // we will be creating a new widget name info carrd
+
+              InfoCard(text: email, icon: Icons.email, onPressed: () async {}),
+              InfoCard(text: occu, icon: Icons.work, onPressed: () async {}),
+              InfoCard(text: gen, icon: Icons.man, onPressed: () async {}),
+              InfoCard(
+                  text: ag,
+                  icon: Icons.confirmation_number_sharp,
+                  onPressed: () async {}),
             ],
           ),
-        ],
-      ),
-    );
+        ));
   }
+}
 
-  _fetch() async {
-    final firebaseUser = await FirebaseAuth.instance.currentUser;
-    if (firebaseUser != null)
-      await FirebaseFirestore.instance
-          .collection('Users')
-          .doc(firebaseUser.uid)
-          .get()
-          .then((ds) {
-        name = ds.data()!['Name'] ?? '';
-        myEmail = ds.data()!['Email'] ?? '';
-        gender = ds.data()!['Gender'] ?? '';
-        age = ds.data()!['Age'] ?? '';
-        occupation = ds.data()!['Occupation'] ?? '';
-      }).catchError((e) {
-        print(e);
-      });
-  }
+_fetch() async {
+  final firebaseUser = await FirebaseAuth.instance.currentUser;
+  if (firebaseUser != null)
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(firebaseUser.uid)
+        .get()
+        .then((ds) {
+      name = ds.data()!['Name'] ?? '';
+      myEmail = ds.data()!['Email'] ?? '';
+      gender = ds.data()!['Gender'] ?? '';
+      age = ds.data()!['Age'] ?? '';
+      occupation = ds.data()!['Occupation'] ?? '';
+    }).catchError((e) {
+      print(e);
+    });
+}
 
-  Future<void> log(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    Navigator.of(context).popUntil((route) => route.isFirst);
-  }
+Future<void> log(BuildContext context) async {
+  await FirebaseAuth.instance.signOut();
+  Navigator.of(context).popUntil((route) => route.isFirst);
 }
