@@ -171,22 +171,22 @@ class _HomeState extends State<Home> {
               InfoCard(
                   text: email,
                   icon: Icons.email,
-                  clr: Colors.grey,
+                  clr: Colors.blue,
                   onPressed: () async {}),
               InfoCard(
                   text: occu,
                   icon: Icons.work,
-                  clr: Color.fromARGB(255, 255, 94, 0),
+                  clr: Colors.blue,
                   onPressed: () async {}),
               InfoCard(
                   text: gender,
                   icon: Icons.man,
-                  clr: Color.fromARGB(255, 255, 64, 175),
+                  clr: Colors.blue,
                   onPressed: () async {}),
               InfoCard(
                   text: '25',
                   icon: Icons.confirmation_number_sharp,
-                  clr: Color.fromARGB(255, 57, 99, 99),
+                  clr: Colors.blue,
                   onPressed: () async {}),
             ],
             // we will be creating a new widget name info carrd
