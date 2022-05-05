@@ -18,6 +18,7 @@ const occu = "Banker";
 const email = "nasifshahriar4@gmail.com";
 const gen = "Male"; // not real number :)
 String ag = "25";
+String url = "";
 
 class Home extends StatefulWidget {
   @override
@@ -41,7 +42,6 @@ class _HomeState extends State<Home> {
     });
   }
 
-  
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushReplacement(
@@ -146,11 +146,10 @@ class _HomeState extends State<Home> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
-          minimum: const EdgeInsets.only(top: 100),
           child: Column(
             children: <Widget>[
               CircleAvatar(
-                radius: 200,
+                radius: 170,
                 backgroundImage: AssetImage('assets/avatar.jpg'),
               ),
               Text(

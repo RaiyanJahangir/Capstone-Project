@@ -13,17 +13,17 @@ class InfoCard extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Card(
-        color: Colors.white,
+        color: Colors.black,
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
         child: ListTile(
           leading: Icon(
             icon,
-            color: Colors.teal,
+            color: Colors.blue,
           ),
           title: Text(
             text,
             style: TextStyle(
-                color: Colors.blue,
+                color: Colors.teal,
                 fontSize: 20,
                 fontFamily: "Source Sans Pro"),
           ),
