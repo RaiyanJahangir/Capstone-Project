@@ -148,12 +148,8 @@ class _HomeState extends State<Home> {
         body: SafeArea(
           child: Column(
             children: <Widget>[
-              CircleAvatar(
-                radius: 170,
-                backgroundImage: AssetImage('assets/avatar.jpg'),
-              ),
               Text(
-                "Nasif Shahriar",
+                "$name",
                 style: TextStyle(
                   fontSize: 40.0,
                   color: Colors.blueGrey[800],
@@ -172,11 +168,16 @@ class _HomeState extends State<Home> {
 
               // we will be creating a new widget name info carrd
 
-              InfoCard(text: email, icon: Icons.email, onPressed: () async {}),
-              InfoCard(text: occu, icon: Icons.work, onPressed: () async {}),
-              InfoCard(text: gen, icon: Icons.man, onPressed: () async {}),
               InfoCard(
-                  text: ag,
+                  text: "$myEmail", icon: Icons.email, onPressed: () async {}),
+              InfoCard(
+                  text: "$occupation",
+                  icon: Icons.work,
+                  onPressed: () async {}),
+              InfoCard(
+                  text: "$gender", icon: Icons.man, onPressed: () async {}),
+              InfoCard(
+                  text: "$age",
                   icon: Icons.confirmation_number_sharp,
                   onPressed: () async {}),
             ],
