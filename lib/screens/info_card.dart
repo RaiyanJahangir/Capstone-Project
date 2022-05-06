@@ -13,7 +13,7 @@ class InfoCard extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Card(
-        color: Colors.white,
+        color: Colors.grey[200],
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
         child: ListTile(
           leading: Icon(

@@ -2,23 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/screens/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:email_password_login/screens/home_screen.dart';
+import 'package:email_password_login/screens/info_card.dart';
 import 'package:email_password_login/model/user_model.dart';
 import 'package:email_password_login/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:email_password_login/screens/info_card.dart';
-
-String myEmail = '';
-int age = 0;
-String gender = '';
-String name = '';
-String occupation = '';
-const occu = "Banker";
-const email = "nasifshahriar4@gmail.com";
-const gen = "Male"; // not real number :)
-String ag = "25";
-String url = "";
 
 class Home extends StatefulWidget {
   @override
@@ -42,6 +31,11 @@ class _HomeState extends State<Home> {
     });
   }
 
+  String myEmail = '';
+  int age = 0;
+  String gender = '';
+  String name = '';
+  String occupation = '';
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushReplacement(
@@ -144,67 +138,107 @@ class _HomeState extends State<Home> {
   Widget displayUserInformation(context, snapshot) {
     final user = snapshot.data;
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              Text(
-                "$name",
-                style: TextStyle(
-                  fontSize: 40.0,
-                  color: Colors.blueGrey[800],
-                  fontWeight: FontWeight.bold,
-                  fontFamily: "Pacifico",
-                ),
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("Users")
+                    .doc(loggedInUser.uid)
+                    .collection("images")
+                    .snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (!snapshot.hasData) {
+                    return (const Center(child: Text("No Images Found")));
+                  } else {
+                    return ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        String url = snapshot.data!.docs[index]['downloadURL'];
+
+                        return Image.network(
+                          url,
+                          height: 300,
+                          fit: BoxFit.fitWidth,
+                        );
+                      },
+                    );
+                  }
+                },
               ),
-
-              SizedBox(
-                height: 20,
-                width: 200,
-                child: Divider(
-                  color: Colors.blueGrey[1000],
-                ),
-              ),
-
-              // we will be creating a new widget name info carrd
-
-              InfoCard(
-                  text: "$myEmail", icon: Icons.email, onPressed: () async {}),
-              InfoCard(
-                  text: "$occupation",
-                  icon: Icons.work,
-                  onPressed: () async {}),
-              InfoCard(
-                  text: "$gender", icon: Icons.man, onPressed: () async {}),
-              InfoCard(
-                  text: "$age",
-                  icon: Icons.confirmation_number_sharp,
-                  onPressed: () async {}),
+              Expanded(
+                  child: Container(
+                      color: Colors.white,
+                      child: Center(
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              "$name",
+                              style: TextStyle(
+                                fontSize: 40.0,
+                                color: Colors.blueGrey[800],
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Pacifico",
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                              width: 200,
+                              child: Divider(
+                                color: Colors.black,
+                              ),
+                            ),
+                            InfoCard(
+                                text: "$myEmail",
+                                icon: Icons.email,
+                                onPressed: () async {}),
+                            InfoCard(
+                                text: "$occupation",
+                                icon: Icons.work,
+                                onPressed: () async {}),
+                            InfoCard(
+                                text: "$gender",
+                                icon: Icons.man,
+                                onPressed: () async {}),
+                            InfoCard(
+                                text: "$age",
+                                icon: Icons.confirmation_number_sharp,
+                                onPressed: () async {}),
+                          ],
+                        ),
+                      ))),
             ],
           ),
-        ));
+        ],
+      ),
+    );
   }
-}
 
-_fetch() async {
-  final firebaseUser = await FirebaseAuth.instance.currentUser;
-  if (firebaseUser != null)
-    await FirebaseFirestore.instance
-        .collection('Users')
-        .doc(firebaseUser.uid)
-        .get()
-        .then((ds) {
-      name = ds.data()!['Name'] ?? '';
-      myEmail = ds.data()!['Email'] ?? '';
-      gender = ds.data()!['Gender'] ?? '';
-      age = ds.data()!['Age'] ?? '';
-      occupation = ds.data()!['Occupation'] ?? '';
-    }).catchError((e) {
-      print(e);
-    });
-}
+  _fetch() async {
+    final firebaseUser = await FirebaseAuth.instance.currentUser;
+    if (firebaseUser != null)
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(firebaseUser.uid)
+          .get()
+          .then((ds) {
+        name = ds.data()!['Name'] ?? '';
+        myEmail = ds.data()!['Email'] ?? '';
+        gender = ds.data()!['Gender'] ?? '';
+        age = ds.data()!['Age'] ?? '';
+        occupation = ds.data()!['Occupation'] ?? '';
+      }).catchError((e) {
+        print(e);
+      });
+  }
 
-Future<void> log(BuildContext context) async {
-  await FirebaseAuth.instance.signOut();
-  Navigator.of(context).popUntil((route) => route.isFirst);
+  Future<void> log(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  }
 }
