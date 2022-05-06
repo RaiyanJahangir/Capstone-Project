@@ -160,11 +160,10 @@ class _HomeState extends State<Home> {
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (BuildContext context, int index) {
                         String url = snapshot.data!.docs[index]['downloadURL'];
-
-                        return Image.network(
-                          url,
-                          height: 300,
-                          fit: BoxFit.fitWidth,
+                        return CircleAvatar(
+                          backgroundColor: Colors.white,
+                          radius: 120,
+                          child: Image.network(url, fit: BoxFit.cover),
                         );
                       },
                     );
