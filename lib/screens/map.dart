@@ -16,6 +16,12 @@ class MapSampleState extends State<MapSample> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
+  static final Marker _kmark = Marker(
+      markerId: MarkerId('_kmark'),
+      infoWindow: InfoWindow(title: 'Google plex'),
+      icon: BitmapDescriptor.defaultMarker,
+      position: LatLng(23.83780840691303, 90.35788633293909));
+
   @override
   void initState() {
     super.initState();
@@ -141,8 +147,16 @@ class MapSampleState extends State<MapSample> {
         ],
         //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
       ),
+      // body: GoogleMap(
+      //   mapType: MapType.hybrid,
+      //   initialCameraPosition: _kGooglePlex,
+      //   onMapCreated: (GoogleMapController controller) {
+      //     _controller.complete(controller);
+      //   },
+      // ),
       body: GoogleMap(
         mapType: MapType.hybrid,
+        markers: {_kmark},
         initialCameraPosition: _kGooglePlex,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
