@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gauge/flutter_gauge.dart';
 
 class SensorScreen extends StatefulWidget {
   const SensorScreen({Key? key}) : super(key: key);
@@ -238,6 +239,48 @@ class SensorScreenState extends State<SensorScreen> {
                 color: Colors.blue,
                 thickness: 2,
               ),
+              // Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: <Widget>[
+              //       Expanded(
+              //         child: Center(
+              //           child: FlutterGauge(
+              //             index: double.parse(pulse),
+              //             width: 280,
+              //             counterStyle: TextStyle(
+              //               color: Colors.black,
+              //               fontSize: 22,
+              //             ),
+              //             secondsMarker: SecondsMarker.secondsAndMinute,
+              //             number: Number.all,
+              //             numberInAndOut: NumberInAndOut.outside,
+              //           ),
+              //         ),
+              //       ),
+              //       VerticalDivider(
+              //         color: Colors.black,
+              //         thickness: 2,
+              //       ),
+              //       Expanded(
+              //         child: Center(
+              //           child: FlutterGauge(
+              //             index: double.parse(temperature),
+              //             width: 280,
+              //             counterStyle: TextStyle(
+              //               color: Colors.black,
+              //               fontSize: 22,
+              //             ),
+              //             secondsMarker: SecondsMarker.secondsAndMinute,
+              //             number: Number.all,
+              //             numberInAndOut: NumberInAndOut.outside,
+              //           ),
+              //         ),
+              //       ),
+              //     ]),
+              // Divider(
+              //   color: Colors.blue,
+              //   thickness: 2,
+              // ),
               Text(
                 "Previous Data",
                 style: TextStyle(

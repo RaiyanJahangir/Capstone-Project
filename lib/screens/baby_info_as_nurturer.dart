@@ -148,9 +148,9 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 25,
-                            color: Colors.red[400],
+                            color: Colors.blue,
                             fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic,
+                            //fontStyle: FontStyle.italic,
                             shadows: [
                               Shadow(
                                   color: Colors.blueAccent,
@@ -164,11 +164,12 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                     icon: const Icon(Icons.arrow_downward),
                     iconSize: 24,
                     elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
-                    ),
+                    style: const TextStyle(color: Colors.blue),
+                    // underline: Container(
+                    //   height: 2,
+                    //   width: 5,
+                    //   color: Colors.deepPurpleAccent,
+                    // ),
                     onChanged: (String? newValue) {
                       setState(() {
                         dropdownValue = newValue!;
@@ -188,9 +189,10 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
             Expanded(
               flex: 5,
               child: GridView.count(
+                padding: EdgeInsets.all(8),
                 crossAxisCount: 2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
+                mainAxisSpacing: 5,
+                crossAxisSpacing: 5,
                 primary: false,
                 children: [
                   Card(
@@ -217,7 +219,7 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                                     fontSize: 20,
                                     color: Colors.black54,
                                     fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic,
+                                    //fontStyle: FontStyle.italic,
                                   )))
                         ],
                       ),
@@ -247,7 +249,7 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                                     fontSize: 20,
                                     color: Colors.black54,
                                     fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic,
+                                    //fontStyle: FontStyle.italic,
                                   )))
                         ],
                       ),
