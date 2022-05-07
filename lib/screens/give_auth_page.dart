@@ -43,7 +43,13 @@ class _authState extends State<auth> {
   String? _box = 'Baby1';
   String? _relation;
 
+  final auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final nameEditingController = TextEditingController();
+  final emailEditingController = TextEditingController();
+  final gurdTypeEditingController = TextEditingController();
+  final childEditingController = TextEditingController();
+  final relationEditingController = TextEditingController();
 
   Widget _buildname() {
     return TextFormField(
@@ -53,8 +59,10 @@ class _authState extends State<auth> {
         if (value!.isEmpty) return 'Required';
         return null;
       },
+      controller: nameEditingController,
       onSaved: (value) {
         _name = value;
+        nameEditingController.text = value!;
       },
     );
   }
@@ -75,8 +83,10 @@ class _authState extends State<auth> {
 
         return null;
       },
+      controller: emailEditingController,
       onSaved: (value) {
         _email = value;
+        emailEditingController.text = value!;
       },
     );
   }
@@ -92,6 +102,7 @@ class _authState extends State<auth> {
             onChanged: (value) {
               setState(() {
                 _site = value as supervisor?;
+                //gurdTypeEditingController.text = value!;
               });
             },
           ),
@@ -129,6 +140,7 @@ class _authState extends State<auth> {
       onChanged: (newValue) {
         setState(() {
           _box = newValue!;
+          childEditingController.text = newValue;
         });
       },
       items: <String>['Baby1', 'Baby2', 'Baby3', 'Baby4']
@@ -149,8 +161,10 @@ class _authState extends State<auth> {
         if (value!.isEmpty) return 'Required';
         return null;
       },
+      controller: relationEditingController,
       onSaved: (value) {
         _relation = (value as String?)!;
+        relationEditingController.text = value!;
       },
     );
   }
@@ -314,7 +328,7 @@ class _authState extends State<auth> {
                       SizedBox(
                         height: 10,
                       ),
-                      RaisedButton(
+                      TextButton(
                         child: Text(
                           'Submit',
                           style: TextStyle(color: Colors.blue, fontSize: 16),
@@ -344,6 +358,13 @@ class _authState extends State<auth> {
                           print(_email);
                           print(_box);
                           print(_relation);
+
+                          ///authetication trial
+                          sendData(
+                              nameEditingController.text,
+                              emailEditingController.text,
+                              childEditingController.text,
+                              relationEditingController.text);
                         },
                       )
                     ],
@@ -353,6 +374,23 @@ class _authState extends State<auth> {
         ),
       ),
     );
+  }
+
+  Future<void> sendData(
+      String name, String email, String child, String relation) async {
+    User? user = auth.currentUser;
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    UserModel userModel = UserModel();
+    userModel.uid = user!.uid;
+    userModel.auth_name = nameEditingController.text;
+    userModel.auth_email = emailEditingController.text;
+    userModel.auth_child = childEditingController.text;
+    userModel.auth_relation = relationEditingController.text;
+
+    await firebaseFirestore
+        .collection("Users")
+        .doc(user.uid)
+        .update(userModel.authItems(name, email, relation));
   }
 
   Future<void> logout(BuildContext context) async {
