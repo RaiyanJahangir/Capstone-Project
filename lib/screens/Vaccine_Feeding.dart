@@ -11,27 +11,28 @@ import 'package:email_password_login/screens/FeedingList.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_password_login/model/user_model.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'avenir'),
-      home: homePage(),
-    );
-  }
-}
-
-class homePage extends StatefulWidget {
-  @override
+  // Widget build(BuildContext context) {
+  //   return MaterialApp(
+  //     debugShowCheckedModeBanner: false,
+  //     theme: ThemeData(fontFamily: 'avenir'),
+  //     home: homePage(),
+  //   );
+  // }
   _homePageState createState() => _homePageState();
 }
 
-class _homePageState extends State<homePage> {
+// class homePage extends StatefulWidget {
+//   @override
+//   _homePageState createState() => _homePageState();
+// }
+
+class _homePageState extends State<HomePage> {
   final Stream<QuerySnapshot> vaccinestream =
-  FirebaseFirestore.instance.collection('vaccines').snapshots();
+      FirebaseFirestore.instance.collection('vaccines').snapshots();
 
   String filterType = "today";
   DateTime today = new DateTime.now();
@@ -68,7 +69,6 @@ class _homePageState extends State<homePage> {
     });
   }
 
-
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
         stream: vaccinestream,
@@ -93,16 +93,15 @@ class _homePageState extends State<homePage> {
             appBar: AppBar(
               leading: IconButton(
                   icon: Icon(Icons.arrow_back),
-                onPressed: (){
-                  Navigator.pop(context);
-                }
-              ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
               centerTitle: true,
               title: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Expanded(child: Text('Feeding Time')),
+                    Expanded(child: Text('Baby Schedule')),
                     IconButton(
                       icon: Icon(
                         Icons.circle_notifications,
@@ -254,177 +253,179 @@ class _homePageState extends State<homePage> {
                     ),
                     (filterType == "monthly")
                         ? Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            TableCalendar(
-                              calendarController: ctrlr,
-                              startingDayOfWeek: StartingDayOfWeek.monday,
-                              initialCalendarFormat: CalendarFormat.week,
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(20),
+                            child: SingleChildScrollView(
                               child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "Today ${monthNames[today.month - 1]}, ${today.day}/${today.year}",
-                                    style: TextStyle(
-                                        fontSize: 18, color: Colors.grey),
-                                  )
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  TableCalendar(
+                                    calendarController: ctrlr,
+                                    startingDayOfWeek: StartingDayOfWeek.monday,
+                                    initialCalendarFormat: CalendarFormat.week,
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Today ${monthNames[today.month - 1]}, ${today.day}/${today.year}",
+                                          style: TextStyle(
+                                              fontSize: 18, color: Colors.grey),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  // for (var i in storedocs)
+                                  //   Column(
+                                  //     children: [
+                                  //       taskWidget(
+                                  //         Color(0xfff90CAF9),
+                                  //         "${i['name']}",
+                                  //         "${i['date']}",
+                                  //       ),
+                                  //     ],
+                                  //   ),
+
+                                  taskWidget(
+                                      Colors.blue, "Breakfast", "9:00 AM"),
+                                  taskWidget(
+                                      Colors.blue, "Lunch ", "1:00 PM"),
+                                  taskWidget(
+                                      Colors.blue, "Dinner ", "9:00 PM"),
+                                  // Container(
+                                  //   child: ListView.builder(
+                                  //     itemCount: 1,
+                                  //     itemBuilder: (BuildContext context, int) {
+                                  //       return ListTile(title: Text('hello'));
+                                  //       // return taskWidget(
+                                  //       //   Color(0xfff96060),
+                                  //       //   "${storedocs[index]['name']}",
+                                  //       //   "${storedocs[index]['reason']}",
+                                  //       // );
+                                  //     },
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
-                            for (var i in storedocs)
-                              Column(
-                                children: [
-                                  taskWidget(
-                                    Color(0xfff90CAF9),
-                                    "${i['name']}",
-                                    "${i['date']}",
-                                  ),
-                                ],
-                              ),
-
-                            // taskWidget(
-                            //     Colors.blue, "Meeting with someone", "9:00 AM"),
-                            // taskWidget(
-                            //     Colors.green, "Take your medicines", "9:00 AM"),
-                            // Container(
-                            //   child: ListView.builder(
-                            //     itemCount: 1,
-                            //     itemBuilder: (BuildContext context, int) {
-                            //       return ListTile(title: Text('hello'));
-                            //       // return taskWidget(
-                            //       //   Color(0xfff96060),
-                            //       //   "${storedocs[index]['name']}",
-                            //       //   "${storedocs[index]['reason']}",
-                            //       // );
-                            //     },
-                            //   ),
-                            // ),
-                          ],
-                        ),
-                      ),
-                    )
+                          )
                         : Container(),
                     (filterType == "Vaccination list")
                         ? Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(20),
+                            child: SingleChildScrollView(
                               child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "Today ${monthNames[today.month - 1]}, ${today.day}/${today.year}",
-                                    style: TextStyle(
-                                        fontSize: 18, color: Colors.grey),
-                                  )
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Today ${monthNames[today.month - 1]}, ${today.day}/${today.year}",
+                                          style: TextStyle(
+                                              fontSize: 18, color: Colors.grey),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  for (var i in storedocs)
+                                    Column(
+                                      children: [
+                                        taskWidget(
+                                          Color(0xfff90CAF9),
+                                          "${i['name']}",
+                                          "${i['reason']}",
+                                        ),
+                                      ],
+                                    ),
+
+                                  // taskWidget(
+                                  //     Colors.blue, "Meeting with someone", "9:00 AM"),
+                                  // taskWidget(
+                                  //     Colors.green, "Take your medicines", "9:00 AM"),
+                                  // Container(
+                                  //   child: ListView.builder(
+                                  //     itemCount: 1,
+                                  //     itemBuilder: (BuildContext context, int) {
+                                  //       return ListTile(title: Text('hello'));
+                                  //       // return taskWidget(
+                                  //       //   Color(0xfff96060),
+                                  //       //   "${storedocs[index]['name']}",
+                                  //       //   "${storedocs[index]['reason']}",
+                                  //       // );
+                                  //     },
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
-                            for (var i in storedocs)
-                              Column(
-                                children: [
-                                  taskWidget(
-                                    Color(0xfff90CAF9),
-                                    "${i['name']}",
-                                    "${i['reason']}",
-                                  ),
-                                ],
-                              ),
-
-                            // taskWidget(
-                            //     Colors.blue, "Meeting with someone", "9:00 AM"),
-                            // taskWidget(
-                            //     Colors.green, "Take your medicines", "9:00 AM"),
-                            // Container(
-                            //   child: ListView.builder(
-                            //     itemCount: 1,
-                            //     itemBuilder: (BuildContext context, int) {
-                            //       return ListTile(title: Text('hello'));
-                            //       // return taskWidget(
-                            //       //   Color(0xfff96060),
-                            //       //   "${storedocs[index]['name']}",
-                            //       //   "${storedocs[index]['reason']}",
-                            //       // );
-                            //     },
-                            //   ),
-                            // ),
-                          ],
-                        ),
-                      ),
-                    )
+                          )
                         : Container(),
                     (filterType != "Vaccination list" &&
-                        filterType != "monthly")
+                            filterType != "monthly")
                         ? Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(20),
+                            child: SingleChildScrollView(
                               child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "Today ${monthNames[today.month - 1]}, ${today.day}/${today.year}",
-                                    style: TextStyle(
-                                        fontSize: 18, color: Colors.grey),
-                                  )
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Today ${monthNames[today.month - 1]}, ${today.day}/${today.year}",
+                                          style: TextStyle(
+                                              fontSize: 18, color: Colors.grey),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  for (var i in storedocs)
+                                    Column(
+                                      children: [
+                                        taskWidget(
+                                          Color(0xfff90CAF9),
+                                          "${i['name']}",
+                                          "${i['reason']}",
+                                        ),
+                                      ],
+                                    ),
+
+                                  // taskWidget(
+                                  //     Colors.blue, "Meeting with someone", "9:00 AM"),
+                                  // taskWidget(
+                                  //     Colors.green, "Take your medicines", "9:00 AM"),
+                                  // Container(
+                                  //   child: ListView.builder(
+                                  //     itemCount: 1,
+                                  //     itemBuilder: (BuildContext context, int) {
+                                  //       return ListTile(title: Text('hello'));
+                                  //       // return taskWidget(
+                                  //       //   Color(0xfff96060),
+                                  //       //   "${storedocs[index]['name']}",
+                                  //       //   "${storedocs[index]['reason']}",
+                                  //       // );
+                                  //     },
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
-                            for (var i in storedocs)
-                              Column(
-                                children: [
-                                  taskWidget(
-                                    Color(0xfff90CAF9),
-                                    "${i['name']}",
-                                    "${i['reason']}",
-                                  ),
-                                ],
-                              ),
-
-                            // taskWidget(
-                            //     Colors.blue, "Meeting with someone", "9:00 AM"),
-                            // taskWidget(
-                            //     Colors.green, "Take your medicines", "9:00 AM"),
-                            // Container(
-                            //   child: ListView.builder(
-                            //     itemCount: 1,
-                            //     itemBuilder: (BuildContext context, int) {
-                            //       return ListTile(title: Text('hello'));
-                            //       // return taskWidget(
-                            //       //   Color(0xfff96060),
-                            //       //   "${storedocs[index]['name']}",
-                            //       //   "${storedocs[index]['reason']}",
-                            //       // );
-                            //     },
-                            //   ),
-                            // ),
-                          ],
-                        ),
-                      ),
-                    )
+                          )
                         : Container(),
                     Container(
                       height: 110,
@@ -468,69 +469,69 @@ class _homePageState extends State<homePage> {
                 Container(
                   child: (taskPop == "open")
                       ? Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    color: Colors.black.withOpacity(0.3),
-                    // InkWell(
-                    //             onTap: openVaccinationList,
-                    //             child: Container(
-                    //               child: Text(
-                    //                 "Add Vaccination",
-                    //                 style: TextStyle(fontSize: 18),
-                    //               ),
-                    //             ),
-                    //           ),
-                    child: Center(
-                      child: InkWell(
-                        onTap: openTaskPop,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(10)),
-                              color: Colors.white),
-                          height:
-                          MediaQuery.of(context).size.height * 0.3,
-                          width: MediaQuery.of(context).size.width * 0.7,
-                          child: Column(
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceAround,
-                            children: [
-                              SizedBox(
-                                height: 1,
-                              ),
-                              InkWell(
-                                onTap: openVaccinationList,
-                                child: Container(
-                                  child: Text(
-                                    "Add Vaccination",
-                                    style: TextStyle(fontSize: 18),
-                                  ),
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          color: Colors.black.withOpacity(0.3),
+                          // InkWell(
+                          //             onTap: openVaccinationList,
+                          //             child: Container(
+                          //               child: Text(
+                          //                 "Add Vaccination",
+                          //                 style: TextStyle(fontSize: 18),
+                          //               ),
+                          //             ),
+                          //           ),
+                          child: Center(
+                            child: InkWell(
+                              onTap: openTaskPop,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    color: Colors.white),
+                                height:
+                                    MediaQuery.of(context).size.height * 0.3,
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    SizedBox(
+                                      height: 1,
+                                    ),
+                                    InkWell(
+                                      onTap: openVaccinationList,
+                                      child: Container(
+                                        child: Text(
+                                          "Add Vaccination",
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 1,
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 30),
+                                      color: Colors.blue.withOpacity(0.2),
+                                    ),
+                                    InkWell(
+                                      onTap: openFeedingList,
+                                      child: Container(
+                                        child: Text(
+                                          "Add Feeding time",
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 1,
+                                    )
+                                  ],
                                 ),
                               ),
-                              Container(
-                                height: 1,
-                                margin:
-                                EdgeInsets.symmetric(horizontal: 30),
-                                color: Colors.blue.withOpacity(0.2),
-                              ),
-                              InkWell(
-                                onTap: openFeedingList,
-                                child: Container(
-                                  child: Text(
-                                    "Add Feeding time",
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 1,
-                              )
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                  )
+                        )
                       : Container(),
                 )
               ],

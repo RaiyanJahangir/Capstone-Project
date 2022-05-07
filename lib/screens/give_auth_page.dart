@@ -40,7 +40,7 @@ class _authState extends State<auth> {
   supervisor? _site = supervisor.guardian;
   String? _name;
   String? _email;
-  String? _box = 'Child1';
+  String? _box = 'Baby1';
   String? _relation;
 
   final auth = FirebaseAuth.instance;
@@ -126,13 +126,16 @@ class _authState extends State<auth> {
   Widget _buildlist() {
     return DropdownButton<String>(
       value: _box,
-      icon: const Icon(Icons.arrow_downward),
+      icon: const Icon(
+        Icons.arrow_downward,
+        color: Colors.blue,
+      ),
       iconSize: 24,
       elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
+      style: const TextStyle(color: Colors.blue),
       underline: Container(
         height: 2,
-        color: Colors.deepPurpleAccent,
+        color: Colors.blue,
       ),
       onChanged: (newValue) {
         setState(() {
@@ -140,7 +143,7 @@ class _authState extends State<auth> {
           childEditingController.text = newValue;
         });
       },
-      items: <String>['Child1', 'Child2', 'Child3', 'Child4']
+      items: <String>['Baby1', 'Baby2', 'Baby3', 'Baby4']
           .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
@@ -152,7 +155,7 @@ class _authState extends State<auth> {
 
   Widget _builduser() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Child Relation to the User'),
+      decoration: InputDecoration(labelText: 'Baby\'s Relation to the User'),
       maxLength: 30,
       validator: (value) {
         if (value!.isEmpty) return 'Required';
@@ -275,12 +278,12 @@ class _authState extends State<auth> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 20,
-                      color: Colors.red[400],
+                      color: Colors.blue,
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.italic,
                       shadows: [
                         Shadow(
-                            color: Colors.blueAccent,
+                            color: Colors.lightBlueAccent,
                             offset: Offset(2, 1),
                             blurRadius: 10)
                       ])),

@@ -4,6 +4,7 @@ import 'package:email_password_login/model/user_model.dart';
 import 'package:email_password_login/screens/notification_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -16,6 +17,19 @@ class MapSampleState extends State<MapSample> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
+  final databaseRef =
+      FirebaseDatabase.instance.reference().child("Sensor Data");
+
+  var latitude = 0.0;
+  var longitude = 0.0;
+
+  static final Marker _kmark = Marker(
+      markerId: MarkerId('_kmark'),
+      infoWindow: InfoWindow(title: 'Google plex'),
+      icon: BitmapDescriptor.defaultMarker,
+      position: LatLng(23.83780840691303, 90.35788633293909));
+  // position: LatLng(latitude, longitude));
+
   @override
   void initState() {
     super.initState();
@@ -27,6 +41,20 @@ class MapSampleState extends State<MapSample> {
       this.loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
+
+    databaseRef.onValue.listen((event) {
+      var snapshot = event.snapshot;
+      Map<dynamic, dynamic> values = snapshot.value;
+      values.forEach((key, values) {
+        if (key == 'Latitude') {
+          latitude = values;
+        }
+        if (key == 'Longitude') {
+          longitude = values;
+        }
+        setState(() {});
+      });
+    });
   }
 
   Completer<GoogleMapController> _controller = Completer();
@@ -35,6 +63,7 @@ class MapSampleState extends State<MapSample> {
     // target: LatLng(37.42796133580664, -122.085749655962),
     //target: LatLng(23.748742, 90.373972),
     target: LatLng(23.83780840691303, 90.35788633293909),
+    //target: LatLng(latitude,longitude),
     zoom: 14.4746,
   );
 
@@ -43,6 +72,7 @@ class MapSampleState extends State<MapSample> {
       //target: LatLng(37.43296265331129, -122.08832357078792),
       //target: LatLng(23.748742, 90.373972),
       target: LatLng(23.83780840691303, 90.35788633293909),
+      //target: LatLng(latitude,longitude),
       tilt: 59.440717697143555,
       zoom: 19.151926040649414);
 
@@ -55,7 +85,7 @@ class MapSampleState extends State<MapSample> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Expanded(child: Text('Child Location')),
+              Expanded(child: Text('Baby Location')),
               IconButton(
                 icon: Icon(
                   Icons.circle_notifications,
@@ -141,8 +171,16 @@ class MapSampleState extends State<MapSample> {
         ],
         //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
       ),
+      // body: GoogleMap(
+      //   mapType: MapType.hybrid,
+      //   initialCameraPosition: _kGooglePlex,
+      //   onMapCreated: (GoogleMapController controller) {
+      //     _controller.complete(controller);
+      //   },
+      // ),
       body: GoogleMap(
         mapType: MapType.hybrid,
+        markers: {_kmark},
         initialCameraPosition: _kGooglePlex,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);

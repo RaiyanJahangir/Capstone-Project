@@ -1,12 +1,16 @@
 // ignore_for_file: prefer_const_constructors, duplicate_ignore, non_constant_identifier_names
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/babies_model.dart';
 import 'package:email_password_login/screens/user_home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:email_password_login/screens/profile.dart';
 import 'package:email_password_login/screens/notification_screen.dart';
@@ -38,6 +42,11 @@ class _RegisterChildState extends State<RegisterChild> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
+  // initializing some values for image upload
+  File? _image;
+  final imagePicker = ImagePicker();
+  String? downloadURL;
+
   // ignore: prefer_typing_uninitialized_variables
   var selectTypeGen, selectTypeBld, selectedGenderType, selectBloodType;
   // ignore: prefer_final_fields, unused_field
@@ -63,6 +72,40 @@ class _RegisterChildState extends State<RegisterChild> {
       holder_gen = selectTypeGen;
       holder_bldgrp = selectTypeBld;
     });
+  }
+
+  // picking the image
+
+  Future imagePickerMethod() async {
+    final pick = await imagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pick != null) {
+        _image = File(pick.path);
+      } else {
+        showSnackBar("No File selected", Duration(milliseconds: 400));
+      }
+    });
+  }
+
+  //uploading the image to firebase cloudstore
+  Future uploadImage(File _image, ChildModel childModel) async {
+    final imgId = DateTime.now().millisecondsSinceEpoch.toString();
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    Reference reference = FirebaseStorage.instance
+        .ref()
+        .child('${childModel.uid}/images')
+        .child("post_$imgId");
+
+    await reference.putFile(_image);
+    downloadURL = await reference.getDownloadURL();
+
+    // cloud firestore
+    await firebaseFirestore
+        .collection("Babies")
+        .doc(childModel.uid)
+        .collection("images")
+        .add({'downloadURL': downloadURL}).whenComplete(
+            () => showSnackBar("Image Uploaded", Duration(seconds: 2)));
   }
 
   void initState() {
@@ -432,7 +475,7 @@ class _RegisterChildState extends State<RegisterChild> {
       decoration: InputDecoration(
           prefixIcon: Icon(Icons.account_circle),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Child's Relation to you",
+          hintText: "Baby's Relation to you",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
             10,
@@ -512,7 +555,7 @@ class _RegisterChildState extends State<RegisterChild> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Expanded(child: Text('Child Registration')),
+              Expanded(child: Text('Baby Registration')),
               IconButton(
                 icon: Icon(
                   Icons.circle_notifications,
@@ -662,6 +705,51 @@ class _RegisterChildState extends State<RegisterChild> {
                     SizedBox(
                       height: 10,
                     ),
+                    ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: SizedBox(
+                            height: 100,
+                            width: double.infinity,
+                            child: Column(children: [
+                              const Text("Upload Image"),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Expanded(
+                                flex: 4,
+                                child: Container(
+                                  width: 310,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(22),
+                                    border:
+                                        Border.all(color: Colors.blueAccent),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        // the image that we wanted to upload
+                                        Expanded(
+                                            child: _image == null
+                                                ? const Center(
+                                                    child: Text(
+                                                        "No image selected"))
+                                                : Image.file(_image!)),
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              imagePickerMethod();
+                                            },
+                                            child: const Text("Select Image")),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ]))),
+                    SizedBox(
+                      height: 10,
+                    ),
                     registerButton,
                   ],
                 ),
@@ -729,7 +817,9 @@ class _RegisterChildState extends State<RegisterChild> {
         .collection("Babies")
         .doc(user.uid)
         .set(childModel.toMap());
-    Fluttertoast.showToast(msg: "Child Registered");
+    Fluttertoast.showToast(msg: "Baby Registered");
+
+    uploadImage(_image!, childModel);
 
     // Navigator.pushAndRemoveUntil(
     //     (context),
@@ -743,5 +833,10 @@ class _RegisterChildState extends State<RegisterChild> {
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+
+  showSnackBar(String snackText, Duration d) {
+    final snackBar = SnackBar(content: Text(snackText), duration: d);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

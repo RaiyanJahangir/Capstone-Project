@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/screens/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:email_password_login/screens/home_screen.dart';
+import 'package:email_password_login/screens/info_card.dart';
 import 'package:email_password_login/model/user_model.dart';
 import 'package:email_password_login/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -47,10 +48,9 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: (){
+            onPressed: () {
               Navigator.pop(context);
-            }
-        ),
+            }),
         centerTitle: false,
         title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -137,75 +137,291 @@ class _HomeState extends State<Home> {
 
   Widget displayUserInformation(context, snapshot) {
     final user = snapshot.data;
-
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Email : $myEmail",
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.grey[800],
-              fontFamily: 'Open Sans',
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w900,
-            ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("Users")
+                    .doc(loggedInUser.uid)
+                    .collection("images")
+                    .snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (!snapshot.hasData) {
+                    return (const Center(child: Text("No Images Found")));
+                  } else {
+                    return ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        String url = snapshot.data!.docs[index]['downloadURL'];
+                        return CircleAvatar(
+                          backgroundColor: Colors.white,
+                          radius: 120,
+                          child: Image.network(url, fit: BoxFit.cover),
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
+              Expanded(
+                flex: 5,
+                child: Container(
+                  color: Colors.grey[200],
+                  child: Center(
+                      child: Card(
+                          margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                          child: Container(
+                              width: 400.0,
+                              height: 350.0,
+                              child: Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Profile",
+                                      style: TextStyle(
+                                        fontSize: 17.0,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                    ),
+                                    Divider(
+                                      color: Colors.grey[300],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.people,
+                                          color: Colors.blueAccent[400],
+                                          size: 35,
+                                        ),
+                                        SizedBox(
+                                          width: 20.0,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Name",
+                                              style: TextStyle(
+                                                fontSize: 15.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              name,
+                                              style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.grey[400],
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.email,
+                                          color: Colors.yellowAccent[400],
+                                          size: 35,
+                                        ),
+                                        SizedBox(
+                                          width: 20.0,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Email",
+                                              style: TextStyle(
+                                                fontSize: 15.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              myEmail,
+                                              style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.grey[400],
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.work,
+                                          color: Colors.pinkAccent[400],
+                                          size: 35,
+                                        ),
+                                        SizedBox(
+                                          width: 20.0,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Occupation",
+                                              style: TextStyle(
+                                                fontSize: 15.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              occupation,
+                                              style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.grey[400],
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.man,
+                                          color: Colors.pinkAccent[400],
+                                          size: 35,
+                                        ),
+                                        SizedBox(
+                                          width: 20.0,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Gender",
+                                              style: TextStyle(
+                                                fontSize: 15.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              gender,
+                                              style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.grey[400],
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.confirmation_number_sharp,
+                                          color: Colors.lightGreen[400],
+                                          size: 35,
+                                        ),
+                                        SizedBox(
+                                          width: 20.0,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Age",
+                                              style: TextStyle(
+                                                fontSize: 15.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              age.toString(),
+                                              style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.grey[400],
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )))),
+                ),
+              ),
+              Expanded(
+                  child: Container(
+                      color: Colors.white,
+                      child: Center(
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              "$name",
+                              style: TextStyle(
+                                fontSize: 40.0,
+                                color: Colors.blueGrey[800],
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Pacifico",
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                              width: 200,
+                              child: Divider(
+                                color: Colors.black,
+                              ),
+                            ),
+                            InfoCard(
+                                text: "$myEmail",
+                                icon: Icons.email,
+                                onPressed: () async {}),
+                            InfoCard(
+                                text: "$occupation",
+                                icon: Icons.work,
+                                onPressed: () async {}),
+                            InfoCard(
+                                text: "$gender",
+                                icon: Icons.man,
+                                onPressed: () async {}),
+                            InfoCard(
+                                text: "$age",
+                                icon: Icons.confirmation_number_sharp,
+                                onPressed: () async {}),
+                          ],
+                        ),
+                      ))),
+            ],
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Name : $name",
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.orange[800],
-              fontFamily: 'Open Sans',
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Gender : $gender",
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.deepPurple[800],
-              fontFamily: 'Open Sans',
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Age : $age",
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.lightBlue[800],
-              fontFamily: 'Open Sans',
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Occupation : $occupation",
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.pink[800],
-              fontFamily: 'Open Sans',
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

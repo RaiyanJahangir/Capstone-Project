@@ -71,7 +71,8 @@ class _UserHomeState extends State<UserHome> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.person),
-          onPressed: (){},),
+          onPressed: () {},
+        ),
         centerTitle: true,
         title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -199,7 +200,7 @@ class _UserHomeState extends State<UserHome> {
                           Expanded(
                             flex: 1,
                             child: Text(
-                              'Register Child',
+                              'Register Baby',
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.blue[400],

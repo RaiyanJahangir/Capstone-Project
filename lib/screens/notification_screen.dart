@@ -46,24 +46,26 @@ class NotificationScreenState extends State<NotificationScreen> {
     //_configureFirebaseListeners();
   }
 
-  //late List<Message> messagesList;
+  // late List<Message> messagesList;
 
   // _configureFirebaseListeners() {
-  //   _firebaseMessaging.configure(
-  //     //this line shows error
-  //     onMessage: (Map<String, dynamic> message) async {
-  //       print('onMessage: $message');
-  //       _setMessage(message);
-  //     },
-  //     onLaunch: (Map<String, dynamic> message) async {
-  //       print('onLaunch: $message');
-  //       _setMessage(message);
-  //     },
-  //     onResume: (Map<String, dynamic> message) async {
+  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+  //     try {
+  //       final data = message.data;
+  //       print(message.notification);
+  //     } catch (e) {
+  //       print(e);
+  //     }
+  //   });
+  //   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+  //     try {
   //       print('onResume: $message');
-  //       _setMessage(message);
-  //     },
-  //   );
+  //       final data = message.data;
+  //       print(message.notification);
+  //     } catch (e) {
+  //       print(e);
+  //     }
+  //   });
   //   // _firebaseMessaging.requestNotificationPermissions(
   //   //   const IosNotificationSettings(sound: true, badge: true, alert: true),
   //   // );
@@ -83,26 +85,58 @@ class NotificationScreenState extends State<NotificationScreen> {
   // }
 
   @override
+  //_getToken();
+  //_configureFirebaseListeners();
+
+// _configureFirebaseListeners() {
+//   _firebaseMessaging.configure(
+//     //this line shows error
+//     onMessage: (Map<String, dynamic> message) async {
+//       print('onMessage: $message');
+//       _setMessage(message);
+//     },
+//     onLaunch: (Map<String, dynamic> message) async {
+//       print('onLaunch: $message');
+//       _setMessage(message);
+//     },
+//     onResume: (Map<String, dynamic> message) async {
+//       print('onResume: $message');
+//       _setMessage(message);
+//     },
+//   );
+//   // _firebaseMessaging.requestNotificationPermissions(
+//   //   const IosNotificationSettings(sound: true, badge: true, alert: true),
+//   // );
+// }
+
+// _setMessage(Map<String, dynamic> message) {
+//   final notification = message['notification'];
+//   final data = message['data'];
+//   final String title = notification['title'];
+//   final String body = notification['body'];
+//   String mMessage = data['message'];
+//   print("Title: $title, body: $body, message: $mMessage");
+//   setState(() {
+//     Message msg = Message(title, body, mMessage);
+//     messagesList.add(msg);
+//   });
+// }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+        centerTitle: false,
         title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(child: Text('Notifications')),
-              // IconButton(
-              //   icon: Icon(
-              //     Icons.circle_notifications,
-              //     color: Colors.white,
-              //     size: 24.0,
-              //   ),
-              //   onPressed: () {
-              //     Navigator.of(context).push(
-              //         MaterialPageRoute(builder: (c) => NotificationScreen()));
-              //   },
-              // ),
             ]),
         actions: [
           PopupMenuButton(
@@ -177,44 +211,156 @@ class NotificationScreenState extends State<NotificationScreen> {
         ],
         //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
       ),
-      // body: ListView.builder(
-      //   itemCount: null == messagesList ? 0 : messagesList.length,
-      //   itemBuilder: (BuildContext context, int index) {
-      //     return Card(
-      //       child: Padding(
-      //         padding: EdgeInsets.all(10.0),
-      //         child: Text(
-      //           messagesList[index].message,
-      //           style: TextStyle(
-      //             fontSize: 16.0,
-      //             color: Colors.black,
+      body: listView(),
+      //   body: ListView.builder(
+      //     itemCount: null == messagesList ? 0 : messagesList.length,
+      //     itemBuilder: (BuildContext context, int index) {
+      //       return Card(
+      //         child: Padding(
+      //           padding: EdgeInsets.all(10.0),
+      //           child: Text(
+      //             messagesList[index].message,
+      //             style: TextStyle(
+      //               fontSize: 16.0,
+      //               color: Colors.black,
+      //             ),
       //           ),
       //         ),
-      //       ),
-      //     );
-      //   },
-      // ),
+      //       );
+      //     },
+      //   ),
     );
   }
 
-  // Future<void> logout(BuildContext context) async {
-  //   await FirebaseAuth.instance.signOut();
-  //   Navigator.of(context).pushReplacement(
-  //       MaterialPageRoute(builder: (context) => LoginScreen()));
-  // }
+  Widget listView() {
+    return ListView.separated(
+      itemCount: 15,
+      separatorBuilder: (context, index) {
+        return Divider(height: 0);
+      },
+      itemBuilder: (context, index) {
+        return listViewItem(index);
+      },
+    );
+  }
+
+  Widget listViewItem(int index) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          prefixIcon(),
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.only(left: 10),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    message(index),
+                    timeAnddata(index),
+                  ]),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget prefixIcon() {
+    return Container(
+      height: 50,
+      width: 50,
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.grey.shade300,
+      ),
+      child: Icon(
+        Icons.notifications,
+        size: 25,
+        color: Colors.grey.shade700,
+      ),
+    );
+  }
+
+  Widget message(int index) {
+    double textSize = 14;
+    return Container(
+      child: RichText(
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+        text: TextSpan(
+          text: 'message',
+          style: TextStyle(
+              fontSize: textSize,
+              color: Colors.black,
+              fontWeight: FontWeight.bold),
+          children: [
+            TextSpan(
+                text: 'Notification description',
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                ))
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget timeAnddata(int index) {
+    return Container(
+      margin: EdgeInsets.only(top: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            '23-01-2022',
+            style: TextStyle(fontSize: 10),
+          )
+        ],
+      ),
+    );
+  }
+
+// body: ListView.builder(
+//   itemCount: null == messagesList ? 0 : messagesList.length,
+//   itemBuilder: (BuildContext context, int index) {
+//     return Card(
+//       child: Padding(
+//         padding: EdgeInsets.all(10.0),
+//         child: Text(
+//           messagesList[index].message,
+//           style: TextStyle(
+//             fontSize: 16.0,
+//             color: Colors.black,
+//           ),
+//         ),
+//       ),
+//     );
+//   },
+// ),
+//   );
+// }
+
+// Future<void> logout(BuildContext context) async {
+//   await FirebaseAuth.instance.signOut();
+//   Navigator.of(context).pushReplacement(
+//       MaterialPageRoute(builder: (context) => LoginScreen()));
+// }
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
-}
 
-class Message {
-  late String title;
-  late String body;
-  late String message;
-  Message(title, body, message) {
-    this.title = title;
-    this.body = body;
-    this.message = message;
-  }
+// class Message {
+//   late String title;
+//   late String body;
+//   late String message;
+//   Message(title, body, message) {
+//     this.title = title;
+//     this.body = body;
+//     this.message = message;
+//   }
+// }
 }
