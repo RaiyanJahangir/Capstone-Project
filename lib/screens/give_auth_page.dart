@@ -264,12 +264,12 @@ class _authState extends State<auth> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 20,
-                      color: Colors.red[400],
+                      color: Colors.blue,
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.italic,
                       shadows: [
                         Shadow(
-                            color: Colors.blueAccent,
+                            color: Colors.lightBlueAccent,
                             offset: Offset(2, 1),
                             blurRadius: 10)
                       ])),

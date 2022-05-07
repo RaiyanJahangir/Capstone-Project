@@ -152,9 +152,9 @@ class guardian_homepageState extends State<guardian_homepage> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 25,
-                            color: Colors.red[400],
+                            color: Colors.blue,
                             fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic,
+                            //fontStyle: FontStyle.italic,
                             shadows: [
                               Shadow(
                                   color: Colors.blueAccent,
@@ -165,13 +165,13 @@ class guardian_homepageState extends State<guardian_homepage> {
                   Expanded(
                     child: Text(
                         //"${loggedInUser.name}",
-                      "John Cameron",
+                        "John Cameron",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.blueGrey,
                           fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
+                          //fontStyle: FontStyle.italic,
                         )),
                   ),
                   Expanded(
@@ -204,9 +204,10 @@ class guardian_homepageState extends State<guardian_homepage> {
             Expanded(
               flex: 5,
               child: GridView.count(
+                padding: EdgeInsets.all(8),
                 crossAxisCount: 2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
+                mainAxisSpacing: 5,
+                crossAxisSpacing: 5,
                 primary: false,
                 children: [
                   Card(
@@ -233,7 +234,7 @@ class guardian_homepageState extends State<guardian_homepage> {
                                     fontSize: 20,
                                     color: Colors.black54,
                                     fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic,
+                                    //fontStyle: FontStyle.italic,
                                   )))
                         ],
                       ),
@@ -263,7 +264,7 @@ class guardian_homepageState extends State<guardian_homepage> {
                                     fontSize: 20,
                                     color: Colors.black54,
                                     fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic,
+                                    //fontStyle: FontStyle.italic,
                                   )))
                         ],
                       ),
@@ -295,7 +296,7 @@ class guardian_homepageState extends State<guardian_homepage> {
                                     fontSize: 20,
                                     color: Colors.black54,
                                     fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic,
+                                    //fontStyle: FontStyle.italic,
                                   )))
                         ],
                       ),
@@ -325,7 +326,7 @@ class guardian_homepageState extends State<guardian_homepage> {
                                     fontSize: 20,
                                     color: Colors.black54,
                                     fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic,
+                                    //fontStyle: FontStyle.italic,
                                   )))
                         ],
                       ),
