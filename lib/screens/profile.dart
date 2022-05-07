@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/screens/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:email_password_login/screens/home_screen.dart';
+import 'package:email_password_login/screens/info_card.dart';
 import 'package:email_password_login/model/user_model.dart';
 import 'package:email_password_login/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -137,6 +138,7 @@ class _HomeState extends State<Home> {
   Widget displayUserInformation(context, snapshot) {
     final user = snapshot.data;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           Column(
@@ -158,10 +160,10 @@ class _HomeState extends State<Home> {
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (BuildContext context, int index) {
                         String url = snapshot.data!.docs[index]['downloadURL'];
-                        return Image.network(
-                          url,
-                          height: 300,
-                          fit: BoxFit.fitWidth,
+                        return CircleAvatar(
+                          backgroundColor: Colors.white,
+                          radius: 120,
+                          child: Image.network(url, fit: BoxFit.cover),
                         );
                       },
                     );
@@ -375,6 +377,47 @@ class _HomeState extends State<Home> {
                               )))),
                 ),
               ),
+              Expanded(
+                  child: Container(
+                      color: Colors.white,
+                      child: Center(
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              "$name",
+                              style: TextStyle(
+                                fontSize: 40.0,
+                                color: Colors.blueGrey[800],
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Pacifico",
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                              width: 200,
+                              child: Divider(
+                                color: Colors.black,
+                              ),
+                            ),
+                            InfoCard(
+                                text: "$myEmail",
+                                icon: Icons.email,
+                                onPressed: () async {}),
+                            InfoCard(
+                                text: "$occupation",
+                                icon: Icons.work,
+                                onPressed: () async {}),
+                            InfoCard(
+                                text: "$gender",
+                                icon: Icons.man,
+                                onPressed: () async {}),
+                            InfoCard(
+                                text: "$age",
+                                icon: Icons.confirmation_number_sharp,
+                                onPressed: () async {}),
+                          ],
+                        ),
+                      ))),
             ],
           ),
         ],
