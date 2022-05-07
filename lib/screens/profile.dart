@@ -47,10 +47,9 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: (){
+            onPressed: () {
               Navigator.pop(context);
-            }
-        ),
+            }),
         centerTitle: false,
         title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -142,6 +141,33 @@ class _HomeState extends State<Home> {
         children: [
           Column(
             children: [
+              StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("Users")
+                    .doc(loggedInUser.uid)
+                    .collection("images")
+                    .snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (!snapshot.hasData) {
+                    return (const Center(child: Text("No Images Found")));
+                  } else {
+                    return ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        String url = snapshot.data!.docs[index]['downloadURL'];
+                        return Image.network(
+                          url,
+                          height: 300,
+                          fit: BoxFit.fitWidth,
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
               Expanded(
                 flex: 5,
                 child: Container(
@@ -190,7 +216,7 @@ class _HomeState extends State<Home> {
                                               ),
                                             ),
                                             Text(
-                                              "nasif Shahriar",
+                                              name,
                                               style: TextStyle(
                                                 fontSize: 12.0,
                                                 color: Colors.grey[400],
@@ -226,7 +252,7 @@ class _HomeState extends State<Home> {
                                               ),
                                             ),
                                             Text(
-                                              "nasifshahriar5@gmail.com",
+                                              myEmail,
                                               style: TextStyle(
                                                 fontSize: 12.0,
                                                 color: Colors.grey[400],
@@ -262,7 +288,7 @@ class _HomeState extends State<Home> {
                                               ),
                                             ),
                                             Text(
-                                              "Banker",
+                                              occupation,
                                               style: TextStyle(
                                                 fontSize: 12.0,
                                                 color: Colors.grey[400],
@@ -298,7 +324,7 @@ class _HomeState extends State<Home> {
                                               ),
                                             ),
                                             Text(
-                                              "Male",
+                                              gender,
                                               style: TextStyle(
                                                 fontSize: 12.0,
                                                 color: Colors.grey[400],
@@ -334,7 +360,7 @@ class _HomeState extends State<Home> {
                                               ),
                                             ),
                                             Text(
-                                              "25",
+                                              age.toString(),
                                               style: TextStyle(
                                                 fontSize: 12.0,
                                                 color: Colors.grey[400],
