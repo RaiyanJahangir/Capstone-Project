@@ -813,10 +813,15 @@ class _RegisterChildState extends State<RegisterChild> {
     childModel.child_uid = docId;
     childModel.age = ageEditingController.text;
 
+    final QuerySnapshot qSnap =
+        await FirebaseFirestore.instance.collection('Babies').get();
+    final int a = qSnap.docs.length;
+    String d = a.toString();
     await firebaseFirestore
         .collection("Babies")
-        .doc(user.uid)
+        .doc("baby" + d)
         .set(childModel.toMap());
+    ////await uid = users model<-doc users->collec access array add "baby" + d
     Fluttertoast.showToast(msg: "Baby Registered");
 
     uploadImage(_image!, childModel);
