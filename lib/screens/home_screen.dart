@@ -195,8 +195,8 @@ class HomeScreenState extends State<HomeScreen> {
                   ActionChip(
                       label: Text("Guardian"),
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (c) => guardian_homepage()));
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (c) => guardian_homepage()));
                       }),
                   SizedBox(height: 15),
                   ActionChip(

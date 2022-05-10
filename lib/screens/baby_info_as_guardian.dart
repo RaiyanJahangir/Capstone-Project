@@ -14,6 +14,7 @@ import 'package:email_password_login/screens/child_info_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
 import 'package:email_password_login/screens/notification_screen.dart';
 import '../model/user_model.dart';
+import '../model/babies_model.dart';
 
 enum _MenuValues {
   logout,
@@ -22,8 +23,8 @@ String? myEmail;
 String? myName;
 
 class guardian_homepage extends StatefulWidget {
-  const guardian_homepage({Key? key}) : super(key: key);
-
+  final String text;
+  const guardian_homepage(@required this.text, {Key? key}) : super(key: key);
   @override
   guardian_homepageState createState() => guardian_homepageState();
 }
@@ -31,6 +32,7 @@ class guardian_homepage extends StatefulWidget {
 class guardian_homepageState extends State<guardian_homepage> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  ChildModel loggedInbaby= ChildModel();
 
   @override
   void initState() {
@@ -41,6 +43,14 @@ class guardian_homepageState extends State<guardian_homepage> {
         .get()
         .then((value) {
       this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+    FirebaseFirestore.instance
+        .collection("Babies")
+        .doc(widget.text)
+        .get()
+        .then((value) {
+      this.loggedInbaby = ChildModel.fromMap(value.data());
       setState(() {});
     });
   }
@@ -166,8 +176,7 @@ class guardian_homepageState extends State<guardian_homepage> {
                   ),
                   Expanded(
                     child: Text(
-                        //"${loggedInUser.name}",
-                        "John Cameron",
+                        "${loggedInbaby.name}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
