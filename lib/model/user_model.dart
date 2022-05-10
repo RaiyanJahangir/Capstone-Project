@@ -7,6 +7,7 @@ class UserModel {
   String? gender;
   int? age;
   String? occupation;
+  List? access;
 
   ///for authentication
   String? auth_name;
@@ -21,7 +22,8 @@ class UserModel {
       this.name,
       this.gender,
       this.age,
-      this.occupation});
+      this.occupation,
+      this.access});
 
   //receiving data from server
   factory UserModel.fromMap(map) {
@@ -32,6 +34,7 @@ class UserModel {
       gender: map['Gender'],
       age: map['Age'],
       occupation: map['Occupation'],
+      access: map['access'],
     );
   }
 

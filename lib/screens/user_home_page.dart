@@ -39,6 +39,7 @@ class _UserHomeState extends State<UserHome> {
 
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  List? Access;
 
   @override
   void initState() {
@@ -52,7 +53,9 @@ class _UserHomeState extends State<UserHome> {
         .then((value) {
       // ignore: unnecessary_this
       this.loggedInUser = UserModel.fromMap(value.data());
-      setState(() {});
+      setState(() {
+        Access=loggedInUser.access;
+      });
     });
     // FirebaseFirestore.instance
     //     .collection("Babies")
@@ -168,11 +171,12 @@ class _UserHomeState extends State<UserHome> {
         child: Column(
           children: [
             Expanded(
-              flex: 5,
+              flex: 3,
               child: GridView.count(
                 crossAxisCount: 1,
                 mainAxisSpacing: 5,
                 crossAxisSpacing: 5,
+                padding: EdgeInsets.all(8),
                 primary: false,
                 children: [
                   Card(
@@ -237,95 +241,22 @@ class _UserHomeState extends State<UserHome> {
               child: Text('Nurturer'),
             ),
             Expanded(
-              child: DropdownButton(
-                borderRadius: BorderRadius.circular(10),
-                items: _gurdType
-                    .map((value) => DropdownMenuItem(
-                          child: Text(
-                            value,
-                            style: TextStyle(
-                              color: Colors.blue[400],
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          value: value,
-                        ))
-                    .toList(),
-                onChanged: (selectedGurdType) {
-                  setState(() {
-                    selectType = selectedGurdType;
-                  });
-                },
-                value: selectType,
-                isExpanded: false,
-                hint: Text(
-                  "Select Type Of Viewer",
-                  style: TextStyle(
-                    color: Colors.blue[400],
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-
-              // child: StreamBuilder<QuerySnapshot>(
-              //   stream:
-              //       FirebaseFirestore.instance.collection("Babies").snapshots(),
-              //   builder: (context, snapshot) {
-              //     if (!snapshot.hasData) {
-              //       return Text("Loading");
-              //     }
-              //     return Row(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       // ignore: prefer_const_literals_to_create_immutables
-              //       children: <Widget>[
-              //         Icon(
-              //           Icons.payments_outlined,
-              //           size: 30,
-              //           color: Colors.black,
-              //         ),
-              //         SizedBox(
-              //           width: 20,
-              //         ),
-              //         DropdownButton(
-              //             // ignore: prefer_const_literals_to_create_immutables
-              //             items: snapshot.data!.docs
-              //                 .map((DocumentSnapshot document) {
-              //               return DropdownMenuItem(
-              //                 value: document.get("Name"),
-              //                 // ignore: unnecessary_string_interpolations
-              //                 child: Text('${document.get("Name")}'),
-              //                 onTap: () {
-              //                   selectedTypeEditingController.text =
-              //                       document.get("Name");
-              //                 },
-              //               );
-              //             }).toList(),
-              //             onChanged: (catValue) {
-              //               setState(() {
-              //                 selectedCat = catValue;
-              //               });
-              //             },
-              //             value: selectedCat,
-              //             isExpanded: false,
-              //             // ignore: unnecessary_new
-              //             hint: new Text(
-              //               "List of babies",
-              //               style: TextStyle(
-              //                 color: Colors.black,
-              //                 fontSize: 20,
-              //                 fontWeight: FontWeight.bold,
-              //               ),
-              //             )),
-              //       ],
-              //     );
-              //   },
-              // ),
+              flex: 2,
+              child: ListView(
+              children: Access!.map((strone){
+              return Container(
+                  child: Text(strone),
+                  margin: EdgeInsets.all(5),
+                  padding: EdgeInsets.all(15),
+                  color: Colors.green[100],
+                  );
+              }
+              ).toList(),
             ),
-          ],
-        ),
-      ),
+            ),
+      ]
+    ),
+    )
     );
   }
 
@@ -333,9 +264,4 @@ class _UserHomeState extends State<UserHome> {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
-  // Future<void> logout(BuildContext context) async {
-  //   await FirebaseAuth.instance.signOut();
-  //   Navigator.of(context).pushReplacement(
-  //       MaterialPageRoute(builder: (context) => LoginScreen()));
-  // }
 }
