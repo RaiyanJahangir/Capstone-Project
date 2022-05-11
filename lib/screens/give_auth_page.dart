@@ -38,14 +38,6 @@ class _authState extends State<auth> {
       this.loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
-    FirebaseFirestore.instance
-        .collection("Babies")
-        .doc(widget.text)
-        .get()
-        .then((value) {
-      this.loggedInbaby = ChildModel.fromMap(value.data());
-      setState(() {});
-    });
   }
 
   supervisor? _site = supervisor.guardian;
@@ -260,8 +252,8 @@ class _authState extends State<auth> {
         .get();
     nuruid=snapshot.docs.first['uid'].toString();
     print(nuruid);
-    await FirebaseFirestore.instance.collection('Users').doc(nuruid).update({"access": FieldValue.arrayUnion([loggedInbaby.uid])});
-    print(loggedInbaby.uid);
+    await FirebaseFirestore.instance.collection('Users').doc(nuruid).update({"access": FieldValue.arrayUnion([widget.text])});
+    print(widget.text);
     }
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
