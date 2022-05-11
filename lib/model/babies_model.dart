@@ -18,7 +18,7 @@ class ChildModel {
   String? mothersName;
   String? childsReltn;
   String? guard;
-  String? child_uid;
+  String? baby_uid;
   List? Guardians;
 
   ChildModel({
@@ -33,7 +33,7 @@ class ChildModel {
     this.bloodGrp,
     this.birthCertNo,
     this.childsReltn,
-    this.child_uid,
+    this.baby_uid,
     this.age,
   });
 
@@ -52,14 +52,14 @@ class ChildModel {
       fathersName: map['fathers name'],
       mothersName: map['mothers name'],
       childsReltn: map['childs relation to you'],
-      child_uid: map['child uid'],
+      baby_uid: map['child uid'],
     );
   }
 
   //sending data to our server
   Map<String, dynamic> toMap() {
     return {
-      'child_uid': child_uid,
+      'uid': baby_uid,
       'name': name,
       'dob': dob,
       'gender': gender,
