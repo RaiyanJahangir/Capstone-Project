@@ -209,8 +209,8 @@ class HomeScreenState extends State<HomeScreen> {
                   ActionChip(
                       label: Text("Authorize people"),
                       onPressed: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (c) => auth()));
+                        // Navigator.of(context)
+                        //     .push(MaterialPageRoute(builder: (c) => auth()));
                       }),
                   SizedBox(height: 5),
                   ActionChip(
