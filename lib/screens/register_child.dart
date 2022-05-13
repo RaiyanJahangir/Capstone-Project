@@ -803,6 +803,7 @@ class _RegisterChildState extends State<RegisterChild> {
     String d = a.toString();
     String baby_uid = "baby" + d;
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    UserModel userModel = UserModel();
     ChildModel childModel = ChildModel();
     childModel.uid = user!.uid;
     childModel.name = nameEditingController.text;
@@ -818,12 +819,19 @@ class _RegisterChildState extends State<RegisterChild> {
     childModel.baby_uid = baby_uid;
     childModel.age = ageEditingController.text;
 
+    userModel.gaccess = baby_uid;
+
     await firebaseFirestore
         .collection("Babies")
         .doc(baby_uid)
         .set(childModel.toMap());
     ////await uid = users model<-doc users->collec access array add "baby" + d
     Fluttertoast.showToast(msg: "Baby Registered");
+
+    await firebaseFirestore
+        .collection("Users")
+        .doc(user.uid)
+        .update(userModel.updateBabyuid(baby_uid));
 
     uploadImage(_image!, childModel);
 

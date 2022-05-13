@@ -72,9 +72,7 @@ class ChildModel {
       'mothers_name': mothersName,
       'childs_rltn': childsReltn,
       'guardian': FieldValue.arrayUnion([
-        {
-          "uid": uid,
-        }
+        uid,
       ]),
     };
   }
