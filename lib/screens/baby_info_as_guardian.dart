@@ -189,7 +189,7 @@ class guardian_homepageState extends State<guardian_homepage> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (c) => ChildInfoScreen()));
+                            builder: (c) => ChildInfoScreen(loggedInbaby.uid ?? '')));
                       },
                       child: Container(
                         decoration: const BoxDecoration(

@@ -19,7 +19,7 @@ class ChildModel {
   String? childsReltn;
   String? guard;
   String? child_uid;
-  List? Guardians;
+  List? guardian;
 
   ChildModel({
     this.uid,
@@ -35,6 +35,7 @@ class ChildModel {
     this.childsReltn,
     this.child_uid,
     this.age,
+    this.guardian
   });
 
   ///Receiving data from server
@@ -48,11 +49,12 @@ class ChildModel {
       h8: map['height'],
       w8: map['weight'],
       bloodGrp: map['blood_grp'],
-      birthCertNo: map['birth_cert_no.'],
+      birthCertNo: map['birth_cert_no'],
       fathersName: map['fathers name'],
       mothersName: map['mothers name'],
       childsReltn: map['childs relation to you'],
       child_uid: map['child uid'],
+      guardian: map['guardian'],
     );
   }
 
@@ -60,6 +62,7 @@ class ChildModel {
   Map<String, dynamic> toMap() {
     return {
       'child_uid': child_uid,
+      'uid': uid,
       'name': name,
       'dob': dob,
       'gender': gender,

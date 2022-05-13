@@ -216,8 +216,8 @@ class HomeScreenState extends State<HomeScreen> {
                   ActionChip(
                       label: Text("Check baby Info"),
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (c) => ChildInfoScreen()));
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (c) => ChildInfoScreen()));
                       }),
                   SizedBox(height: 5),
                   ActionChip(

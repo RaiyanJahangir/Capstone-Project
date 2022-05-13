@@ -54,7 +54,7 @@ class _UserHomeState extends State<UserHome> {
       // ignore: unnecessary_this
       this.loggedInUser = UserModel.fromMap(value.data());
       setState(() {
-        Access=loggedInUser.access;
+        Access=loggedInUser.gaccess;
       });
     });
   }
@@ -254,8 +254,8 @@ class _UserHomeState extends State<UserHome> {
         .doc(uidname)
         .get().then((value) {
       Map data = value.data() as Map;
-      return data['name'];
+      print(data['name']);
     });
-    return 'error loading';
+    return 'error';
   }
 }

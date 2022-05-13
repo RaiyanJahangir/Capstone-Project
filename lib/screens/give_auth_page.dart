@@ -25,8 +25,6 @@ class _authState extends State<auth> {
   UserModel loggedInUser = UserModel();
   ChildModel loggedInbaby=ChildModel();
 
-  var data;
-
   @override
   void initState() {
     super.initState();
@@ -43,13 +41,45 @@ class _authState extends State<auth> {
   supervisor? _site = supervisor.guardian;
   String? _name;
   String? _email;
-  String? _box = 'Baby1';
+  String? _box = 'Guardian';
   String? _relation;
 
   final auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final nameEditingController = TextEditingController();
   final emailEditingController = TextEditingController();
+  final authas = TextEditingController();
+  var data;
+
+  Widget _authlist() {
+    return DropdownButton<String>(
+      value: _box,
+      icon: const Icon(
+        Icons.arrow_downward,
+        color: Colors.blue,
+      ),
+      iconSize: 24,
+      elevation: 16,
+      style: const TextStyle(color: Colors.blue),
+      // underline: Container(
+      //   height: 2,
+      //   color: Colors.blue,
+      // ),
+      onChanged: (newValue) {
+        setState(() {
+          _box = newValue!;
+          authas.text = newValue;
+        });
+      },
+      items: <String>['Guardian', 'Nurturer']
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+  }
 
   Widget _buildemail() {
     return TextFormField(
@@ -206,6 +236,19 @@ class _authState extends State<auth> {
                       ),
                       _buildemail(),
                       SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'Give Authorization as: ',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      _authlist(),
+                      SizedBox(
                         height: 10,
                       ),
                       TextButton(
@@ -224,6 +267,7 @@ class _authState extends State<auth> {
                           } else {
                             _formKey.currentState!.save();
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                duration: const Duration(seconds: 2),
                                 content: Text(
                                     'Sending Data to the Cloud Firestore')));
                           }
@@ -231,7 +275,8 @@ class _authState extends State<auth> {
 
                           ///authetication trial
                           sendData(
-                              emailEditingController.text
+                              emailEditingController.text,
+                              authas.text
                           );
                         },
                       )
@@ -244,16 +289,26 @@ class _authState extends State<auth> {
     );
   }
 
-  Future<void> sendData(String email) async {
-    String nuruid;
+  Future<void> sendData(String email,String authp) async {
+    String euid;
+    bool err=true;
     final snapshot = await FirebaseFirestore.instance
         .collection('Users')
         .where('Email', isEqualTo: email)
         .get();
-    nuruid=snapshot.docs.first['uid'].toString();
-    print(nuruid);
-    await FirebaseFirestore.instance.collection('Users').doc(nuruid).update({"access": FieldValue.arrayUnion([widget.text])});
-    print(widget.text);
+    euid=snapshot.docs.first['uid'].toString();if(authp=='Guardian'){
+        await FirebaseFirestore.instance.collection('Users').doc(euid).update({"gaccess": FieldValue.arrayUnion([widget.text])});
+      }
+      else if(authp=='Nurturer'){
+        await FirebaseFirestore.instance.collection('Users').doc(euid).update({"naccess": FieldValue.arrayUnion([widget.text])});
+      }
+      print(widget.text);
+      print(authp);
+      await ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        duration: const Duration(seconds: 2),
+        content: Text('Authorized as '+ authp),
+      ),);
+      Navigator.pop(context);
     }
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
