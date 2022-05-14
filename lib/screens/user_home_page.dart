@@ -40,6 +40,7 @@ class _UserHomeState extends State<UserHome> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
   List? Access;
+  int itemCount = 0;
 
   @override
   void initState() {
@@ -54,7 +55,10 @@ class _UserHomeState extends State<UserHome> {
       // ignore: unnecessary_this
       this.loggedInUser = UserModel.fromMap(value.data());
       setState(() {
-        Access=loggedInUser.gaccess;
+        Access = loggedInUser.gaccess;
+        if (Access!.isNotEmpty) {
+          itemCount = Access!.length;
+        }
       });
     });
   }
@@ -80,8 +84,8 @@ class _UserHomeState extends State<UserHome> {
                     size: 24.0,
                   ),
                   onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (c) => NotificationScreen()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (c) => NotificationScreen()));
                   },
                 ),
               ]),
@@ -159,100 +163,100 @@ class _UserHomeState extends State<UserHome> {
           //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
         ),
         body: Container(
-          child: Column(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: GridView.count(
-                    crossAxisCount: 1,
-                    mainAxisSpacing: 5,
-                    crossAxisSpacing: 5,
-                    padding: EdgeInsets.all(8),
-                    primary: false,
-                    children: [
-                      Card(
-                        elevation: 1,
-                        child: InkWell(
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => RegisterChild(),
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            // ignore: prefer_const_literals_to_create_immutables
-                            children: [
-                              Expanded(
-                                flex: 4,
-                                child: Lottie.asset(
-                                  "assets/child_animation.json",
-                                  width: 200,
-                                  height: 200,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                  'Register Baby',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.blue[400],
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.normal,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+          child: Column(children: [
+            Expanded(
+              flex: 3,
+              child: GridView.count(
+                crossAxisCount: 1,
+                mainAxisSpacing: 5,
+                crossAxisSpacing: 5,
+                padding: EdgeInsets.all(8),
+                primary: false,
+                children: [
+                  Card(
+                    elevation: 1,
+                    child: InkWell(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RegisterChild(),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: ListView(
-                    children: Access!.map((strone){
-                      return Container(
-                        child: InkWell(
-                          onTap: () {
-                            //print('hei');
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        guardian_homepage(strone)));
-                          },
-                          child: new Text(
-                            strone,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        // ignore: prefer_const_literals_to_create_immutables
+                        children: [
+                          Expanded(
+                            flex: 4,
+                            child: Lottie.asset(
+                              "assets/child_animation.json",
+                              width: 200,
+                              height: 200,
+                              fit: BoxFit.fill,
+                            ),
                           ),
-                        ),
-                        margin: EdgeInsets.all(5),
-                        padding: EdgeInsets.all(15),
-                        color: Colors.blue[100],
-                      );
-                    }
-                    ).toList(),
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              'Register Baby',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.blue[400],
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ]
-          ),
-        )
-    );
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: itemCount > 0
+                  ? ListView(
+                      children: Access!.map((strone) {
+                        return Container(
+                          child: InkWell(
+                            onTap: () {
+                              //print('hei');
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          guardian_homepage(strone)));
+                            },
+                            child: new Text(
+                              strone,
+                            ),
+                          ),
+                          margin: EdgeInsets.all(5),
+                          padding: EdgeInsets.all(15),
+                          color: Colors.blue[100],
+                        );
+                      }).toList(),
+                    )
+                  : Center(child: const Text('No child registered')),
+            ),
+          ]),
+        ));
   }
 
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
+
   Future<String> bname(String uidname) async {
     String a;
     var snapshot = await FirebaseFirestore.instance
         .collection('user')
         .doc(uidname)
-        .get().then((value) {
+        .get()
+        .then((value) {
       Map data = value.data() as Map;
       print(data['name']);
     });
