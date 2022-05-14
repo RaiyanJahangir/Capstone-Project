@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/user_model.dart';
-import 'package:email_password_login/screens/give_auth_page.dart';
 import 'package:email_password_login/screens/notification_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:email_password_login/model/babies_model.dart';
 
 import 'give_auth_page.dart';
 
@@ -14,7 +13,8 @@ String? myEmail;
 String? myName;
 
 class auth extends StatefulWidget {
-  const auth({Key? key}) : super(key: key);
+  final String text;
+  const auth(@required this.text , {Key? key}) : super(key: key);
 
   @override
   State<auth> createState() => _authState();
@@ -23,6 +23,7 @@ class auth extends StatefulWidget {
 class _authState extends State<auth> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  ChildModel loggedInbaby=ChildModel();
 
   @override
   void initState() {
@@ -40,30 +41,43 @@ class _authState extends State<auth> {
   supervisor? _site = supervisor.guardian;
   String? _name;
   String? _email;
-  String? _box = 'Baby1';
+  String? _box = 'Guardian';
   String? _relation;
 
   final auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final nameEditingController = TextEditingController();
   final emailEditingController = TextEditingController();
-  final gurdTypeEditingController = TextEditingController();
-  final childEditingController = TextEditingController();
-  final relationEditingController = TextEditingController();
+  final authas = TextEditingController();
+  var data;
 
-  Widget _buildname() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'UserName'),
-      maxLength: 30,
-      validator: (value) {
-        if (value!.isEmpty) return 'Required';
-        return null;
+  Widget _authlist() {
+    return DropdownButton<String>(
+      value: _box,
+      icon: const Icon(
+        Icons.arrow_downward,
+        color: Colors.blue,
+      ),
+      iconSize: 24,
+      elevation: 16,
+      style: const TextStyle(color: Colors.blue),
+      // underline: Container(
+      //   height: 2,
+      //   color: Colors.blue,
+      // ),
+      onChanged: (newValue) {
+        setState(() {
+          _box = newValue!;
+          authas.text = newValue;
+        });
       },
-      controller: nameEditingController,
-      onSaved: (value) {
-        _name = value;
-        nameEditingController.text = value!;
-      },
+      items: <String>['Guardian', 'Nurturer']
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 
@@ -87,84 +101,6 @@ class _authState extends State<auth> {
       onSaved: (value) {
         _email = value;
         emailEditingController.text = value!;
-      },
-    );
-  }
-
-  Widget _buildbox() {
-    return Column(
-      children: <Widget>[
-        ListTile(
-          title: const Text('Guardian'),
-          leading: Radio(
-            value: supervisor.guardian,
-            groupValue: _site,
-            onChanged: (value) {
-              setState(() {
-                _site = value as supervisor?;
-                //gurdTypeEditingController.text = value!;
-              });
-            },
-          ),
-        ),
-        ListTile(
-          title: const Text('Nurturer'),
-          leading: Radio(
-            value: supervisor.nurturer,
-            groupValue: _site,
-            onChanged: (value) {
-              setState(() {
-                _site = value as supervisor?;
-              });
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildlist() {
-    return DropdownButton<String>(
-      value: _box,
-      icon: const Icon(
-        Icons.arrow_downward,
-        color: Colors.blue,
-      ),
-      iconSize: 24,
-      elevation: 16,
-      style: const TextStyle(color: Colors.blue),
-      underline: Container(
-        height: 2,
-        color: Colors.blue,
-      ),
-      onChanged: (newValue) {
-        setState(() {
-          _box = newValue!;
-          childEditingController.text = newValue;
-        });
-      },
-      items: <String>['Baby1', 'Baby2', 'Baby3', 'Baby4']
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
-  }
-
-  Widget _builduser() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Baby\'s Relation to the User'),
-      maxLength: 30,
-      validator: (value) {
-        if (value!.isEmpty) return 'Required';
-        return null;
-      },
-      controller: relationEditingController,
-      onSaved: (value) {
-        _relation = (value as String?)!;
-        relationEditingController.text = value!;
       },
     );
   }
@@ -295,43 +231,35 @@ class _authState extends State<auth> {
                   child: Column(
                     //mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildname(),
                       SizedBox(
                         height: 10,
                       ),
                       _buildemail(),
-                      SizedBox(height: 20),
-                      Text(
-                        'Give permission as: ',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                      _buildbox(),
-                      Text(
-                        'Give permission on: ',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                      _buildlist(),
                       SizedBox(
-                        height: 10,
+                        height: 20,
                       ),
-                      _builduser(),
+                      Text(
+                        'Give Authorization as: ',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      _authlist(),
                       SizedBox(
                         height: 10,
                       ),
                       TextButton(
                         child: Text(
-                          'Submit',
-                          style: TextStyle(color: Colors.blue, fontSize: 16),
+                          'Authorize',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                        style: TextButton.styleFrom(
+                            primary: Colors.orange,
+                            elevation: 2,
+                            backgroundColor: Colors.blueAccent
                         ),
                         onPressed: () {
                           if (!_formKey.currentState!.validate()) {
@@ -339,32 +267,17 @@ class _authState extends State<auth> {
                           } else {
                             _formKey.currentState!.save();
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                duration: const Duration(seconds: 2),
                                 content: Text(
                                     'Sending Data to the Cloud Firestore')));
-                            users
-                                .add({
-                                  'user-name': _name,
-                                  'email': _email,
-                                  'permission-type': _relation,
-                                  'permission-on': _box,
-                                  'relation': _relation,
-                                })
-                                .then((value) => print('User Added'))
-                                .catchError((error) =>
-                                    print('Failed to Add User : $error '));
                           }
-                          print(_site);
-                          print(_name);
                           print(_email);
-                          print(_box);
-                          print(_relation);
 
                           ///authetication trial
                           sendData(
-                              nameEditingController.text,
                               emailEditingController.text,
-                              childEditingController.text,
-                              relationEditingController.text);
+                              authas.text
+                          );
                         },
                       )
                     ],
@@ -376,23 +289,27 @@ class _authState extends State<auth> {
     );
   }
 
-  Future<void> sendData(
-      String name, String email, String child, String relation) async {
-    User? user = auth.currentUser;
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    UserModel userModel = UserModel();
-    userModel.uid = user!.uid;
-    userModel.auth_name = nameEditingController.text;
-    userModel.auth_email = emailEditingController.text;
-    userModel.auth_child = childEditingController.text;
-    userModel.auth_relation = relationEditingController.text;
-
-    await firebaseFirestore
-        .collection("Users")
-        .doc(user.uid)
-        .update(userModel.authItems(name, email, relation));
-  }
-
+  Future<void> sendData(String email,String authp) async {
+    String euid;
+    bool err=true;
+    final snapshot = await FirebaseFirestore.instance
+        .collection('Users')
+        .where('Email', isEqualTo: email)
+        .get();
+    euid=snapshot.docs.first['uid'].toString();if(authp=='Guardian'){
+        await FirebaseFirestore.instance.collection('Users').doc(euid).update({"gaccess": FieldValue.arrayUnion([widget.text])});
+      }
+      else if(authp=='Nurturer'){
+        await FirebaseFirestore.instance.collection('Users').doc(euid).update({"naccess": FieldValue.arrayUnion([widget.text])});
+      }
+      print(widget.text);
+      print(authp);
+      await ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        duration: const Duration(seconds: 2),
+        content: Text('Authorized as '+ authp),
+      ),);
+      Navigator.pop(context);
+    }
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).popUntil((route) => route.isFirst);

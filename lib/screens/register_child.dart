@@ -778,24 +778,6 @@ class _RegisterChildState extends State<RegisterChild> {
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection('Babies').doc();
     String? docId = documentReference.id;
-    // documentReference.set({
-    //   'child_uid': documentReference.id,
-    //   'name': nameEditingController.text,
-    //   'dob': dobEditingController.text,
-    //   'gender': genderEditingController.text,
-    //   'height': h8EditingController.text,
-    //   'weight': w8EditingController.text,
-    //   'blood_grp': bldgrpEditingController.text,
-    //   'birth_cert_no': birthCertNo,
-    //   'fathers_name': birthCertEditingController.text,
-    //   'mothers_name': mothersnameEditingController.text,
-    //   'childs_rltn': relationEditingController.text,
-    //   'guardian': FieldValue.arrayUnion([
-    //     {
-    //       "uid": user!.uid,
-    //     }
-    //   ]),
-    // });
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     ChildModel childModel = ChildModel();
@@ -817,6 +799,7 @@ class _RegisterChildState extends State<RegisterChild> {
         await FirebaseFirestore.instance.collection('Babies').get();
     final int a = qSnap.docs.length;
     String d = a.toString();
+
     await firebaseFirestore
         .collection("Babies")
         .doc("baby" + d)
@@ -825,11 +808,6 @@ class _RegisterChildState extends State<RegisterChild> {
     Fluttertoast.showToast(msg: "Baby Registered");
 
     uploadImage(_image!, childModel);
-
-    // Navigator.pushAndRemoveUntil(
-    //     (context),
-    //     MaterialPageRoute(builder: (context) => const UserHome()),
-    //     (route) => false);
 
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (context) => UserHome()));
