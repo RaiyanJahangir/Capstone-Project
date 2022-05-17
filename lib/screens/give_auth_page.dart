@@ -6,11 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_password_login/model/babies_model.dart';
 
-import 'give_auth_page.dart';
-
-enum supervisor { guardian, nurturer }
-String? myEmail;
-String? myName;
 
 class auth extends StatefulWidget {
   final String text;
@@ -23,7 +18,6 @@ class auth extends StatefulWidget {
 class _authState extends State<auth> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
-  ChildModel loggedInbaby=ChildModel();
 
   @override
   void initState() {
@@ -38,11 +32,9 @@ class _authState extends State<auth> {
     });
   }
 
-  supervisor? _site = supervisor.guardian;
-  String? _name;
+
   String? _email;
   String? _box = 'Guardian';
-  String? _relation;
 
   final auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -54,17 +46,13 @@ class _authState extends State<auth> {
   Widget _authlist() {
     return DropdownButton<String>(
       value: _box,
-      icon: const Icon(
+      icon: Icon(
         Icons.arrow_downward,
-        color: Colors.blue,
+        color: Colors.grey.shade900,
       ),
       iconSize: 24,
       elevation: 16,
-      style: const TextStyle(color: Colors.blue),
-      // underline: Container(
-      //   height: 2,
-      //   color: Colors.blue,
-      // ),
+      style: TextStyle(color: Colors.grey.shade900),
       onChanged: (newValue) {
         setState(() {
           _box = newValue!;
@@ -107,6 +95,8 @@ class _authState extends State<auth> {
 
   @override
   Widget build(BuildContext context) {
+    var wo = MediaQuery.of(context).size.width;
+    var wh = MediaQuery.of(context).size.height;
     CollectionReference users =
         FirebaseFirestore.instance.collection('Authorization');
     return Scaffold(
@@ -148,7 +138,6 @@ class _authState extends State<auth> {
                   subtitle: Text(
                     "${loggedInUser.name}",
                   ),
-                  //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
                   onTap: () => Navigator.of(context)
                       .push(MaterialPageRoute(builder: (c) => Home())),
                 ),
@@ -238,18 +227,19 @@ class _authState extends State<auth> {
                       SizedBox(
                         height: 20,
                       ),
-                      Text(
-                        'Give Authorization as: ',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                      _authlist(),
+                      Row(
+                          children: <Widget>[
+                        Padding(padding: EdgeInsets.only(right: 0 * wo)),
+                        Text('Give Authorization as:    ',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                                fontSize: wh * 0.02,
+                                height: 1.5)),
+                                _authlist(),
+                      ]),
                       SizedBox(
-                        height: 10,
+                        height: 20,
                       ),
                       TextButton(
                         child: Text(
@@ -296,7 +286,8 @@ class _authState extends State<auth> {
         .collection('Users')
         .where('Email', isEqualTo: email)
         .get();
-    euid=snapshot.docs.first['uid'].toString();if(authp=='Guardian'){
+    euid=snapshot.docs.first['uid'].toString();
+    if(authp=='Guardian'){
         await FirebaseFirestore.instance.collection('Users').doc(euid).update({"gaccess": FieldValue.arrayUnion([widget.text])});
       }
       else if(authp=='Nurturer'){

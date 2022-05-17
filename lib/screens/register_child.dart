@@ -550,6 +550,11 @@ class _RegisterChildState extends State<RegisterChild> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context,true);
+            }),
         centerTitle: true,
         title: Row(
             mainAxisAlignment: MainAxisAlignment.center,

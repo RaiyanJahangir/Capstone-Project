@@ -28,7 +28,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
   UserModel loggedInUser = UserModel();
   ChildModel loggedInbaby = ChildModel();
   List? guardian;
-
+  int itemCount=0;
   @override
   void initState() {
     super.initState();
@@ -40,6 +40,9 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
       this.loggedInbaby = ChildModel.fromMap(value.data());
       setState(() {
         guardian=loggedInbaby.guardian;
+        if (guardian!.isNotEmpty) {
+          itemCount = guardian!.length;
+        }
       });
     });
   }
@@ -270,23 +273,23 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
                             color: Colors.blue,
                             fontSize: wh * 0.02,
                             height: 1.5)),
-                    ListView(
-                      children: guardian!.map((strone){
-                        return Container(
-                          child: InkWell(
-                            onTap: () {
-                            },
-                            child: new Text(
-                              strone,
-                            ),
-                          ),
-                          margin: EdgeInsets.all(5),
-                          padding: EdgeInsets.all(15),
-                          color: Colors.blue[100],
-                        );
-                      }
-                      ).toList(),
-                    ),
+                    // itemCount > 0 ? ListView(
+                    //   children: guardian!.map((strone){
+                    //     return Container(
+                    //       child: InkWell(
+                    //         onTap: () {
+                    //         },
+                    //         child: new Text(
+                    //           strone,
+                    //         ),
+                    //       ),
+                    //       margin: EdgeInsets.all(5),
+                    //       padding: EdgeInsets.all(15),
+                    //       color: Colors.blue[100],
+                    //     );
+                    //   }
+                    //   ).toList(),
+                    // ) : Text(' Error Loading Guardian... '),
                   ]),
                 ],
               ),
