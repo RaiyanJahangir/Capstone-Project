@@ -5,3 +5,4 @@ emulator -avd Pixel_5_API_30 -dns-server 8.8.8.8
 Flutter clean
 Flutter pub get
 Flutter run
+flutter run --no-sound-null-safety
