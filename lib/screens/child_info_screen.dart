@@ -15,7 +15,8 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
 class ChildInfoScreen extends StatefulWidget {
-  const ChildInfoScreen({Key? key}) : super(key: key);
+  final String text;
+  const ChildInfoScreen(@required this.text, {Key? key}) : super(key: key);
 
   @override
   ChildInfoScreenState createState() => ChildInfoScreenState();
@@ -25,248 +26,34 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
   User? user = FirebaseAuth.instance.currentUser;
   String? child = FirebaseFirestore.instance.collection("Babies").id;
   UserModel loggedInUser = UserModel();
-  ChildModel childInfo = ChildModel();
-  //late final String documentId;
-  // DocumentReference docRef =
-  //     FirebaseFirestore.instance.collection('Babies').doc();
-
+  ChildModel loggedInbaby = ChildModel();
+  List? baby_guardian;
+  int itemCount=0;
   @override
   void initState() {
     super.initState();
     FirebaseFirestore.instance
-        .collection("Users")
-        .doc(user!.uid)
-        .get()
-        .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
-      setState(() {});
-    });
-
-    super.initState();
-    FirebaseFirestore.instance
         .collection("Babies")
-        .doc(user!.uid)
+        .doc(widget.text)
         .get()
         .then((value) {
-      this.childInfo = ChildModel.fromMap(value.data());
-      setState(() {});
+      this.loggedInbaby = ChildModel.fromMap(value.data());
+      setState(() {
+        baby_guardian=loggedInbaby.guardian;
+        if (baby_guardian!.isNotEmpty) {
+          itemCount = baby_guardian!.length;
+        }
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    //var nm="Nasif Shahriar";
-    var baby_name = "John Cameron";
-    var dob = "25/03/2021";
-    var gender = "Male";
-    var baby_height = "75.2cm";
-    var baby_weight = "5kg";
-    var blood_group = "A+";
-    var baby_age = "5mo";
-    //var bbc = "234678909";
-    var guardians = ["Jack Cameron", "Nasif Shahriar", "Mahapara Naim"];
 
     var wo = MediaQuery.of(context).size.width;
     var wh = MediaQuery.of(context).size.height;
 
-    //entire list
-    List<Widget> bd = [
-      Container(child: Padding(padding: EdgeInsets.only(right: 0.2 * wo))),
-      // Container(
-      //   child: Text('Baby Information',
-      //       style: TextStyle(
-      //           fontWeight: FontWeight.w200,
-      //           fontSize: wh * 0.035,
-      //           height: 3,
-      //           fontStyle: FontStyle.italic)),
-      // ),
-
-      Container(
-          child: Divider(
-              color: Colors.white, endIndent: 0.1 * wo, indent: 0.1 * wo)),
-      //taking for a row
-      Row(children: <Widget>[
-        Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-        Text('Name: ',
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-                fontSize: wh * 0.02,
-                height: 2)),
-        Text("${childInfo.name}",
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
-      ]),
-
-      //taking for a row
-      Row(children: <Widget>[
-        Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-        Text('Date Of Birth: ',
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-                fontSize: wh * 0.02,
-                height: 2)),
-        Text("${childInfo.dob}",
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
-      ]),
-
-      //taking for a row
-      Row(children: <Widget>[
-        Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-        Text('Gender: ',
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-                fontSize: wh * 0.02,
-                height: 2)),
-        Text("${childInfo.gender}",
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
-      ]),
-
-      //taking for a row
-      Row(children: <Widget>[
-        Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-        Text('Height: ',
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-                fontSize: wh * 0.02,
-                height: 2)),
-        Text("${childInfo.h8}",
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
-      ]),
-
-      //taking for a row
-      Row(children: <Widget>[
-        Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-        Text('Weight: ',
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-                fontSize: wh * 0.02,
-                height: 2)),
-        Text("${childInfo.w8}",
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
-      ]),
-
-      //taking for a row
-      Row(children: <Widget>[
-        Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-        Text('Blood Group: ',
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-                fontSize: wh * 0.02,
-                height: 2)),
-        Text("${childInfo.bloodGrp}",
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
-      ]),
-
-      //taking for a row
-      Row(children: <Widget>[
-        Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-        Text('Age: ',
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-                fontSize: wh * 0.02,
-                height: 2)),
-        Text("${childInfo.age}",
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
-      ]),
-
-      //taking for a row
-      Row(children: <Widget>[
-        Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-        Text('Birth Certificate: ',
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-                fontSize: wh * 0.02,
-                height: 1.5)),
-        Text("${childInfo.birthCertNo}",
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
-      ]),
-
-      //taking for a row
-      Row(children: <Widget>[
-        Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-        Text('List Of Guardians: ',
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-                fontSize: wh * 0.02,
-                height: 1.5)),
-        Text('',
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
-      ]),
-      // StreamBuilder(
-      //   stream: FirebaseFirestore.instance.collection("Babies").snapshots(),
-      //   builder: (BuildContext,
-      //       AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-      //     //Error Handling conditions
-      //     if (snapshot.hasError) {
-      //       return Text("Something went wrong");
-      //     }
-
-      //     if (snapshot.hasData && snapshot.data != null) {
-      //       return Text("Document does not exist");
-      //     }
-
-      //     // //Data is output to the user
-      //     // if (snapshot.connectionState == ConnectionState.done) {
-      //     //   Map<String, dynamic> data =
-      //     //       snapshot.data!.data() as Map<String, dynamic>;
-      //     //   return Text("Full Name: ${data['full_name']} ${data['last_name']}");
-      //     // }
-
-      //     return Text("loading");
-      //   },
-      // ),
-      //taking for a row
-    ];
-    //entire list
-
-    var checkedValue = true;
-    for (var i = 0; i < guardians.length; i++) {
-      bd.add(Padding(
-          padding: EdgeInsets.only(left: 0.05 * wo),
-          child: CheckboxListTile(
-            title: Text(guardians[i]),
-            value: checkedValue,
-            onChanged: (newValue) {
-              setState(() {
-                checkedValue = newValue!;
-              });
-            },
-            controlAffinity:
-                ListTileControlAffinity.leading, //  <-- leading Checkbox
-          )));
-    }
-
-    bd.add(Padding(padding: EdgeInsets.only(top: 0.02 * wh)));
-    bd.add(Padding(
-        padding: EdgeInsets.all(0.02 * wo),
-        child: ElevatedButton(
-          onPressed: () {
-            bd.removeAt(bd.length - 3);
-            print("removed\n");
-          },
-          child: Text('Revoke Auth Button',
-              style: TextStyle(fontWeight: FontWeight.bold)),
-        )));
-
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           leading: IconButton(
               icon: Icon(Icons.arrow_back),
@@ -365,10 +152,140 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
           //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
         ),
         body: Container(
-          child: Column(children: bd),
+            margin: EdgeInsets.all(20),
+            child: SingleChildScrollView(
+              reverse: true,
+              padding: EdgeInsets.all(5),
+              child: Column(
+                children: [
+                  Row(children: <Widget>[
+                    Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                    Text('Name: ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                            fontSize: wh * 0.02,
+                            height: 2)),
+                    Text("${loggedInbaby.name}",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
+                  ]),
+                  Row(children: <Widget>[
+                    Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                    Text('Date Of Birth: ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                            fontSize: wh * 0.02,
+                            height: 2)),
+                    Text("${loggedInbaby.dob}",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
+                  ]),
+
+                  //taking for a row
+                  Row(children: <Widget>[
+                    Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                    Text('Gender: ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                            fontSize: wh * 0.02,
+                            height: 2)),
+                    Text("${loggedInbaby.gender}",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
+                  ]),
+
+                  //taking for a row
+                  Row(children: <Widget>[
+                    Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                    Text('Height: ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                            fontSize: wh * 0.02,
+                            height: 2)),
+                    Text("${loggedInbaby.h8}",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
+                  ]),
+
+                  //taking for a row
+                  Row(children: <Widget>[
+                    Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                    Text('Weight: ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                            fontSize: wh * 0.02,
+                            height: 2)),
+                    Text("${loggedInbaby.w8}",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
+                  ]),
+
+                  //taking for a row
+                  Row(children: <Widget>[
+                    Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                    Text('Blood Group: ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                            fontSize: wh * 0.02,
+                            height: 2)),
+                    Text("${loggedInbaby.bloodGrp}",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
+                  ]),
+
+                  //taking for a row
+                  Row(children: <Widget>[
+                    Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                    Text('Age: ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                            fontSize: wh * 0.02,
+                            height: 2)),
+                    Text("${loggedInbaby.age}",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
+                  ]),
+                  //taking for a row
+                  Row(children: <Widget>[
+                    Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                    Text('Birth Certificate: ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                            fontSize: wh * 0.02,
+                            height: 1.5)),
+                    Text("${loggedInbaby.birthCertNo}",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
+                  ]),
+                  Row(children: <Widget>[
+                    Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                    Text('List Of Guardians: ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                            fontSize: wh * 0.02,
+                            height: 1.5)),
+                  ]),
+                  itemCount > 0 ? ListView.builder(
+                      padding: const EdgeInsets.all(8),
+                      itemCount: baby_guardian!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Text( baby_guardian![index]);
+                      }
+                  ) : Text(' Error Loading Guardian... '),
+                ],
+              ),
+          )
         ),
-      ),
-    );
+      );
   }
 
   Future<void> logout(BuildContext context) async {

@@ -7,7 +7,10 @@ class UserModel {
   String? gender;
   int? age;
   String? occupation;
-  String? gaccess;
+  List? access;
+  List? gaccess;
+  List? naccess;
+
 
   ///for authentication
   String? auth_name;
@@ -23,7 +26,10 @@ class UserModel {
       this.gender,
       this.age,
       this.occupation,
-      this.gaccess});
+      this.gaccess,
+      this.naccess
+      });
+
 
   //receiving data from server
   factory UserModel.fromMap(map) {
@@ -34,7 +40,8 @@ class UserModel {
       gender: map['Gender'],
       age: map['Age'],
       occupation: map['Occupation'],
-      //gaccess: map['Gaccess'],
+      gaccess: map['gaccess'],
+      naccess: map['naccess'],
     );
   }
 

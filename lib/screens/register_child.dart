@@ -550,6 +550,11 @@ class _RegisterChildState extends State<RegisterChild> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context,true);
+            }),
         centerTitle: true,
         title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -778,24 +783,6 @@ class _RegisterChildState extends State<RegisterChild> {
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection('Babies').doc();
     String? docId = documentReference.id;
-    // documentReference.set({
-    //   'child_uid': documentReference.id,
-    //   'name': nameEditingController.text,
-    //   'dob': dobEditingController.text,
-    //   'gender': genderEditingController.text,
-    //   'height': h8EditingController.text,
-    //   'weight': w8EditingController.text,
-    //   'blood_grp': bldgrpEditingController.text,
-    //   'birth_cert_no': birthCertNo,
-    //   'fathers_name': birthCertEditingController.text,
-    //   'mothers_name': mothersnameEditingController.text,
-    //   'childs_rltn': relationEditingController.text,
-    //   'guardian': FieldValue.arrayUnion([
-    //     {
-    //       "uid": user!.uid,
-    //     }
-    //   ]),
-    // });
 
     final QuerySnapshot qSnap =
         await FirebaseFirestore.instance.collection('Babies').get();
@@ -834,11 +821,6 @@ class _RegisterChildState extends State<RegisterChild> {
         .update(userModel.updateBabyuid(baby_uid));
 
     uploadImage(_image!, childModel);
-
-    // Navigator.pushAndRemoveUntil(
-    //     (context),
-    //     MaterialPageRoute(builder: (context) => const UserHome()),
-    //     (route) => false);
 
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (context) => UserHome()));
