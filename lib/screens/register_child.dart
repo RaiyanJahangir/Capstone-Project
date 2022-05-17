@@ -801,7 +801,7 @@ class _RegisterChildState extends State<RegisterChild> {
     childModel.age = ageEditingController.text;
 
     final QuerySnapshot qSnap =
-    await FirebaseFirestore.instance.collection('Babies').get();
+        await FirebaseFirestore.instance.collection('Babies').get();
     final int a = qSnap.docs.length;
     String d = a.toString();
 

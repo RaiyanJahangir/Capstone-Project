@@ -217,30 +217,30 @@ class _UserHomeState extends State<UserHome> {
                 ),
                 Expanded(
                   flex: 2,
-                    child: itemCount > 0
-                        ? ListView(
-                      children: Access!.map((strone) {
-                        return Container(
-                          child: InkWell(
-                            onTap: () {
-                              //print('hei');
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          guardian_homepage(strone)));
-                            },
-                            child: new Text(
-                              strone,
-                            ),
+                  child: itemCount > 0
+                      ? ListView(
+                    children: Access!.map((strone) {
+                      return Container(
+                        child: InkWell(
+                          onTap: () {
+                            //print('hei');
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        guardian_homepage(strone)));
+                          },
+                          child: new Text(
+                            strone,
                           ),
-                          margin: EdgeInsets.all(5),
-                          padding: EdgeInsets.all(15),
-                          color: Colors.blue[100],
-                        );
-                      }).toList(),
-                    )
-                        : Center(child: const Text('Don\'t have any child')),
+                        ),
+                        margin: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(15),
+                        color: Colors.blue[100],
+                      );
+                    }).toList(),
+                  )
+                      : Center(child: const Text('Don\'t have any child')),
                 )]
           ),
         )
