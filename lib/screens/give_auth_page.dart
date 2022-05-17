@@ -318,6 +318,7 @@ class _authState extends State<auth> {
       print(widget.text);
       print(authp);
     }
+
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).popUntil((route) => route.isFirst);

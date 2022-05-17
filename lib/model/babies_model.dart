@@ -21,6 +21,7 @@ class ChildModel {
   String? child_uid;
   List? guardian;
 
+
   ChildModel({
     this.uid,
     this.name,
@@ -33,7 +34,7 @@ class ChildModel {
     this.bloodGrp,
     this.birthCertNo,
     this.childsReltn,
-    this.child_uid,
+    this.baby_uid,
     this.age,
     this.guardian
   });
@@ -55,6 +56,7 @@ class ChildModel {
       childsReltn: map['childs relation to you'],
       child_uid: map['child uid'],
       guardian: map['guardian'],
+
     );
   }
 
@@ -75,9 +77,7 @@ class ChildModel {
       'mothers_name': mothersName,
       'childs_rltn': childsReltn,
       'guardian': FieldValue.arrayUnion([
-        {
-          "uid": uid,
-        }
+        uid,
       ]),
     };
   }

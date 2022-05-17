@@ -11,6 +11,7 @@ class UserModel {
   List? gaccess;
   List? naccess;
 
+
   ///for authentication
   String? auth_name;
   String? auth_email;
@@ -28,6 +29,7 @@ class UserModel {
       this.gaccess,
       this.naccess
       });
+
 
   //receiving data from server
   factory UserModel.fromMap(map) {
@@ -55,15 +57,10 @@ class UserModel {
     };
   }
 
-  Map<String, dynamic> authItems(String name, String email, String relation) {
+  Map<String, dynamic> updateBabyuid(String gaccess) {
     return {
-      'Babies': FieldValue.arrayUnion([
-        {
-          'username': auth_name,
-          'email': auth_email,
-          'child': auth_child,
-          'relation': auth_relation,
-        }
+      'gaccess': FieldValue.arrayUnion([
+        gaccess,
       ]),
     };
   }
