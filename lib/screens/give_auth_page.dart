@@ -5,6 +5,7 @@ import 'package:email_password_login/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_password_login/model/babies_model.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 class auth extends StatefulWidget {
@@ -257,7 +258,7 @@ class _authState extends State<auth> {
                           } else {
                             _formKey.currentState!.save();
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                duration: const Duration(seconds: 2),
+                                duration: const Duration(seconds: 1),
                                 content: Text(
                                     'Sending Data to the Cloud Firestore')));
                           }
@@ -266,7 +267,7 @@ class _authState extends State<auth> {
                           ///authetication trial
                           sendData(
                               emailEditingController.text,
-                              authas.text
+                              _box!
                           );
                         },
                       )
@@ -285,21 +286,37 @@ class _authState extends State<auth> {
     final snapshot = await FirebaseFirestore.instance
         .collection('Users')
         .where('Email', isEqualTo: email)
-        .get();
+        .get().catchError((error) {
+      Fluttertoast.showToast(msg: error!.message);
+      print("Something went wrong: ${error.message}");
+      err=false;
+    });
     euid=snapshot.docs.first['uid'].toString();
-    if(authp=='Guardian'){
+    print('uid '+ euid);
+    if(err == false ){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        duration: const Duration(seconds: 2),
+        content: Text(' This email doesn\'t exist... '),
+      ),);
+    }
+    else if(authp=='Guardian'){
         await FirebaseFirestore.instance.collection('Users').doc(euid).update({"gaccess": FieldValue.arrayUnion([widget.text])});
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          duration: const Duration(seconds: 2),
+          content: Text('Authorized as Guardian'),
+        ),);
+        Navigator.pop(context,true);
       }
       else if(authp=='Nurturer'){
         await FirebaseFirestore.instance.collection('Users').doc(euid).update({"naccess": FieldValue.arrayUnion([widget.text])});
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          duration: const Duration(seconds: 2),
+          content: Text('Authorized as Nurturer'),
+        ),);
+        Navigator.pop(context,true);
       }
       print(widget.text);
       print(authp);
-      await ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        duration: const Duration(seconds: 2),
-        content: Text('Authorized as '+ authp),
-      ),);
-      Navigator.pop(context);
     }
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();

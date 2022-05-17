@@ -27,7 +27,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
   String? child = FirebaseFirestore.instance.collection("Babies").id;
   UserModel loggedInUser = UserModel();
   ChildModel loggedInbaby = ChildModel();
-  List? guardian;
+  List? baby_guardian;
   int itemCount=0;
   @override
   void initState() {
@@ -39,9 +39,9 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
         .then((value) {
       this.loggedInbaby = ChildModel.fromMap(value.data());
       setState(() {
-        guardian=loggedInbaby.guardian;
-        if (guardian!.isNotEmpty) {
-          itemCount = guardian!.length;
+        baby_guardian=loggedInbaby.guardian;
+        if (baby_guardian!.isNotEmpty) {
+          itemCount = baby_guardian!.length;
         }
       });
     });
@@ -152,7 +152,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
           //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
         ),
         body: Container(
-            margin: EdgeInsets.all(24),
+            margin: EdgeInsets.all(20),
             child: SingleChildScrollView(
               reverse: true,
               padding: EdgeInsets.all(5),
@@ -273,24 +273,14 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
                             color: Colors.blue,
                             fontSize: wh * 0.02,
                             height: 1.5)),
-                    // itemCount > 0 ? ListView(
-                    //   children: guardian!.map((strone){
-                    //     return Container(
-                    //       child: InkWell(
-                    //         onTap: () {
-                    //         },
-                    //         child: new Text(
-                    //           strone,
-                    //         ),
-                    //       ),
-                    //       margin: EdgeInsets.all(5),
-                    //       padding: EdgeInsets.all(15),
-                    //       color: Colors.blue[100],
-                    //     );
-                    //   }
-                    //   ).toList(),
-                    // ) : Text(' Error Loading Guardian... '),
                   ]),
+                  itemCount > 0 ? ListView.builder(
+                      padding: const EdgeInsets.all(8),
+                      itemCount: baby_guardian!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Text( baby_guardian![index]);
+                      }
+                  ) : Text(' Error Loading Guardian... '),
                 ],
               ),
           )
