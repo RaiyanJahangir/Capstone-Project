@@ -37,9 +37,9 @@ void loop() {
        gps.get_position(&latitude,&longitude); // get latitude and longitude
        
        //Sending data to firebase
-       Firebase.setInt("Latitude",latitude);
+       Firebase.setInt("Sensor Data/Latitude",latitude);
        delay(10);
-       Firebase.setInt("Longitude",longitude);
+       Firebase.setInt("Sensor Data/Longitude",longitude);
        delay(10);
 
        //Saving previous data 
