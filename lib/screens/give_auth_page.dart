@@ -387,10 +387,10 @@ class _authState extends State<auth> {
     userModel.auth_child = childEditingController.text;
     userModel.auth_relation = relationEditingController.text;
 
-    await firebaseFirestore
-        .collection("Users")
-        .doc(user.uid)
-        .update(userModel.authItems(name, email, relation));
+    // await firebaseFirestore
+    //     .collection("Users")
+    //     .doc(user.uid)
+    //     .update(userModel.authItems(name, email, relation));
   }
 
   Future<void> logout(BuildContext context) async {

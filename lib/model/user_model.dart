@@ -7,6 +7,7 @@ class UserModel {
   String? gender;
   int? age;
   String? occupation;
+  String? gaccess;
 
   ///for authentication
   String? auth_name;
@@ -21,7 +22,8 @@ class UserModel {
       this.name,
       this.gender,
       this.age,
-      this.occupation});
+      this.occupation,
+      this.gaccess});
 
   //receiving data from server
   factory UserModel.fromMap(map) {
@@ -32,6 +34,7 @@ class UserModel {
       gender: map['Gender'],
       age: map['Age'],
       occupation: map['Occupation'],
+      //gaccess: map['Gaccess'],
     );
   }
 
@@ -44,18 +47,16 @@ class UserModel {
       'Gender': gender,
       'Age': age,
       'Occupation': occupation,
+      'Gaccess': FieldValue.arrayUnion([
+        gaccess,
+      ]),
     };
   }
 
-  Map<String, dynamic> authItems(String name, String email, String relation) {
+  Map<String, dynamic> updateBabyuid(String gaccess) {
     return {
-      'Babies': FieldValue.arrayUnion([
-        {
-          'username': auth_name,
-          'email': auth_email,
-          'child': auth_child,
-          'relation': auth_relation,
-        }
+      'gaccess': FieldValue.arrayUnion([
+        gaccess,
       ]),
     };
   }
