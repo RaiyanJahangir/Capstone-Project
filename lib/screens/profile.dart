@@ -170,213 +170,213 @@ class _HomeState extends State<Home> {
                   }
                 },
               ),
-              Expanded(
-                flex: 5,
-                child: Container(
-                  color: Colors.grey[200],
-                  child: Center(
-                      child: Card(
-                          margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                          child: Container(
-                              width: 400.0,
-                              height: 350.0,
-                              child: Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Profile",
-                                      style: TextStyle(
-                                        fontSize: 17.0,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                    Divider(
-                                      color: Colors.grey[300],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Icon(
-                                          Icons.people,
-                                          color: Colors.blueAccent[400],
-                                          size: 35,
-                                        ),
-                                        SizedBox(
-                                          width: 20.0,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Name",
-                                              style: TextStyle(
-                                                fontSize: 15.0,
-                                              ),
-                                            ),
-                                            Text(
-                                              name,
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                color: Colors.grey[400],
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Icon(
-                                          Icons.email,
-                                          color: Colors.yellowAccent[400],
-                                          size: 35,
-                                        ),
-                                        SizedBox(
-                                          width: 20.0,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Email",
-                                              style: TextStyle(
-                                                fontSize: 15.0,
-                                              ),
-                                            ),
-                                            Text(
-                                              myEmail,
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                color: Colors.grey[400],
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Icon(
-                                          Icons.work,
-                                          color: Colors.pinkAccent[400],
-                                          size: 35,
-                                        ),
-                                        SizedBox(
-                                          width: 20.0,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Occupation",
-                                              style: TextStyle(
-                                                fontSize: 15.0,
-                                              ),
-                                            ),
-                                            Text(
-                                              occupation,
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                color: Colors.grey[400],
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Icon(
-                                          Icons.man,
-                                          color: Colors.pinkAccent[400],
-                                          size: 35,
-                                        ),
-                                        SizedBox(
-                                          width: 20.0,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Gender",
-                                              style: TextStyle(
-                                                fontSize: 15.0,
-                                              ),
-                                            ),
-                                            Text(
-                                              gender,
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                color: Colors.grey[400],
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Icon(
-                                          Icons.confirmation_number_sharp,
-                                          color: Colors.lightGreen[400],
-                                          size: 35,
-                                        ),
-                                        SizedBox(
-                                          width: 20.0,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Age",
-                                              style: TextStyle(
-                                                fontSize: 15.0,
-                                              ),
-                                            ),
-                                            Text(
-                                              age.toString(),
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                color: Colors.grey[400],
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              )))),
-                ),
-              ),
+              // Expanded(
+              //   flex: 5,
+              //   child: Container(
+              //     color: Colors.grey[200],
+              //     child: Center(
+              //         child: Card(
+              //             margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+              //             child: Container(
+              //                 width: 400.0,
+              //                 height: 350.0,
+              //                 child: Padding(
+              //                   padding: EdgeInsets.all(10.0),
+              //                   child: Column(
+              //                     crossAxisAlignment: CrossAxisAlignment.start,
+              //                     children: [
+              //                       Text(
+              //                         "Profile",
+              //                         style: TextStyle(
+              //                           fontSize: 17.0,
+              //                           fontWeight: FontWeight.w800,
+              //                         ),
+              //                       ),
+              //                       Divider(
+              //                         color: Colors.grey[300],
+              //                       ),
+              //                       Row(
+              //                         mainAxisAlignment:
+              //                             MainAxisAlignment.start,
+              //                         children: [
+              //                           Icon(
+              //                             Icons.people,
+              //                             color: Colors.blueAccent[400],
+              //                             size: 35,
+              //                           ),
+              //                           SizedBox(
+              //                             width: 20.0,
+              //                           ),
+              //                           Column(
+              //                             crossAxisAlignment:
+              //                                 CrossAxisAlignment.start,
+              //                             children: [
+              //                               Text(
+              //                                 "Name",
+              //                                 style: TextStyle(
+              //                                   fontSize: 15.0,
+              //                                 ),
+              //                               ),
+              //                               Text(
+              //                                 name,
+              //                                 style: TextStyle(
+              //                                   fontSize: 12.0,
+              //                                   color: Colors.grey[400],
+              //                                 ),
+              //                               )
+              //                             ],
+              //                           )
+              //                         ],
+              //                       ),
+              //                       SizedBox(
+              //                         height: 20.0,
+              //                       ),
+              //                       Row(
+              //                         mainAxisAlignment:
+              //                             MainAxisAlignment.start,
+              //                         children: [
+              //                           Icon(
+              //                             Icons.email,
+              //                             color: Colors.yellowAccent[400],
+              //                             size: 35,
+              //                           ),
+              //                           SizedBox(
+              //                             width: 20.0,
+              //                           ),
+              //                           Column(
+              //                             crossAxisAlignment:
+              //                                 CrossAxisAlignment.start,
+              //                             children: [
+              //                               Text(
+              //                                 "Email",
+              //                                 style: TextStyle(
+              //                                   fontSize: 15.0,
+              //                                 ),
+              //                               ),
+              //                               Text(
+              //                                 myEmail,
+              //                                 style: TextStyle(
+              //                                   fontSize: 12.0,
+              //                                   color: Colors.grey[400],
+              //                                 ),
+              //                               )
+              //                             ],
+              //                           )
+              //                         ],
+              //                       ),
+              //                       SizedBox(
+              //                         height: 20.0,
+              //                       ),
+              //                       Row(
+              //                         mainAxisAlignment:
+              //                             MainAxisAlignment.start,
+              //                         children: [
+              //                           Icon(
+              //                             Icons.work,
+              //                             color: Colors.pinkAccent[400],
+              //                             size: 35,
+              //                           ),
+              //                           SizedBox(
+              //                             width: 20.0,
+              //                           ),
+              //                           Column(
+              //                             crossAxisAlignment:
+              //                                 CrossAxisAlignment.start,
+              //                             children: [
+              //                               Text(
+              //                                 "Occupation",
+              //                                 style: TextStyle(
+              //                                   fontSize: 15.0,
+              //                                 ),
+              //                               ),
+              //                               Text(
+              //                                 occupation,
+              //                                 style: TextStyle(
+              //                                   fontSize: 12.0,
+              //                                   color: Colors.grey[400],
+              //                                 ),
+              //                               )
+              //                             ],
+              //                           )
+              //                         ],
+              //                       ),
+              //                       SizedBox(
+              //                         height: 20.0,
+              //                       ),
+              //                       Row(
+              //                         mainAxisAlignment:
+              //                             MainAxisAlignment.start,
+              //                         children: [
+              //                           Icon(
+              //                             Icons.man,
+              //                             color: Colors.pinkAccent[400],
+              //                             size: 35,
+              //                           ),
+              //                           SizedBox(
+              //                             width: 20.0,
+              //                           ),
+              //                           Column(
+              //                             crossAxisAlignment:
+              //                                 CrossAxisAlignment.start,
+              //                             children: [
+              //                               Text(
+              //                                 "Gender",
+              //                                 style: TextStyle(
+              //                                   fontSize: 15.0,
+              //                                 ),
+              //                               ),
+              //                               Text(
+              //                                 gender,
+              //                                 style: TextStyle(
+              //                                   fontSize: 12.0,
+              //                                   color: Colors.grey[400],
+              //                                 ),
+              //                               )
+              //                             ],
+              //                           )
+              //                         ],
+              //                       ),
+              //                       SizedBox(
+              //                         height: 20.0,
+              //                       ),
+              //                       Row(
+              //                         mainAxisAlignment:
+              //                             MainAxisAlignment.start,
+              //                         children: [
+              //                           Icon(
+              //                             Icons.confirmation_number_sharp,
+              //                             color: Colors.lightGreen[400],
+              //                             size: 35,
+              //                           ),
+              //                           SizedBox(
+              //                             width: 20.0,
+              //                           ),
+              //                           Column(
+              //                             crossAxisAlignment:
+              //                                 CrossAxisAlignment.start,
+              //                             children: [
+              //                               Text(
+              //                                 "Age",
+              //                                 style: TextStyle(
+              //                                   fontSize: 15.0,
+              //                                 ),
+              //                               ),
+              //                               Text(
+              //                                 age.toString(),
+              //                                 style: TextStyle(
+              //                                   fontSize: 12.0,
+              //                                   color: Colors.grey[400],
+              //                                 ),
+              //                               )
+              //                             ],
+              //                           )
+              //                         ],
+              //                       ),
+              //                     ],
+              //                   ),
+              //                 )))),
+              //   ),
+              // ),
               Expanded(
                   child: Container(
                       color: Colors.white,
@@ -386,14 +386,14 @@ class _HomeState extends State<Home> {
                             Text(
                               "$name",
                               style: TextStyle(
-                                fontSize: 40.0,
+                                fontSize: 20.0,
                                 color: Colors.blueGrey[800],
                                 fontWeight: FontWeight.bold,
                                 fontFamily: "Pacifico",
                               ),
                             ),
                             SizedBox(
-                              height: 20,
+                              height: 5,
                               width: 200,
                               child: Divider(
                                 color: Colors.black,

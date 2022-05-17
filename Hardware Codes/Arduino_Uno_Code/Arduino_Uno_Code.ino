@@ -18,7 +18,7 @@ void setup() {
   pulseSensor.analogInput(PulseWire);
   //pulseSensor.blinkOnPulse(LED13); //auto-magically blink Arduino's LED with heartbeat.
   pulseSensor.setThreshold(Threshold);
- 
+  delay(500);
   // Double-check the "pulseSensor" object was created and "began" seeing a signal.
   if (pulseSensor.begin()) {
   

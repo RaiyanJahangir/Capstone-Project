@@ -8,6 +8,11 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+var latitude = 23.83780840691303;
+var longitude = 90.35788633293909;
+// var latitude;
+// var longitude;
+
 class MapSample extends StatefulWidget {
   @override
   State<MapSample> createState() => MapSampleState();
@@ -20,15 +25,15 @@ class MapSampleState extends State<MapSample> {
   final databaseRef =
       FirebaseDatabase.instance.reference().child("Sensor Data");
 
-  var latitude = 0.0;
-  var longitude = 0.0;
+  /*var latitude = 0.0;
+  var longitude = 0.0;*/
 
   static final Marker _kmark = Marker(
       markerId: MarkerId('_kmark'),
       infoWindow: InfoWindow(title: 'Google plex'),
       icon: BitmapDescriptor.defaultMarker,
-      position: LatLng(23.83780840691303, 90.35788633293909));
-  // position: LatLng(latitude, longitude));
+      //position: LatLng(23.83780840691303, 90.35788633293909));
+      position: LatLng(latitude, longitude));
 
   @override
   void initState() {
@@ -43,38 +48,71 @@ class MapSampleState extends State<MapSample> {
     });
 
     databaseRef.onValue.listen((event) {
+      print(latitude.toString() + "dollar " + longitude.toString());
       var snapshot = event.snapshot;
+      int count = 0;
       Map<dynamic, dynamic> values = snapshot.value;
       values.forEach((key, values) {
+        count++;
+        // if (key == 'Latitude') {
+        //   latitude = values;
+        // }
+        // if (key == 'Longitude') {
+        //   longitude = values;
+        // }
         if (key == 'Latitude') {
-          latitude = values;
+          int a = values;
+          latitude = a.toDouble();
+          print('Latitude ' + latitude.toString());
         }
         if (key == 'Longitude') {
-          longitude = values;
+          int a = values;
+          longitude = a.toDouble();
+          print('Longitude ' + longitude.toString());
         }
-        setState(() {});
+        if (key == 'Pulse Rate') {
+          print('Pulse Rate ' + values.toString());
+        }
+        if (key == 'Temperature') {
+          print('Temperature ' + values.toString());
+        }
+        // setState(() {});
+        _setMarker(LatLng(latitude, longitude));
       });
     });
   }
 
   Completer<GoogleMapController> _controller = Completer();
 
+  Set<Marker> _markers = Set<Marker>();
+  Set<Polygon> _polygon = Set<Polygon>();
+  List<LatLng> _latlong = <LatLng>[];
+  int _polygonIdCounter = 1;
+
   static final CameraPosition _kGooglePlex = CameraPosition(
     // target: LatLng(37.42796133580664, -122.085749655962),
     //target: LatLng(23.748742, 90.373972),
-    target: LatLng(23.83780840691303, 90.35788633293909),
-    //target: LatLng(latitude,longitude),
-    zoom: 14.4746,
+    //target: LatLng(23.83780840691303, 90.35788633293909),
+    target: LatLng(latitude, longitude),
+    zoom: 17.4746,
   );
 
   static final CameraPosition _kLake = CameraPosition(
       bearing: 192.8334901395799,
       //target: LatLng(37.43296265331129, -122.08832357078792),
       //target: LatLng(23.748742, 90.373972),
-      target: LatLng(23.83780840691303, 90.35788633293909),
-      //target: LatLng(latitude,longitude),
+      //target: LatLng(23.83780840691303, 90.35788633293909),
+      target: LatLng(latitude, longitude),
       tilt: 59.440717697143555,
       zoom: 19.151926040649414);
+
+  void _setMarker(LatLng point) {
+    setState(() {
+      _markers.add(
+        Marker(markerId: MarkerId('marker'), position: point),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -186,17 +224,18 @@ class MapSampleState extends State<MapSample> {
           _controller.complete(controller);
         },
       ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: _goToTheLake,
-      //   label: Text('To the lake!'),
-      //   icon: Icon(Icons.directions_boat),
-      // ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _goToTheLake,
+        label: Text('To the lake!'),
+        icon: Icon(Icons.directions_boat),
+      ),
     );
   }
 
   Future<void> _goToTheLake() async {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+    _setMarker(LatLng(latitude, longitude));
   }
 
   Future<void> logout(BuildContext context) async {
