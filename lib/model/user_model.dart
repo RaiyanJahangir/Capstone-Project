@@ -47,9 +47,6 @@ class UserModel {
       'Gender': gender,
       'Age': age,
       'Occupation': occupation,
-      'Gaccess': FieldValue.arrayUnion([
-        gaccess,
-      ]),
     };
   }
 
