@@ -1,3 +1,0 @@
-flutter clean
-flutter pub get
-flutter run --no-sound-null-safety
