@@ -1,3 +1,4 @@
+import 'package:email_password_login/model/babies_model.dart';
 import 'package:email_password_login/screens/FeedingList.dart';
 import 'package:email_password_login/screens/Vaccine_Feeding.dart';
 import 'package:email_password_login/screens/notification_screen.dart';
@@ -9,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_password_login/screens/sensor_screen.dart';
 import 'package:email_password_login/model/user_model.dart';
 import 'package:email_password_login/screens/profile.dart';
+import 'package:email_password_login/model/babies_model.dart';
 
 enum _MenuValues {
   logout,
@@ -18,7 +20,9 @@ String? myName;
 String dropdownValue = 'One';
 
 class nurturer_homepage extends StatefulWidget {
-  const nurturer_homepage({Key? key}) : super(key: key);
+  final String text;
+
+  const nurturer_homepage(@required this.text,{Key? key}) : super(key: key);
 
   @override
   State<nurturer_homepage> createState() => _nurturer_homepageState();
@@ -27,6 +31,7 @@ class nurturer_homepage extends StatefulWidget {
 class _nurturer_homepageState extends State<nurturer_homepage> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  ChildModel loggedInbaby = ChildModel();
 
   @override
   void initState() {
@@ -37,6 +42,14 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
         .get()
         .then((value) {
       this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+    FirebaseFirestore.instance
+        .collection("Babies")
+        .doc(widget.text)
+        .get()
+        .then((value) {
+      this.loggedInbaby = ChildModel.fromMap(value.data());
       setState(() {});
     });
   }
@@ -144,7 +157,7 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text('List of Babies : ',
+                    child: Text('Name : ',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 25,
@@ -159,30 +172,16 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                             ])),
                   ),
                   Expanded(
-                      child: DropdownButton<String>(
-                    value: dropdownValue,
-                    icon: const Icon(Icons.arrow_downward),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.blue),
-                    // underline: Container(
-                    //   height: 2,
-                    //   width: 5,
-                    //   color: Colors.deepPurpleAccent,
-                    // ),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownValue = newValue!;
-                      });
-                    },
-                    items: <String>['One', 'Two', 'Free', 'Four']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  )),
+                    child: Text(
+                        "${loggedInbaby.name}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.blueGrey,
+                          fontWeight: FontWeight.bold,
+                          //fontStyle: FontStyle.italic,
+                        )),
+                  ),
                 ],
               ),
             ),
@@ -245,6 +244,35 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                           Expanded(
                               flex: 1,
                               child: Text('Health Record',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold,
+                                    //fontStyle: FontStyle.italic,
+                                  )))
+                        ],
+                      ),
+                    ),
+                  ),
+                  Card(
+                    elevation: 4,
+                    child: InkWell(
+                      onTap: () => null,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            flex: 4,
+                            child: Lottie.asset(
+                              "assets/user.json",
+                              width: 200,
+                              height: 200,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          Expanded(
+                              flex: 2,
+                              child: Text('Req for New Child',
                                   style: TextStyle(
                                     fontSize: 20,
                                     color: Colors.black54,

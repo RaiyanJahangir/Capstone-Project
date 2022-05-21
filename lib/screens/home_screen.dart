@@ -202,8 +202,8 @@ class HomeScreenState extends State<HomeScreen> {
                   ActionChip(
                       label: Text("Nurturer"),
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (c) => nurturer_homepage()));
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (c) => nurturer_homepage()));
                       }),
                   SizedBox(height: 5),
                   ActionChip(
