@@ -32,7 +32,7 @@ class guardian_homepage extends StatefulWidget {
 class guardian_homepageState extends State<guardian_homepage> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
-  ChildModel loggedInbaby= ChildModel();
+  ChildModel loggedInbaby = ChildModel();
 
   @override
   void initState() {
@@ -175,8 +175,7 @@ class guardian_homepageState extends State<guardian_homepage> {
                             ])),
                   ),
                   Expanded(
-                    child: Text(
-                        "${loggedInbaby.name}",
+                    child: Text("${loggedInbaby.name}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
@@ -323,6 +322,7 @@ class guardian_homepageState extends State<guardian_homepage> {
                     child: InkWell(
                       onTap: () => Navigator.of(context)
                           .push(MaterialPageRoute(builder: (c) => auth(loggedInbaby.baby_uid ?? ''))),
+
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

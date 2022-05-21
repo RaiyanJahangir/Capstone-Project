@@ -93,7 +93,7 @@ class _RegisterChildState extends State<RegisterChild> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     Reference reference = FirebaseStorage.instance
         .ref()
-        .child('${childModel.uid}/images')
+        .child('${childModel.baby_uid}/images')
         .child("post_$imgId");
 
     await reference.putFile(_image);
@@ -102,7 +102,7 @@ class _RegisterChildState extends State<RegisterChild> {
     // cloud firestore
     await firebaseFirestore
         .collection("Babies")
-        .doc(childModel.uid)
+        .doc(childModel.baby_uid)
         .collection("images")
         .add({'downloadURL': downloadURL}).whenComplete(
             () => showSnackBar("Image Uploaded", Duration(seconds: 2)));
@@ -491,54 +491,58 @@ class _RegisterChildState extends State<RegisterChild> {
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text("Confirm Account Registration ?",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic,
-                            color: Colors.blue,
-                            fontSize: 25)),
-                    actions: <Widget>[
-                      TextButton(
-                          onPressed: () {
-                            // signUp(emailEditingController.text,
-                            //     passwordEditingController.text);
-                            sendData(
-                                nameEditingController.text,
-                                dobEditingController.text,
-                                genderEditingController.text,
-                                h8EditingController.text,
-                                w8EditingController.text,
-                                bldgrpEditingController.text,
-                                fathersnameEditingController.text,
-                                mothersnameEditingController.text,
-                                birthCertEditingController.text,
-                                relationEditingController.text);
-                            getDropDownItem();
-                          },
-                          child: Text("YES",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.blueAccent,
-                                  fontSize: 20))),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text("NO",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.blueAccent,
-                                  fontSize: 20)))
-                    ],
-                  );
-                });
+            if (_image != null) {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Confirm Account Registration ?",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.blue,
+                              fontSize: 25)),
+                      actions: <Widget>[
+                        TextButton(
+                            onPressed: () {
+                              // signUp(emailEditingController.text,
+                              //     passwordEditingController.text);
+                              sendData(
+                                  nameEditingController.text,
+                                  dobEditingController.text,
+                                  genderEditingController.text,
+                                  h8EditingController.text,
+                                  w8EditingController.text,
+                                  bldgrpEditingController.text,
+                                  fathersnameEditingController.text,
+                                  mothersnameEditingController.text,
+                                  birthCertEditingController.text,
+                                  relationEditingController.text);
+                              getDropDownItem();
+                            },
+                            child: const Text("YES",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.blueAccent,
+                                    fontSize: 20))),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text("NO",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.blueAccent,
+                                    fontSize: 20)))
+                      ],
+                    );
+                  });
+            } else {
+              showSnackBar("Select Image first", Duration(milliseconds: 400));
+            }
           },
           child: Text(
             "Register",
@@ -553,7 +557,7 @@ class _RegisterChildState extends State<RegisterChild> {
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pop(context,true);
+              Navigator.pop(context, true);
             }),
         centerTitle: true,
         title: Row(
@@ -806,7 +810,7 @@ class _RegisterChildState extends State<RegisterChild> {
     childModel.baby_uid = baby_uid;
     childModel.age = ageEditingController.text;
 
-    userModel.gaccess = baby_uid as List?;
+    userModel.gaccess?.add(baby_uid);
 
     await firebaseFirestore
         .collection("Babies")

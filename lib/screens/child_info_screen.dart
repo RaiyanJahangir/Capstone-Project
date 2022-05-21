@@ -24,11 +24,10 @@ class ChildInfoScreen extends StatefulWidget {
 
 class ChildInfoScreenState extends State<ChildInfoScreen> {
   User? user = FirebaseAuth.instance.currentUser;
-  String? child = FirebaseFirestore.instance.collection("Babies").id;
   UserModel loggedInUser = UserModel();
   ChildModel loggedInbaby = ChildModel();
   List? baby_guardian;
-  int itemCount=0;
+  int itemCount = 0;
   @override
   void initState() {
     super.initState();
@@ -39,7 +38,7 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
         .then((value) {
       this.loggedInbaby = ChildModel.fromMap(value.data());
       setState(() {
-        baby_guardian=loggedInbaby.guardian;
+        baby_guardian = loggedInbaby.guardian;
         if (baby_guardian!.isNotEmpty) {
           itemCount = baby_guardian!.length;
         }
@@ -49,243 +48,303 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     var wo = MediaQuery.of(context).size.width;
     var wh = MediaQuery.of(context).size.height;
 
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
-          centerTitle: true,
-          title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Expanded(child: Text('Baby Details')),
-                IconButton(
-                  icon: Icon(
-                    Icons.circle_notifications,
-                    color: Colors.white,
+      appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+        centerTitle: true,
+        title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(child: Text('Baby Details')),
+              IconButton(
+                icon: Icon(
+                  Icons.circle_notifications,
+                  color: Colors.white,
+                  size: 24.0,
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (c) => NotificationScreen()));
+                },
+              ),
+            ]),
+        actions: [
+          PopupMenuButton(
+            icon: Icon(Icons.more_vert),
+            itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+              PopupMenuItem(
+                child: ListTile(
+                  //var a;
+                  leading: Icon(
+                    Icons.account_circle,
+                    color: Colors.blue,
                     size: 24.0,
                   ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (c) => NotificationScreen()));
-                  },
-                ),
-              ]),
-          actions: [
-            PopupMenuButton(
-              icon: Icon(Icons.more_vert),
-              itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                PopupMenuItem(
-                  child: ListTile(
-                    //var a;
-                    leading: Icon(
-                      Icons.account_circle,
-                      color: Colors.blue,
-                      size: 24.0,
-                    ),
-                    //title: const Text(size ?? ''),
-                    title: Text(
-                      "User Profile",
-                    ),
-                    subtitle: Text(
-                      "${loggedInUser.name}",
-                    ),
-                    //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
-                    onTap: () => Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (c) => Home())),
+                  //title: const Text(size ?? ''),
+                  title: Text(
+                    "User Profile",
                   ),
-                ),
-                PopupMenuItem(
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.logout,
-                      color: Colors.blue,
-                    ),
-                    title: Text('Logout'),
-                    onTap: () => showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text("Confirm Logging Out ?",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.blue,
-                                    fontSize: 25)),
-                            actions: <Widget>[
-                              TextButton(
-                                  onPressed: () {
-                                    logout(context);
-                                  },
-                                  child: Text("YES",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontStyle: FontStyle.italic,
-                                          color: Colors.blueAccent,
-                                          fontSize: 20))),
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text("NO",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontStyle: FontStyle.italic,
-                                          color: Colors.blueAccent,
-                                          fontSize: 20)))
-                            ],
-                          );
-                        }),
+                  subtitle: Text(
+                    "${loggedInUser.name}",
                   ),
+                  //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
+                  onTap: () => Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (c) => Home())),
                 ),
-              ],
-            ),
-          ],
-          //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
-        ),
-        body: Container(
-            margin: EdgeInsets.all(20),
-            child: SingleChildScrollView(
-              reverse: true,
-              padding: EdgeInsets.all(5),
-              child: Column(
-                children: [
-                  Row(children: <Widget>[
-                    Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-                    Text('Name: ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
-                            fontSize: wh * 0.02,
-                            height: 2)),
-                    Text("${loggedInbaby.name}",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
-                  ]),
-                  Row(children: <Widget>[
-                    Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-                    Text('Date Of Birth: ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
-                            fontSize: wh * 0.02,
-                            height: 2)),
-                    Text("${loggedInbaby.dob}",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
-                  ]),
-
-                  //taking for a row
-                  Row(children: <Widget>[
-                    Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-                    Text('Gender: ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
-                            fontSize: wh * 0.02,
-                            height: 2)),
-                    Text("${loggedInbaby.gender}",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
-                  ]),
-
-                  //taking for a row
-                  Row(children: <Widget>[
-                    Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-                    Text('Height: ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
-                            fontSize: wh * 0.02,
-                            height: 2)),
-                    Text("${loggedInbaby.h8}",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
-                  ]),
-
-                  //taking for a row
-                  Row(children: <Widget>[
-                    Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-                    Text('Weight: ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
-                            fontSize: wh * 0.02,
-                            height: 2)),
-                    Text("${loggedInbaby.w8}",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
-                  ]),
-
-                  //taking for a row
-                  Row(children: <Widget>[
-                    Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-                    Text('Blood Group: ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
-                            fontSize: wh * 0.02,
-                            height: 2)),
-                    Text("${loggedInbaby.bloodGrp}",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
-                  ]),
-
-                  //taking for a row
-                  Row(children: <Widget>[
-                    Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-                    Text('Age: ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
-                            fontSize: wh * 0.02,
-                            height: 2)),
-                    Text("${loggedInbaby.age}",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
-                  ]),
-                  //taking for a row
-                  Row(children: <Widget>[
-                    Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-                    Text('Birth Certificate: ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
-                            fontSize: wh * 0.02,
-                            height: 1.5)),
-                    Text("${loggedInbaby.birthCertNo}",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: wh * 0.02, height: 2))
-                  ]),
-                  Row(children: <Widget>[
-                    Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-                    Text('List Of Guardians: ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
-                            fontSize: wh * 0.02,
-                            height: 1.5)),
-                  ]),
-                  itemCount > 0 ? ListView.builder(
-                      padding: const EdgeInsets.all(8),
-                      itemCount: baby_guardian!.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Text( baby_guardian![index]);
-                      }
-                  ) : Text(' Error Loading Guardian... '),
-                ],
               ),
-          )
-        ),
-      );
+              PopupMenuItem(
+                child: ListTile(
+                  leading: Icon(
+                    Icons.logout,
+                    color: Colors.blue,
+                  ),
+                  title: Text('Logout'),
+                  onTap: () => showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("Confirm Logging Out ?",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.blue,
+                                  fontSize: 25)),
+                          actions: <Widget>[
+                            TextButton(
+                                onPressed: () {
+                                  logout(context);
+                                },
+                                child: Text("YES",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                        color: Colors.blueAccent,
+                                        fontSize: 20))),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("NO",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                        color: Colors.blueAccent,
+                                        fontSize: 20)))
+                          ],
+                        );
+                      }),
+                ),
+              ),
+            ],
+          ),
+        ],
+        //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
+      ),
+      body: Column(
+        children: [
+          StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection("Babies")
+                .doc(loggedInbaby.baby_uid)
+                .collection("images")
+                .snapshots(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (!snapshot.hasData) {
+                return (const Center(child: Text("No Images Found")));
+              } else {
+                return ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    String url = snapshot.data!.docs[index]['downloadURL'];
+                    return CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 120,
+                      child: Image.network(url, fit: BoxFit.cover),
+                    );
+                  },
+                );
+              }
+            },
+          ),
+          Container(
+              margin: EdgeInsets.all(20),
+              child: SingleChildScrollView(
+                reverse: true,
+                padding: EdgeInsets.all(5),
+                child: Column(
+                  children: [
+                    Row(children: <Widget>[
+                      Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                      Text('Name: ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                              fontSize: wh * 0.02,
+                              height: 2)),
+                      Text("${loggedInbaby.name}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: wh * 0.02,
+                              height: 2))
+                    ]),
+                    Row(children: <Widget>[
+                      Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                      Text('Date Of Birth: ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                              fontSize: wh * 0.02,
+                              height: 2)),
+                      Text("${loggedInbaby.dob}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: wh * 0.02,
+                              height: 2))
+                    ]),
+
+                    //taking for a row
+                    Row(children: <Widget>[
+                      Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                      Text('Gender: ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                              fontSize: wh * 0.02,
+                              height: 2)),
+                      Text("${loggedInbaby.gender}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: wh * 0.02,
+                              height: 2))
+                    ]),
+
+                    //taking for a row
+                    Row(children: <Widget>[
+                      Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                      Text('Height: ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                              fontSize: wh * 0.02,
+                              height: 2)),
+                      Text("${loggedInbaby.h8}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: wh * 0.02,
+                              height: 2))
+                    ]),
+
+                    //taking for a row
+                    Row(children: <Widget>[
+                      Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                      Text('Weight: ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                              fontSize: wh * 0.02,
+                              height: 2)),
+                      Text("${loggedInbaby.w8}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: wh * 0.02,
+                              height: 2))
+                    ]),
+
+                    //taking for a row
+                    Row(children: <Widget>[
+                      Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                      Text('Blood Group: ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                              fontSize: wh * 0.02,
+                              height: 2)),
+                      Text("${loggedInbaby.bloodGrp}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: wh * 0.02,
+                              height: 2))
+                    ]),
+
+                    //taking for a row
+                    Row(children: <Widget>[
+                      Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                      Text('Age: ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                              fontSize: wh * 0.02,
+                              height: 2)),
+                      Text("${loggedInbaby.age}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: wh * 0.02,
+                              height: 2))
+                    ]),
+                    //taking for a row
+                    Row(children: <Widget>[
+                      Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                      Text('Birth Certificate: ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                              fontSize: wh * 0.02,
+                              height: 1.5)),
+                      Text("${loggedInbaby.birthCertNo}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: wh * 0.02,
+                              height: 2))
+                    ]),
+                    Row(children: <Widget>[
+                      Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                      Text('Father\'s Name : ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                              fontSize: wh * 0.02,
+                              height: 2)),
+                      Text("${loggedInbaby.fathersName}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: wh * 0.02,
+                              height: 2))
+                    ]),
+                    Row(children: <Widget>[
+                      Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                      Text('List Of Guardians: ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                              fontSize: wh * 0.02,
+                              height: 1.5)),
+                    ]),
+                    itemCount > 0
+                        ? ListView.builder(
+                            padding: const EdgeInsets.all(8),
+                            itemCount: baby_guardian!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Text(baby_guardian![index]);
+                            })
+                        : Text(' Error Loading Guardian... '),
+                  ],
+                ),
+              )),
+        ],
+      ),
+    );
   }
 
   Future<void> logout(BuildContext context) async {

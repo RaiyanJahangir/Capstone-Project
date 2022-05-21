@@ -10,6 +10,8 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gauge/flutter_gauge.dart';
 
+import 'graph_screen.dart';
+
 class SensorScreen extends StatefulWidget {
   const SensorScreen({Key? key}) : super(key: key);
 
@@ -20,6 +22,9 @@ class SensorScreen extends StatefulWidget {
 class SensorScreenState extends State<SensorScreen> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  List pulse_list = [];
+  List temp_list = [];
+  List time_list = [];
 
   final databaseRef =
       FirebaseDatabase.instance.reference().child("Sensor Data");
@@ -94,6 +99,9 @@ class SensorScreenState extends State<SensorScreen> {
           print('Longitude ');
         }
         setState(() {});
+        // print(pulse_list);
+        // print(temp_list);
+        // print(time_list);
       });
     });
 
@@ -247,6 +255,35 @@ class SensorScreenState extends State<SensorScreen> {
                 color: Colors.blue,
                 thickness: 2,
               ),
+
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (c) => GraphScreen()));
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: <Color>[
+                        Color(0xFF0D47A1),
+                        Color(0xFF1976D2),
+                        Color(0xFF42A5F5),
+                      ],
+                    ),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  child: Text(
+                    'Check Graph',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+
               // Row(
               //     mainAxisAlignment: MainAxisAlignment.center,
               //     children: <Widget>[
@@ -289,6 +326,10 @@ class SensorScreenState extends State<SensorScreen> {
               //   color: Colors.blue,
               //   thickness: 2,
               // ),
+              Divider(
+                color: Colors.blue,
+                thickness: 2,
+              ),
               Text(
                 "Previous Data",
                 style: TextStyle(
@@ -323,6 +364,7 @@ class SensorScreenState extends State<SensorScreen> {
                                       DataSnapshot snapshot,
                                       Animation<double> animation,
                                       int index) {
+                                    pulse_list.add(snapshot.value);
                                     return ListTile(
                                       title: Text('${snapshot.value}' + " BPM"),
                                     );
@@ -352,6 +394,7 @@ class SensorScreenState extends State<SensorScreen> {
                                       DataSnapshot snapshot,
                                       Animation<double> animation,
                                       int index) {
+                                    temp_list.add(snapshot.value);
                                     return ListTile(
                                       title: Text('${snapshot.value}' + " °C"),
                                     );
@@ -383,6 +426,7 @@ class SensorScreenState extends State<SensorScreen> {
                                       int index) {
                                     var timestamp =
                                         snapshot.value.substring(0, 17);
+                                    time_list.add(snapshot.value);
                                     return ListTile(
                                       title: Text(timestamp),
                                     );
