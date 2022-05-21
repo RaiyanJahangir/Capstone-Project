@@ -93,7 +93,7 @@ class _RegisterChildState extends State<RegisterChild> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     Reference reference = FirebaseStorage.instance
         .ref()
-        .child('${childModel.uid}/images')
+        .child('${childModel.baby_uid}/images')
         .child("post_$imgId");
 
     await reference.putFile(_image);
@@ -102,7 +102,7 @@ class _RegisterChildState extends State<RegisterChild> {
     // cloud firestore
     await firebaseFirestore
         .collection("Babies")
-        .doc(childModel.uid)
+        .doc(childModel.baby_uid)
         .collection("images")
         .add({'downloadURL': downloadURL}).whenComplete(
             () => showSnackBar("Image Uploaded", Duration(seconds: 2)));
