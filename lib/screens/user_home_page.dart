@@ -40,7 +40,9 @@ class _UserHomeState extends State<UserHome> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
   List? Access;
+  List? nAccess;
   int itemCount = 0;
+  int nitemCount = 0;
   @override
   void initState() {
     // ignore: todo
@@ -55,8 +57,12 @@ class _UserHomeState extends State<UserHome> {
       this.loggedInUser = UserModel.fromMap(value.data());
       setState(() {
         Access=loggedInUser.gaccess;
+        nAccess=loggedInUser.naccess;
         if (Access!.isNotEmpty) {
           itemCount = Access!.length;
+        }
+        if (nAccess!.isNotEmpty) {
+          nitemCount = nAccess!.length;
         }
         print(loggedInUser.name);
       });
@@ -216,6 +222,10 @@ class _UserHomeState extends State<UserHome> {
                   ),
                 ),
                 Expanded(
+                  flex: 1,
+                    child: Text('Guardians of ')
+                ),
+                Expanded(
                   flex: 2,
                   child: itemCount > 0
                       ? ListView(
@@ -241,7 +251,39 @@ class _UserHomeState extends State<UserHome> {
                     }).toList(),
                   )
                       : Center(child: const Text('Don\'t have any child')),
-                )]
+                ),
+                Expanded(
+                    flex: 1,
+                    child: Text('Nurturer of ')
+                ),
+                Expanded(
+                  flex: 2,
+                  child: nitemCount > 0
+                      ? ListView(
+                    children: nAccess!.map((nstrone) {
+                      return Container(
+                        child: InkWell(
+                          onTap: () {
+                            //print('hei');
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        nurturer_homepage(nstrone)));
+                          },
+                          child: new Text(
+                            nstrone,
+                          ),
+                        ),
+                        margin: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(15),
+                        color: Colors.green[100],
+                      );
+                    }).toList(),
+                  )
+                      : Center(child: const Text('Don\'t have any child')),
+                )
+              ]
           ),
         )
     );
