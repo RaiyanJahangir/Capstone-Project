@@ -806,7 +806,7 @@ class _RegisterChildState extends State<RegisterChild> {
     childModel.baby_uid = baby_uid;
     childModel.age = ageEditingController.text;
 
-    userModel.gaccess = baby_uid;
+    userModel.gaccess = baby_uid as List?;
 
     await firebaseFirestore
         .collection("Babies")

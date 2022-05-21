@@ -18,7 +18,7 @@ class ChildModel {
   String? mothersName;
   String? childsReltn;
   String? guard;
-  String? child_uid;
+  String? baby_uid;
   List? guardian;
 
 
@@ -34,15 +34,16 @@ class ChildModel {
     this.bloodGrp,
     this.birthCertNo,
     this.childsReltn,
-    this.baby_uid,
     this.age,
-    this.guardian
+    this.guardian,
+    this.baby_uid
   });
 
   ///Receiving data from server
   factory ChildModel.fromMap(map) {
     return ChildModel(
       uid: map['uid'],
+      baby_uid: map['baby_uid'],
       name: map['name'],
       dob: map['dob'],
       gender: map['gender'],
@@ -54,7 +55,6 @@ class ChildModel {
       fathersName: map['fathers name'],
       mothersName: map['mothers name'],
       childsReltn: map['childs relation to you'],
-      child_uid: map['child uid'],
       guardian: map['guardian'],
 
     );
@@ -63,8 +63,8 @@ class ChildModel {
   //sending data to our server
   Map<String, dynamic> toMap() {
     return {
-      'child_uid': child_uid,
       'uid': uid,
+      'baby_uid':baby_uid,
       'name': name,
       'dob': dob,
       'gender': gender,
