@@ -74,16 +74,24 @@ class SensorScreenState extends State<SensorScreen> {
         if (key == 'Pulse Rate') {
           prevPulse = pulse;
           pulse = values;
-          if (prevPulse != pulse) {
-            _updatevalue();
-          }
+          // if (prevPulse != pulse) {
+          //   _updatevalue();
+          // }
+          print('Pulse Rate ' + pulse);
         }
         if (key == 'Temperature') {
           prevTemp = temperature;
           temperature = values;
-          if (prevTemp != temperature) {
-            _updatevalue();
-          }
+          // if (prevTemp != temperature) {
+          //   _updatevalue();
+          // }
+          print('Temperature ' + temperature);
+        }
+        if (key == 'Latitude') {
+          print('Latitude ');
+        }
+        if (key == 'Longitude') {
+          print('Longitude ');
         }
         setState(() {});
       });
@@ -374,7 +382,7 @@ class SensorScreenState extends State<SensorScreen> {
                                       Animation<double> animation,
                                       int index) {
                                     var timestamp =
-                                        snapshot.value.substring(0, 20);
+                                        snapshot.value.substring(0, 17);
                                     return ListTile(
                                       title: Text(timestamp),
                                     );
@@ -384,6 +392,7 @@ class SensorScreenState extends State<SensorScreen> {
                         ),
                       ),
                     ],
+                    //SizedBox(height: 20),
                   ),
                 ),
               ),

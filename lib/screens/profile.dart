@@ -386,14 +386,14 @@ class _HomeState extends State<Home> {
                             Text(
                               "$name",
                               style: TextStyle(
-                                fontSize: 40.0,
+                                fontSize: 20.0,
                                 color: Colors.blueGrey[800],
                                 fontWeight: FontWeight.bold,
                                 fontFamily: "Pacifico",
                               ),
                             ),
                             SizedBox(
-                              height: 20,
+                              height: 5,
                               width: 200,
                               child: Divider(
                                 color: Colors.black,
