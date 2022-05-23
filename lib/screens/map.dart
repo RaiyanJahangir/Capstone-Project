@@ -296,7 +296,22 @@ class MapSampleState extends State<MapSample> {
         .then((value) {
       this.loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
+      WidgetsBinding.instance?.addPostFrameCallback((_) => _goToTheLake());
     });
+
+    //function for string sizing
+    String strSizing(String l) {
+      if (l.length < 7) {
+        int rem = 7 - l.length;
+        for (int i = 0; i < rem; i++) {
+          l += "0";
+        }
+      } else if (l.length > 7) {
+        l = l.substring(0, 7);
+      }
+      return l;
+    }
+    //function for string sizing
 
     databaseRef.onValue.listen((event) {
       var snapshot = event.snapshot;
@@ -305,8 +320,10 @@ class MapSampleState extends State<MapSample> {
       print("\n\nvalues :\n");
       print(values);
       String temp1 = values['Latitude'];
+      temp1 = strSizing(temp1);
       //temp1 = temp1 / 100000.00;
       String temp2 = values['Longitude'];
+      temp2 = strSizing(temp2);
       //temp2 = temp2 / 100000.00;
 
       print("\n");
@@ -350,7 +367,7 @@ class MapSampleState extends State<MapSample> {
 
   Completer<GoogleMapController> _controller = Completer();
 
-  Set<Marker> _markers = Set<Marker>();
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   Set<Polygon> _polygon = Set<Polygon>();
   List<LatLng> _latlong = <LatLng>[];
   int _polygonIdCounter = 1;
@@ -360,23 +377,22 @@ class MapSampleState extends State<MapSample> {
     //target: LatLng(23.748742, 90.373972),
     //target: LatLng(23.83780840691303, 90.35788633293909),
     target: LatLng(latitude, longitude),
-    zoom: 17.4746,
+    zoom: 18.5,
   );
 
-  static final CameraPosition _kLake = CameraPosition(
+  /*static CameraPosition _kLake = CameraPosition(
       bearing: 192.8334901395799,
-      //target: LatLng(37.43296265331129, -122.08832357078792),
-      //target: LatLng(23.748742, 90.373972),
-      //target: LatLng(23.83780840691303, 90.35788633293909),
       target: LatLng(latitude, longitude),
       tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+      zoom: 19.151926040649414);*/
 
   void _setMarker(LatLng point) {
+    var markerIdVal = markers.length + 1;
+    String mar = markerIdVal.toString();
+    final MarkerId markerId = MarkerId(mar);
+    final Marker marker = Marker(markerId: markerId, position: point);
     setState(() {
-      _markers.add(
-        Marker(markerId: MarkerId('marker'), position: point),
-      );
+      markers[markerId] = marker;
     });
   }
 
@@ -486,8 +502,8 @@ class MapSampleState extends State<MapSample> {
       //   },
       // ),
       body: GoogleMap(
-        mapType: MapType.hybrid,
-        markers: {_kmark},
+        mapType: MapType.normal,
+        markers: Set<Marker>.of(markers.values),
         initialCameraPosition: _kGooglePlex,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
@@ -495,8 +511,8 @@ class MapSampleState extends State<MapSample> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _goToTheLake,
-        label: Text('To the lake!'),
-        icon: Icon(Icons.directions_boat),
+        label: Text('Refresh Location'),
+        icon: Icon(Icons.refresh),
       ),
     );
     print(latitude.toString() + " " + longitude.toString() + "\n");
@@ -504,6 +520,12 @@ class MapSampleState extends State<MapSample> {
 
   Future<void> _goToTheLake() async {
     final GoogleMapController controller = await _controller.future;
+    CameraPosition _kLake = CameraPosition(
+        bearing: 192.8334901395799,
+        target: LatLng(latitude, longitude),
+        tilt: 59.440717697143555,
+        //zoom: 19.151926040649414
+        zoom: 17.5);
     controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
     print(latitude.toString() + "@" + longitude.toString() + "\n");
     _setMarker(LatLng(latitude, longitude));
