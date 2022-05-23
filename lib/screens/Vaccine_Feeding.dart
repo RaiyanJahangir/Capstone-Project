@@ -10,9 +10,13 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:email_password_login/screens/FeedingList.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_password_login/model/user_model.dart';
+import 'package:email_password_login/model/babies_model.dart';
+import 'package:email_password_login/model/vaccine_model.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final String text;
+
+  const HomePage(@required this.text, {Key? key}) : super(key: key);
 
   @override
   // Widget build(BuildContext context) {
@@ -55,6 +59,7 @@ class _homePageState extends State<HomePage> {
   @override
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  ChildModel loggedInbaby = ChildModel();
 
   @override
   void initState() {
@@ -65,6 +70,14 @@ class _homePageState extends State<HomePage> {
         .get()
         .then((value) {
       this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+    FirebaseFirestore.instance
+        .collection("Babies")
+        .doc(widget.text)
+        .get()
+        .then((value) {
+      this.loggedInbaby = ChildModel.fromMap(value.data());
       setState(() {});
     });
   }
@@ -292,10 +305,8 @@ class _homePageState extends State<HomePage> {
 
                                   taskWidget(
                                       Colors.blue, "Breakfast", "9:00 AM"),
-                                  taskWidget(
-                                      Colors.blue, "Lunch ", "1:00 PM"),
-                                  taskWidget(
-                                      Colors.blue, "Dinner ", "9:00 PM"),
+                                  taskWidget(Colors.blue, "Lunch ", "1:00 PM"),
+                                  taskWidget(Colors.blue, "Dinner ", "9:00 PM"),
                                   // Container(
                                   //   child: ListView.builder(
                                   //     itemCount: 1,
@@ -344,7 +355,7 @@ class _homePageState extends State<HomePage> {
                                           Color(0xfff90CAF9),
                                           "${i['name']}",
                                           "${i['reason']}",
-                                        ),
+                                        )
                                       ],
                                     ),
 
@@ -623,26 +634,35 @@ class _homePageState extends State<HomePage> {
   }
 
   openVaccinationList() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => NewTask()));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => NewTask(loggedInbaby.baby_uid ?? '')));
   }
 
   openFeedingList() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => FeedingList()));
+        context,
+        MaterialPageRoute(
+            builder: (context) => FeedingList(loggedInbaby.baby_uid ?? '')));
 
     //context, MaterialPageRoute(builder: (context) => openFeedingList()));
   }
 
   openHomeList() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HomePage()));
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomePage(loggedInbaby.baby_uid ?? '')));
 
     //context, MaterialPageRoute(builder: (context) => openFeedingList()));
   }
 
   openNewCheckList() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HomePage()));
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomePage(loggedInbaby.baby_uid ?? '')));
   }
 
   Future<void> logout(BuildContext context) async {

@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/user_model.dart';
+import 'package:email_password_login/model/babies_model.dart';
+
 import 'package:email_password_login/screens/Vaccine_Feeding.dart';
 import 'package:email_password_login/screens/map.dart';
 import 'package:email_password_login/screens/user_home_page.dart';
@@ -15,7 +17,9 @@ import 'package:email_password_login/screens/baby_info_as_nurturer.dart';
 import 'package:email_password_login/screens/give_auth_page.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final String text;
+
+  const HomeScreen(@required this.text, {Key? key}) : super(key: key);
 
   @override
   HomeScreenState createState() => HomeScreenState();
@@ -24,6 +28,7 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  ChildModel loggedInbaby = ChildModel();
 
   @override
   void initState() {
@@ -34,6 +39,14 @@ class HomeScreenState extends State<HomeScreen> {
         .get()
         .then((value) {
       this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+    FirebaseFirestore.instance
+        .collection("Babies")
+        .doc(widget.text)
+        .get()
+        .then((value) {
+      this.loggedInbaby = ChildModel.fromMap(value.data());
       setState(() {});
     });
   }
@@ -172,8 +185,9 @@ class HomeScreenState extends State<HomeScreen> {
                   ActionChip(
                       label: Text("vaccines"),
                       onPressed: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (c) => HomePage()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (c) =>
+                                HomePage(loggedInbaby.baby_uid ?? '')));
                       }),
                   SizedBox(height: 15),
                   ActionChip(

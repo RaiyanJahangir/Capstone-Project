@@ -2,13 +2,19 @@ import 'package:email_password_login/screens/notification_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'Vaccine_Feeding.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/user_model.dart';
+import 'package:email_password_login/model/babies_model.dart';
+import 'package:email_password_login/model/feeding_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FeedingList extends StatefulWidget {
   @override
+  final String text;
+
+  const FeedingList(@required this.text, {Key? key}) : super(key: key);
   // Widget build(BuildContext context) {
   //   return MaterialApp(
   //     debugShowCheckedModeBanner: false,
@@ -30,8 +36,10 @@ class _newTaskState extends State<FeedingList> {
   TextEditingController date = new TextEditingController();
   TextEditingController reason = new TextEditingController();
   String colorgrp = '';
+
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  ChildModel loggedInbaby = ChildModel();
 
   List<int> selectedList = [];
   List<int> medselectedList = [];
@@ -44,6 +52,14 @@ class _newTaskState extends State<FeedingList> {
         .get()
         .then((value) {
       this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+    FirebaseFirestore.instance
+        .collection("Babies")
+        .doc(widget.text)
+        .get()
+        .then((value) {
+      this.loggedInbaby = ChildModel.fromMap(value.data());
       setState(() {});
     });
   }
@@ -179,6 +195,37 @@ class _newTaskState extends State<FeedingList> {
                     SizedBox(
                       height: 25,
                     ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //   children: [
+                    //     Text(
+                    //       "Feeding Type(Breakfast,Lunch,Dinner etc)",
+                    //       style: TextStyle(fontSize: 18),
+                    //     ),
+                    //     SizedBox(
+                    //       width: 50,
+                    //     ),
+                    //   ],
+                    // ),
+                    // Container(
+                    //   padding: EdgeInsets.all(10),
+                    //   //color: Colors.blue.withOpacity(0.2),
+                    //   child: TextField(
+                    //     controller: feedingtype,
+                    //     decoration: InputDecoration(
+                    //         fillColor: Colors.blue.withOpacity(0.2),
+                    //         filled: true,
+                    //         border: OutlineInputBorder(
+                    //           borderRadius: BorderRadius.circular(20),
+                    //           //borderSide: BorderSide(color: Color.blue ,width: 5.0),
+                    //         ),
+                    //         hintText: "Feeding Type"),
+                    //     style: TextStyle(fontSize: 18),
+                    //   ),
+                    // ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -195,7 +242,7 @@ class _newTaskState extends State<FeedingList> {
                       padding: EdgeInsets.all(10),
                       //color: Colors.blue.withOpacity(0.2),
                       child: TextField(
-                        controller: name,
+                        //controller: feedingtime,
                         decoration: InputDecoration(
                             fillColor: Colors.blue.withOpacity(0.2),
                             filled: true,
@@ -210,9 +257,40 @@ class _newTaskState extends State<FeedingList> {
                     SizedBox(
                       height: 10,
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //   children: [
+                    //     Text(
+                    //       "Feeding Item",
+                    //       style: TextStyle(fontSize: 18),
+                    //     ),
+                    //     SizedBox(
+                    //       width: 50,
+                    //     ),
+                    //   ],
+                    // ),
+                    // Container(
+                    //   padding: EdgeInsets.all(10),
+                    //   //color: Colors.blue.withOpacity(0.2),
+                    //   child: TextField(
+                    //     controller: feedingitem,
+                    //     decoration: InputDecoration(
+                    //         fillColor: Colors.blue.withOpacity(0.2),
+                    //         filled: true,
+                    //         border: OutlineInputBorder(
+                    //           borderRadius: BorderRadius.circular(20),
+                    //           //borderSide: BorderSide(color: Color.blue ,width: 5.0),
+                    //         ),
+                    //         hintText: "Feeding Item"),
+                    //     style: TextStyle(fontSize: 18),
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 10,
+                    // ),
+                    // SizedBox(
+                    //   height: 10,
+                    // ),
                     Text(
                       "Which food was provided :",
                       style: TextStyle(fontSize: 18),
@@ -404,7 +482,8 @@ class _newTaskState extends State<FeedingList> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => HomePage()),
+                                        builder: (context) => HomePage(
+                                            loggedInbaby.baby_uid ?? '')),
                                   );
                                 },
                               ),
