@@ -21,6 +21,7 @@ class ChildModel {
   String? baby_uid;
   List? guardian;
   List? nurturer;
+  List? req;
 
 
   ChildModel(
@@ -38,7 +39,8 @@ class ChildModel {
       this.baby_uid,
       this.age,
       this.guardian,
-      this.nurturer});
+      this.nurturer,
+      this.req});
 
   ///Receiving data from server
   factory ChildModel.fromMap(map) {
@@ -57,7 +59,9 @@ class ChildModel {
         childsReltn: map['childs_relation_to_you'],
         baby_uid: map['baby_uid'],
         guardian: map['guardian'],
-        nurturer: map['nurturer']);
+        nurturer: map['nurturer'],
+        req: map['req']
+        );
   }
 
   //sending data to our server
