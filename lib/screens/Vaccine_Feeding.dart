@@ -349,15 +349,17 @@ class _homePageState extends State<HomePage> {
                                     ),
                                   ),
                                   for (var i in storedocs)
-                                    Column(
-                                      children: [
-                                        taskWidget(
-                                          Color(0xfff90CAF9),
-                                          "${i['name']}",
-                                          "${i['reason']}",
-                                        )
-                                      ],
-                                    ),
+                                    if (i['uid'] == loggedInbaby.baby_uid)
+                                      if (true)
+                                        Column(
+                                          children: [
+                                            taskWidget(
+                                              Color(0xfff90CAF9),
+                                              "${i['name']}",
+                                              "${i['reason']}",
+                                            )
+                                          ],
+                                        ),
 
                                   // taskWidget(
                                   //     Colors.blue, "Meeting with someone", "9:00 AM"),
@@ -406,15 +408,17 @@ class _homePageState extends State<HomePage> {
                                     ),
                                   ),
                                   for (var i in storedocs)
-                                    Column(
-                                      children: [
-                                        taskWidget(
-                                          Color(0xfff90CAF9),
-                                          "${i['name']}",
-                                          "${i['reason']}",
+                                    if (i['uid'] == loggedInbaby.baby_uid)
+                                      if (true)
+                                        Column(
+                                          children: [
+                                            taskWidget(
+                                              Color(0xfff90CAF9),
+                                              "${i['name']}",
+                                              "${i['reason']}",
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
 
                                   // taskWidget(
                                   //     Colors.blue, "Meeting with someone", "9:00 AM"),
