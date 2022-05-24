@@ -229,8 +229,9 @@ class guardian_homepageState extends State<guardian_homepage> {
                   Card(
                     elevation: 4,
                     child: InkWell(
-                      onTap: () => Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (c) => HomePage())),
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (c) =>
+                              HomePage(loggedInbaby.baby_uid ?? ''))),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

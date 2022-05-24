@@ -21,7 +21,8 @@ class ChildModel {
   String? baby_uid;
   List? guardian;
   List? nurturer;
-
+  List? newvaccineuid;
+  List? newfeedinguid;
 
   ChildModel(
       {this.uid,
@@ -38,7 +39,9 @@ class ChildModel {
       this.baby_uid,
       this.age,
       this.guardian,
-      this.nurturer});
+      this.nurturer,
+      this.newvaccineuid,
+      this.newfeedinguid});
 
   ///Receiving data from server
   factory ChildModel.fromMap(map) {
@@ -57,13 +60,14 @@ class ChildModel {
         childsReltn: map['childs_relation_to_you'],
         baby_uid: map['baby_uid'],
         guardian: map['guardian'],
-        nurturer: map['nurturer']);
+        nurturer: map['nurturer'],
+        newvaccineuid: map['vaccinelist'],
+        newfeedinguid: map['feedinglist']);
   }
 
   //sending data to our server
   Map<String, dynamic> toMap() {
     return {
-
       'baby_uid': baby_uid,
       'name': name,
       'dob': dob,
@@ -79,7 +83,9 @@ class ChildModel {
       'guardian': FieldValue.arrayUnion([
         uid,
       ]),
-      'nurturer': FieldValue.arrayUnion([])
+      'nurturer': FieldValue.arrayUnion([]),
+      'vaccinelist': FieldValue.arrayUnion([]),
+      'feedinglist': FieldValue.arrayUnion([])
     };
   }
 
@@ -92,4 +98,19 @@ class ChildModel {
   //     ]),
   //   };
   // }
+  Map<String, dynamic> addnewvaccineuid(String newvaccineuid) {
+    return {
+      'vaccinelist': FieldValue.arrayUnion([
+        newvaccineuid,
+      ]),
+    };
+  }
+
+  Map<String, dynamic> addnewfeedinguid(String newfeedinguid) {
+    return {
+      'feedinglist': FieldValue.arrayUnion([
+        newfeedinguid,
+      ]),
+    };
+  }
 }
