@@ -223,26 +223,25 @@ class _UserHomeState extends State<UserHome> {
                           //     fontStyle: FontStyle.normal,
                           //   ),
                           // ),
-                          Text(
-                            'Register Baby',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.blue[400],
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.normal,
-                            ),
-                          ),
-
-                          Text(
-                            'List Of Babies',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.blueGrey[400],
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.normal,
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
+                          // Text(
+                          //   'Register Baby',
+                          //   style: TextStyle(
+                          //     fontSize: 16,
+                          //     color: Colors.blue[400],
+                          //     fontWeight: FontWeight.bold,
+                          //     fontStyle: FontStyle.normal,
+                          //   ),
+                          // ),
+                          // Text(
+                          //   'List Of Babies',
+                          //   style: TextStyle(
+                          //     fontSize: 16,
+                          //     color: Colors.blueGrey[400],
+                          //     fontWeight: FontWeight.bold,
+                          //     fontStyle: FontStyle.normal,
+                          //     decoration: TextDecoration.underline,
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -250,7 +249,7 @@ class _UserHomeState extends State<UserHome> {
                 ],
               ),
             ),
-            // Expanded(flex: 1, child: Text('Guardians of ')),
+            //Expanded(flex: 1, child: Text('Register Baby')),
             Text(
               'Register Baby',
               style: TextStyle(
@@ -260,6 +259,7 @@ class _UserHomeState extends State<UserHome> {
                 fontStyle: FontStyle.normal,
               ),
             ),
+            SizedBox(height: 5),
 
             Text(
               'List Of Babies',
@@ -271,6 +271,7 @@ class _UserHomeState extends State<UserHome> {
                 decoration: TextDecoration.underline,
               ),
             ),
+            SizedBox(height: 5),
             Text(
               "Guardians of:",
               style: TextStyle(

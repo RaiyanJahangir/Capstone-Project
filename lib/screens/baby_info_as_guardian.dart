@@ -202,7 +202,7 @@ class guardian_homepageState extends State<guardian_homepage> {
                           ),
                         ),
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 30, vertical: 10),
+                            horizontal: 25, vertical: 10),
                         child: Text(
                           'Check Info',
                           style: TextStyle(

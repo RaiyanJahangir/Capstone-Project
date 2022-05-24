@@ -322,23 +322,37 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
                               fontSize: wh * 0.02,
                               height: 2))
                     ]),
-                    Row(children: <Widget>[
-                      Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-                      Text('List Of Guardians: ',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue,
-                              fontSize: wh * 0.02,
-                              height: 1.5)),
-                    ]),
-                    itemCount > 0
-                        ? ListView.builder(
-                            padding: const EdgeInsets.all(8),
-                            itemCount: baby_guardian!.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Text(baby_guardian![index]);
-                            })
-                        : Text(' Error Loading Guardian... '),
+                    // Row(children: <Widget>[
+                    //   Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                    //   Text('Mother\'s Name : ',
+                    //       style: TextStyle(
+                    //           fontWeight: FontWeight.bold,
+                    //           color: Colors.blue,
+                    //           fontSize: wh * 0.02,
+                    //           height: 2)),
+                    //   Text("${loggedInbaby.mothersName}",
+                    //       style: TextStyle(
+                    //           fontWeight: FontWeight.bold,
+                    //           fontSize: wh * 0.02,
+                    //           height: 2))
+                    // ]),
+                    // Row(children: <Widget>[
+                    //   Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                    //   Text('List Of Guardians: ',
+                    //       style: TextStyle(
+                    //           fontWeight: FontWeight.bold,
+                    //           color: Colors.blue,
+                    //           fontSize: wh * 0.02,
+                    //           height: 1.5)),
+                    // ]),
+                    // itemCount > 0
+                    //     ? ListView.builder(
+                    //         padding: const EdgeInsets.all(8),
+                    //         itemCount: baby_guardian!.length,
+                    //         itemBuilder: (BuildContext context, int index) {
+                    //           return Text(baby_guardian![index]);
+                    //         })
+                    //     : Text(' Error Loading Guardian... '),
                   ],
                 ),
               )),
