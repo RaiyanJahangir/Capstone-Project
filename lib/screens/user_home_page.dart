@@ -11,6 +11,7 @@ import 'package:email_password_login/screens/registration_screen.dart';
 import 'package:email_password_login/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:email_password_login/screens/profile.dart';
 import 'package:email_password_login/screens/notification_screen.dart';
@@ -39,8 +40,10 @@ class _UserHomeState extends State<UserHome> {
 
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  ChildModel logch=ChildModel();
   List? Access;
   List? nAccess;
+  List? bname;
   int itemCount = 0;
   int nitemCount = 0;
   @override
@@ -56,8 +59,8 @@ class _UserHomeState extends State<UserHome> {
       // ignore: unnecessary_this
       this.loggedInUser = UserModel.fromMap(value.data());
       setState(() {
-        Access=loggedInUser.gaccess;
-        nAccess=loggedInUser.naccess;
+        Access = loggedInUser.gaccess;
+        nAccess = loggedInUser.naccess;
         if (Access!.isNotEmpty) {
           itemCount = Access!.length;
         }
@@ -67,6 +70,21 @@ class _UserHomeState extends State<UserHome> {
         print(loggedInUser.name);
       });
     });
+    // for (int i = 0; i < Access!.length; i++) {
+    //   FirebaseFirestore.instance
+    //       .collection("Babies")
+    //       .doc(Access![i])
+    //       .get()
+    //       .then((value) {
+    //     // ignore: unnecessary_this
+    //     this.logch = ChildModel.fromMap(value.data());
+    //     setState(() {
+    //       print(logch.name);
+    //       bname = [logch.name];
+    //     });
+    //   });
+    //   print(bname);
+    // }
   }
 
   @override
@@ -172,7 +190,7 @@ class _UserHomeState extends State<UserHome> {
           child: Column(
               children: [
                 Expanded(
-                  flex: 3,
+                  flex: 5,
                   child: GridView.count(
                     crossAxisCount: 1,
                     mainAxisSpacing: 5,
@@ -180,41 +198,44 @@ class _UserHomeState extends State<UserHome> {
                     padding: EdgeInsets.all(8),
                     primary: false,
                     children: [
-                      Card(
-                        elevation: 1,
-                        child: InkWell(
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => RegisterChild(),
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            // ignore: prefer_const_literals_to_create_immutables
-                            children: [
-                              Expanded(
-                                flex: 4,
-                                child: Lottie.asset(
-                                  "assets/child_animation.json",
-                                  width: 200,
-                                  height: 200,
-                                  fit: BoxFit.fill,
-                                ),
+                      Expanded(
+                        flex: 3,
+                        child: Card(
+                          elevation: 1,
+                          child: InkWell(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RegisterChild(),
                               ),
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                  'Register Baby',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.blue[400],
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.normal,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              // ignore: prefer_const_literals_to_create_immutables
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Lottie.asset(
+                                    "assets/child_animation.json",
+                                    width: 200,
+                                    height: 200,
+                                    fit: BoxFit.fill,
                                   ),
                                 ),
-                              ),
-                            ],
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    'Register Baby',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.blue[400],
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.normal,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -223,38 +244,75 @@ class _UserHomeState extends State<UserHome> {
                 ),
                 Expanded(
                   flex: 1,
-                    child: Text('Guardians of ')
+                    child: Container(
+                      margin: EdgeInsets.all(10),
+                        child: Text('Guardians of ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            color: Colors.blue[800],
+                            fontSize: 20
+                          ),
+                        )
+                    )
                 ),
                 Expanded(
                   flex: 2,
                   child: itemCount > 0
-                      ? ListView(
-                    children: Access!.map((strone) {
-                      return Container(
-                        child: InkWell(
-                          onTap: () {
-                            //print('hei');
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        guardian_homepage(strone)));
-                          },
-                          child: new Text(
-                            strone,
+                      ? ListView.builder(
+                      itemCount: Access!.length,
+                      itemBuilder: (BuildContext context,int index){
+                        return Container(
+                          margin: EdgeInsets.all(5),
+                          padding: EdgeInsets.all(0),
+                          color: Colors.blue[100],
+                          child: ListTile(
+                              title: Text(Access![index]),
+                              onTap: () {
+                                Navigator.push(context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                            guardian_homepage(Access![index])));
+            },
                           ),
-                        ),
-                        margin: EdgeInsets.all(5),
-                        padding: EdgeInsets.all(15),
-                        color: Colors.blue[100],
-                      );
-                    }).toList(),
+                        );
+                      }
                   )
+                  // ListView(
+                  //   children: Access!.map((strone) {
+                  //     return Container(
+                  //       child: InkWell(
+                  //         onTap: () {
+                  //           //print('hei');
+                  //           Navigator.push(
+                  //               context,
+                  //               MaterialPageRoute(
+                  //                   builder: (context) =>
+                  //                       guardian_homepage(strone)));
+                  //         },
+                  //         child: new Text(
+                  //           strone,
+                  //         ),
+                  //       ),
+                  //       margin: EdgeInsets.all(5),
+                  //       padding: EdgeInsets.all(15),
+                  //       color: Colors.blue[100],
+                  //     );
+                  //   }).toList(),
+                  // )
                       : Center(child: const Text('Don\'t have any child')),
                 ),
                 Expanded(
                     flex: 1,
-                    child: Text('Nurturer of ')
+                    child: Container(
+                        margin: EdgeInsets.all(10),
+                        child: Text('Nurturers of ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue[800],
+                              fontSize: 20
+                          ),
+                        )
+                    )
                 ),
                 Expanded(
                   flex: 2,
@@ -293,15 +351,5 @@ class _UserHomeState extends State<UserHome> {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
-  Future<String> bname(String uidname) async {
-    String a;
-    var snapshot = await FirebaseFirestore.instance
-        .collection('user')
-        .doc(uidname)
-        .get().then((value) {
-      Map data = value.data() as Map;
-      print(data['name']);
-    });
-    return 'error';
-  }
 }
+

@@ -11,14 +11,6 @@ class UserModel {
   List? gaccess;
   List? naccess;
 
-
-  ///for authentication
-  String? auth_name;
-  String? auth_email;
-  String? auth_child;
-  String? auth_relation;
-  List? Babies;
-
   UserModel(
       {this.uid,
       this.email,

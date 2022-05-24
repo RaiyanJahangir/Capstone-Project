@@ -83,7 +83,8 @@ class ChildModel {
       'guardian': FieldValue.arrayUnion([
         uid,
       ]),
-      'nurturer': FieldValue.arrayUnion([])
+      'nurturer': FieldValue.arrayUnion([]),
+      'req': FieldValue.arrayUnion([])
     };
   }
 
