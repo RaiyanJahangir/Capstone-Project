@@ -2,6 +2,7 @@ import 'package:email_password_login/model/babies_model.dart';
 import 'package:email_password_login/screens/FeedingList.dart';
 import 'package:email_password_login/screens/Vaccine_Feeding.dart';
 import 'package:email_password_login/screens/notification_screen.dart';
+import 'package:email_password_login/screens/request.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -257,7 +258,8 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                   Card(
                     elevation: 4,
                     child: InkWell(
-                      onTap: () => null,
+                      onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(builder: (c) => AddRequest())),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
