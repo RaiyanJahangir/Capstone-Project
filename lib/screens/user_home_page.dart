@@ -243,14 +243,14 @@ class _UserHomeState extends State<UserHome> {
                   ),
                 ),
                 Expanded(
-                  flex: 1,
+                    flex: 1,
                     child: Container(
-                      margin: EdgeInsets.all(10),
+                        margin: EdgeInsets.all(10),
                         child: Text('Guardians of ',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                            color: Colors.blue[800],
-                            fontSize: 20
+                              color: Colors.blue[800],
+                              fontSize: 20
                           ),
                         )
                     )
@@ -266,13 +266,13 @@ class _UserHomeState extends State<UserHome> {
                           padding: EdgeInsets.all(0),
                           color: Colors.blue[100],
                           child: ListTile(
-                              title: Text(Access![index]),
-                              onTap: () {
-                                Navigator.push(context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                            guardian_homepage(Access![index])));
-            },
+                            title: Text(Access![index]),
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          guardian_homepage(Access![index])));
+                            },
                           ),
                         );
                       }

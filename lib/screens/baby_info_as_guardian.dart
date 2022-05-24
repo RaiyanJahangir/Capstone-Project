@@ -188,7 +188,8 @@ class guardian_homepageState extends State<guardian_homepage> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (c) => ChildInfoScreen(loggedInbaby.baby_uid ?? '')));
+                            builder: (c) =>
+                                ChildInfoScreen(loggedInbaby.baby_uid ?? '')));
                       },
                       child: Container(
                         decoration: const BoxDecoration(
@@ -228,8 +229,9 @@ class guardian_homepageState extends State<guardian_homepage> {
                   Card(
                     elevation: 4,
                     child: InkWell(
-                      onTap: () => Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (c) => HomePage())),
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (c) =>
+                              HomePage(loggedInbaby.baby_uid ?? ''))),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -320,9 +322,8 @@ class guardian_homepageState extends State<guardian_homepage> {
                   Card(
                     elevation: 4,
                     child: InkWell(
-                      onTap: () => Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (c) => auth(loggedInbaby.baby_uid ?? ''))),
-
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (c) => auth(loggedInbaby.baby_uid ?? ''))),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
