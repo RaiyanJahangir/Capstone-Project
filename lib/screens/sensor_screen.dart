@@ -7,8 +7,10 @@ import 'package:email_password_login/screens/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gauge/flutter_gauge.dart';
+import 'package:email_password_login/screens/graph_screen.dart';
 
 import 'graph_screen.dart';
 
@@ -258,8 +260,9 @@ class SensorScreenState extends State<SensorScreen> {
 
               TextButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (c) => GraphScreen()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (c) =>
+                          GraphScreen(pulse_list, temp_list, time_list)));
                 },
                 child: Container(
                   decoration: const BoxDecoration(
