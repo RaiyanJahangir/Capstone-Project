@@ -2,10 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/user_model.dart';
 import 'package:email_password_login/screens/home_screen.dart';
 import 'package:email_password_login/screens/login_screen.dart';
+import 'package:email_password_login/screens/notification_screen.dart';
+import 'package:email_password_login/screens/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gauge/flutter_gauge.dart';
+
+import 'graph_screen.dart';
 
 class SensorScreen extends StatefulWidget {
   const SensorScreen({Key? key}) : super(key: key);
@@ -17,6 +22,9 @@ class SensorScreen extends StatefulWidget {
 class SensorScreenState extends State<SensorScreen> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  List pulse_list = [];
+  List temp_list = [];
+  List time_list = [];
 
   final databaseRef =
       FirebaseDatabase.instance.reference().child("Sensor Data");
@@ -71,18 +79,29 @@ class SensorScreenState extends State<SensorScreen> {
         if (key == 'Pulse Rate') {
           prevPulse = pulse;
           pulse = values;
-          if (prevPulse != pulse) {
-            _updatevalue();
-          }
+          // if (prevPulse != pulse) {
+          //   _updatevalue();
+          // }
+          print('Pulse Rate ' + pulse);
         }
         if (key == 'Temperature') {
           prevTemp = temperature;
           temperature = values;
-          if (prevTemp != temperature) {
-            _updatevalue();
-          }
+          // if (prevTemp != temperature) {
+          //   _updatevalue();
+          // }
+          print('Temperature ' + temperature);
+        }
+        if (key == 'Latitude') {
+          print('Latitude ');
+        }
+        if (key == 'Longitude') {
+          print('Longitude ');
         }
         setState(() {});
+        // print(pulse_list);
+        // print(temp_list);
+        // print(time_list);
       });
     });
 
@@ -115,60 +134,96 @@ class SensorScreenState extends State<SensorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () {
-              //passing this to a loop
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => HomeScreen()));
-            },
-          ),
-          title: Text("Baby Health Parameters"),
           centerTitle: true,
-          actions: <Widget>[
-            IconButton(
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text("Confirm Logging Out ?",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.blue,
-                                  fontSize: 25)),
-                          actions: <Widget>[
-                            TextButton(
-                                onPressed: () {
-                                  logout(context);
-                                },
-                                child: Text("YES",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic,
-                                        color: Colors.blueAccent,
-                                        fontSize: 20))),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text("NO",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic,
-                                        color: Colors.blueAccent,
-                                        fontSize: 20)))
-                          ],
-                        );
-                      });
-                },
-                icon: Icon(
-                  Icons.logout,
-                  color: Colors.white,
-                ))
+          title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Expanded(child: Text('Health Data')),
+                IconButton(
+                  icon: Icon(
+                    Icons.circle_notifications,
+                    color: Colors.white,
+                    size: 24.0,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (c) => NotificationScreen()));
+                  },
+                ),
+              ]),
+          actions: [
+            PopupMenuButton(
+              icon: Icon(Icons.more_vert),
+              itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                PopupMenuItem(
+                  child: ListTile(
+                    //var a;
+                    leading: Icon(
+                      Icons.account_circle,
+                      color: Colors.blue,
+                      size: 24.0,
+                    ),
+                    //title: const Text(size ?? ''),
+                    title: Text(
+                      "User Profile",
+                    ),
+                    subtitle: Text(
+                      "${loggedInUser.name}",
+                    ),
+                    //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
+                    onTap: () => Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (c) => Home())),
+                  ),
+                ),
+                PopupMenuItem(
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.logout,
+                      color: Colors.blue,
+                    ),
+                    title: Text('Logout'),
+                    onTap: () => showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Confirm Logging Out ?",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.blue,
+                                    fontSize: 25)),
+                            actions: <Widget>[
+                              TextButton(
+                                  onPressed: () {
+                                    logout(context);
+                                  },
+                                  child: Text("YES",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.blueAccent,
+                                          fontSize: 20))),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("NO",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.blueAccent,
+                                          fontSize: 20)))
+                            ],
+                          );
+                        }),
+                  ),
+                ),
+              ],
+            ),
           ],
+          //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
         ),
         body: Container(
             child: Column(
@@ -196,6 +251,81 @@ class SensorScreenState extends State<SensorScreen> {
                     color: Colors.blueAccent,
                     fontSize: 25),
               ),
+              Divider(
+                color: Colors.blue,
+                thickness: 2,
+              ),
+
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (c) => GraphScreen()));
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: <Color>[
+                        Color(0xFF0D47A1),
+                        Color(0xFF1976D2),
+                        Color(0xFF42A5F5),
+                      ],
+                    ),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  child: Text(
+                    'Check Graph',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+
+              // Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: <Widget>[
+              //       Expanded(
+              //         child: Center(
+              //           child: FlutterGauge(
+              //             index: double.parse(pulse),
+              //             width: 280,
+              //             counterStyle: TextStyle(
+              //               color: Colors.black,
+              //               fontSize: 22,
+              //             ),
+              //             secondsMarker: SecondsMarker.secondsAndMinute,
+              //             number: Number.all,
+              //             numberInAndOut: NumberInAndOut.outside,
+              //           ),
+              //         ),
+              //       ),
+              //       VerticalDivider(
+              //         color: Colors.black,
+              //         thickness: 2,
+              //       ),
+              //       Expanded(
+              //         child: Center(
+              //           child: FlutterGauge(
+              //             index: double.parse(temperature),
+              //             width: 280,
+              //             counterStyle: TextStyle(
+              //               color: Colors.black,
+              //               fontSize: 22,
+              //             ),
+              //             secondsMarker: SecondsMarker.secondsAndMinute,
+              //             number: Number.all,
+              //             numberInAndOut: NumberInAndOut.outside,
+              //           ),
+              //         ),
+              //       ),
+              //     ]),
+              // Divider(
+              //   color: Colors.blue,
+              //   thickness: 2,
+              // ),
               Divider(
                 color: Colors.blue,
                 thickness: 2,
@@ -234,6 +364,7 @@ class SensorScreenState extends State<SensorScreen> {
                                       DataSnapshot snapshot,
                                       Animation<double> animation,
                                       int index) {
+                                    pulse_list.add(snapshot.value);
                                     return ListTile(
                                       title: Text('${snapshot.value}' + " BPM"),
                                     );
@@ -263,6 +394,7 @@ class SensorScreenState extends State<SensorScreen> {
                                       DataSnapshot snapshot,
                                       Animation<double> animation,
                                       int index) {
+                                    temp_list.add(snapshot.value);
                                     return ListTile(
                                       title: Text('${snapshot.value}' + " °C"),
                                     );
@@ -293,7 +425,8 @@ class SensorScreenState extends State<SensorScreen> {
                                       Animation<double> animation,
                                       int index) {
                                     var timestamp =
-                                        snapshot.value.substring(0, 20);
+                                        snapshot.value.substring(0, 17);
+                                    time_list.add(snapshot.value);
                                     return ListTile(
                                       title: Text(timestamp),
                                     );
@@ -303,6 +436,7 @@ class SensorScreenState extends State<SensorScreen> {
                         ),
                       ),
                     ],
+                    //SizedBox(height: 20),
                   ),
                 ),
               ),
@@ -315,10 +449,15 @@ class SensorScreenState extends State<SensorScreen> {
   }
 
   //Logout function
+  // Future<void> logout(BuildContext context) async {
+  //   await FirebaseAuth.instance.signOut();
+  //   Navigator.of(context).pushReplacement(
+  //       MaterialPageRoute(builder: (context) => LoginScreen()));
+  // }
+
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => LoginScreen()));
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 }
 

@@ -27,7 +27,9 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
+
     compileSdkVersion 31
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -47,6 +49,7 @@ android {
         applicationId "com.example.email_password_login"
         minSdkVersion 21
         targetSdkVersion 30
+        multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
