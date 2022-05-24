@@ -37,6 +37,16 @@ class _newTaskState extends State<FeedingList> {
   TextEditingController reason = new TextEditingController();
   String colorgrp = '';
 
+  final auth = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
+  final feedingtype = TextEditingController();
+  final feedingtime = DateTime.now();
+  final feedingitem = TextEditingController();
+  final feeding2nd = TextEditingController();
+  final feeding3rd = TextEditingController();
+  final medicinename = TextEditingController();
+  //final vaccineuidEditingController = TextEditingController();
+
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
   ChildModel loggedInbaby = ChildModel();
@@ -193,44 +203,53 @@ class _newTaskState extends State<FeedingList> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 25,
-                    ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //   children: [
-                    //     Text(
-                    //       "Feeding Type(Breakfast,Lunch,Dinner etc)",
-                    //       style: TextStyle(fontSize: 18),
-                    //     ),
-                    //     SizedBox(
-                    //       width: 50,
-                    //     ),
-                    //   ],
-                    // ),
-                    // Container(
-                    //   padding: EdgeInsets.all(10),
-                    //   //color: Colors.blue.withOpacity(0.2),
-                    //   child: TextField(
-                    //     controller: feedingtype,
-                    //     decoration: InputDecoration(
-                    //         fillColor: Colors.blue.withOpacity(0.2),
-                    //         filled: true,
-                    //         border: OutlineInputBorder(
-                    //           borderRadius: BorderRadius.circular(20),
-                    //           //borderSide: BorderSide(color: Color.blue ,width: 5.0),
-                    //         ),
-                    //         hintText: "Feeding Type"),
-                    //     style: TextStyle(fontSize: 18),
-                    //   ),
-                    // ),
-                    SizedBox(
                       height: 10,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
-                          "Feeding Time",
+                          "Meal Type(Breakfast,lunch etc)",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        SizedBox(
+                          width: 50,
+                        ),
+                      ],
+                    ),
+                    // Text(
+                    //   "Meal Type(Breakfast,lunch etc)",
+                    //   style: TextStyle(fontSize: 18),
+                    // ),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      //color: Colors.blue.withOpacity(0.2),
+                      child: TextField(
+                        controller: feedingtype,
+                        decoration: InputDecoration(
+                            fillColor: Colors.blue.withOpacity(0.2),
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              //borderSide: BorderSide(color: Color.blue ,width: 5.0),
+                            ),
+                            hintText: " Meal Type(Breakfast,lunch etc)"),
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: 10,
+                    ),
+                    // Text(
+                    //   "Feeding Time",
+                    //   style: TextStyle(fontSize: 18),
+                    // ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          "Feeding Time : ",
                           style: TextStyle(fontSize: 18),
                         ),
                         SizedBox(
@@ -250,135 +269,151 @@ class _newTaskState extends State<FeedingList> {
                               borderRadius: BorderRadius.circular(20),
                               //borderSide: BorderSide(color: Color.blue ,width: 5.0),
                             ),
-                            hintText: "Time"),
+                            hintText: "Feeding Time"),
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //   children: [
-                    //     Text(
-                    //       "Feeding Item",
-                    //       style: TextStyle(fontSize: 18),
-                    //     ),
-                    //     SizedBox(
-                    //       width: 50,
-                    //     ),
-                    //   ],
+                    // Text(
+                    //   "Feeding Item",
+                    //   style: TextStyle(fontSize: 18),
                     // ),
-                    // Container(
-                    //   padding: EdgeInsets.all(10),
-                    //   //color: Colors.blue.withOpacity(0.2),
-                    //   child: TextField(
-                    //     controller: feedingitem,
-                    //     decoration: InputDecoration(
-                    //         fillColor: Colors.blue.withOpacity(0.2),
-                    //         filled: true,
-                    //         border: OutlineInputBorder(
-                    //           borderRadius: BorderRadius.circular(20),
-                    //           //borderSide: BorderSide(color: Color.blue ,width: 5.0),
-                    //         ),
-                    //         hintText: "Feeding Item"),
-                    //     style: TextStyle(fontSize: 18),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          "Feeding Item",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        SizedBox(
+                          width: 50,
+                        ),
+                      ],
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      //color: Colors.blue.withOpacity(0.2),
+                      child: TextField(
+                        controller: feedingitem,
+                        decoration: InputDecoration(
+                            fillColor: Colors.blue.withOpacity(0.2),
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              //borderSide: BorderSide(color: Color.blue ,width: 5.0),
+                            ),
+                            hintText: "Feeding Item"),
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    // Text(
+                    //   "Which food was provided :",
+                    //   style: TextStyle(fontSize: 18),
+                    // ),
+                    // CheckboxListTile(
+                    //   title: Text(
+                    //     "Rice",
                     //   ),
+                    //   controlAffinity: ListTileControlAffinity.leading,
+                    //   onChanged: (bool? value) {
+                    //     setState(() {
+                    //       if (value!) {
+                    //         selectedList.add(1);
+                    //       } else {
+                    //         selectedList.remove(1);
+                    //       }
+                    //     });
+                    //   },
+                    //   value: selectedList.contains(1),
                     // ),
-                    // SizedBox(
-                    //   height: 10,
+                    // CheckboxListTile(
+                    //   title: Text(
+                    //     "Milk",
+                    //   ),
+                    //   controlAffinity: ListTileControlAffinity.leading,
+                    //   onChanged: (bool? value) {
+                    //     setState(() {
+                    //       if (value!) {
+                    //         selectedList.add(2);
+                    //       } else {
+                    //         selectedList.remove(2);
+                    //       }
+                    //     });
+                    //   },
+                    //   value: selectedList.contains(2),
                     // ),
-                    // SizedBox(
-                    //   height: 10,
+                    // CheckboxListTile(
+                    //   title: Text(
+                    //     "Meat",
+                    //   ),
+                    //   controlAffinity: ListTileControlAffinity.leading,
+                    //   onChanged: (bool? value) {
+                    //     setState(() {
+                    //       if (value!) {
+                    //         selectedList.add(3);
+                    //       } else {
+                    //         selectedList.remove(3);
+                    //       }
+                    //     });
+                    //   },
+                    //   value: selectedList.contains(3),
                     // ),
-                    Text(
-                      "Which food was provided :",
-                      style: TextStyle(fontSize: 18),
+                    // CheckboxListTile(
+                    //   title: Text(
+                    //     "Vegetables",
+                    //   ),
+                    //   controlAffinity: ListTileControlAffinity.leading,
+                    //   onChanged: (bool? value) {
+                    //     setState(() {
+                    //       if (value!) {
+                    //         selectedList.add(4);
+                    //       } else {
+                    //         selectedList.remove(4);
+                    //       }
+                    //     });
+                    //   },
+                    //   value: selectedList.contains(4),
+                    // ),
+                    // CheckboxListTile(
+                    //   title: Text(
+                    //     "Others",
+                    //   ),
+                    //   controlAffinity: ListTileControlAffinity.leading,
+                    //   onChanged: (bool? value) {
+                    //     setState(() {
+                    //       if (value!) {
+                    //         selectedList.add(5);
+                    //       } else {
+                    //         selectedList.remove(5);
+                    //       }
+                    //     });
+                    //   },
+                    //   value: selectedList.contains(5),
+                    // ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          "Any Medication ?",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        SizedBox(
+                          width: 50,
+                        ),
+                      ],
                     ),
-                    CheckboxListTile(
-                      title: Text(
-                        "Rice",
-                      ),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          if (value!) {
-                            selectedList.add(1);
-                          } else {
-                            selectedList.remove(1);
-                          }
-                        });
-                      },
-                      value: selectedList.contains(1),
-                    ),
-                    CheckboxListTile(
-                      title: Text(
-                        "Milk",
-                      ),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          if (value!) {
-                            selectedList.add(2);
-                          } else {
-                            selectedList.remove(2);
-                          }
-                        });
-                      },
-                      value: selectedList.contains(2),
-                    ),
-                    CheckboxListTile(
-                      title: Text(
-                        "Meat",
-                      ),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          if (value!) {
-                            selectedList.add(3);
-                          } else {
-                            selectedList.remove(3);
-                          }
-                        });
-                      },
-                      value: selectedList.contains(3),
-                    ),
-                    CheckboxListTile(
-                      title: Text(
-                        "Vegetables",
-                      ),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          if (value!) {
-                            selectedList.add(4);
-                          } else {
-                            selectedList.remove(4);
-                          }
-                        });
-                      },
-                      value: selectedList.contains(4),
-                    ),
-                    CheckboxListTile(
-                      title: Text(
-                        "Others",
-                      ),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          if (value!) {
-                            selectedList.add(5);
-                          } else {
-                            selectedList.remove(5);
-                          }
-                        });
-                      },
-                      value: selectedList.contains(5),
-                    ),
-                    Text(
-                      "Any Medication ?",
-                      style: TextStyle(fontSize: 18),
-                    ),
+                    // Text(
+                    //   "Any Medication ?",
+                    //   style: TextStyle(fontSize: 18),
+                    // ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -447,6 +482,49 @@ class _newTaskState extends State<FeedingList> {
                         )
                       ],
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
+
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          "Medicine Name(If any?)",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        SizedBox(
+                          width: 50,
+                        ),
+                      ],
+                    ),
+                    // Text(
+                    //   "Medicine Name(If any?)",
+                    //   style: TextStyle(fontSize: 18),
+                    // ),
+
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      //color: Colors.blue.withOpacity(0.2),
+                      child: TextField(
+                        controller: feedingtype,
+                        decoration: InputDecoration(
+                            fillColor: Colors.blue.withOpacity(0.2),
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              //borderSide: BorderSide(color: Color.blue ,width: 5.0),
+                            ),
+                            hintText: "Medicine Name"),
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Container(
                       padding: EdgeInsets.all(15),
                       child: Column(
@@ -470,6 +548,35 @@ class _newTaskState extends State<FeedingList> {
                                       color: Colors.white, fontSize: 18),
                                 ),
                                 onPressed: () {
+                                  final DateTime now = DateTime.now();
+                                  final DateFormat formatter =
+                                      DateFormat('HH:mm:ss');
+                                  final String formatted =
+                                      formatter.format(now);
+
+                                  //print(formatted);
+                                  final oneeightyDaysFromNow =
+                                      now.add(const Duration(hours: 5));
+                                  final DateFormat formatter2nd =
+                                      DateFormat('HH:mm:ss');
+                                  final String formatted2nd =
+                                      formatter.format(oneeightyDaysFromNow);
+
+                                  final oneyearDaysFromNow =
+                                      now.add(const Duration(hours: 9));
+                                  final DateFormat formatter3rd =
+                                      DateFormat('HH:mm:ss');
+                                  final String formatted3rd =
+                                      formatter.format(oneyearDaysFromNow);
+
+                                  sendData(
+                                      feedingtype.text,
+                                      feedingitem.text,
+                                      formatted,
+                                      formatted2nd,
+                                      formatted3rd,
+                                      feeding2nd.text,
+                                      medicinename.text);
                                   /*Map<String, dynamic> data = {
                                     "Vaccine Name": name.text,
                                     "Vaccination Date": date.text,
@@ -505,6 +612,71 @@ class _newTaskState extends State<FeedingList> {
         ),
       ),
     );
+  }
+
+  Future<void> sendData(
+    String feedingitem,
+    String feedingtype,
+    String feedingtime,
+    String feeding2ndtime,
+    String feeding3rdtime,
+    String vaccineuid,
+    String medicinename,
+  ) async {
+    User? user = auth.currentUser;
+
+    //ChildModel? babies = auth.currentUser;
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('feeding').doc();
+    String? docId = documentReference.id;
+
+    final QuerySnapshot qSnap =
+        await FirebaseFirestore.instance.collection('feeding').get();
+    final int a = qSnap.docs.length;
+    String d = a.toString();
+    String feeding_uid = "feeding" + d;
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    UserModel userModel = UserModel();
+    FeedingModel feedingModel = FeedingModel();
+
+    feedingModel.uid = loggedInbaby.baby_uid;
+
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('HH:mm:ss');
+    final String formatted = formatter.format(now);
+
+    //print(formatted);
+    final oneeightyDaysFromNow = now.add(const Duration(hours: 5));
+    final DateFormat formatter2nd = DateFormat('HH:mm:ss');
+    final String formatted2nd = formatter.format(oneeightyDaysFromNow);
+
+    final oneyearDaysFromNow = now.add(const Duration(hours: 9));
+    final DateFormat formatter3rd = DateFormat('HH:mm:ss');
+    final String formatted3rd = formatter.format(oneyearDaysFromNow);
+
+    feedingModel.foodtype = feedingtype;
+    feedingModel.foodtime = formatted;
+    feedingModel.fooditem = feedingitem;
+    feedingModel.food2 = formatted2nd;
+    feedingModel.food3 = formatted3rd;
+    feedingModel.medication = medicinename;
+
+    //userModel.gaccess?.add(vaccine_uid);
+
+    await firebaseFirestore
+        .collection("feeding")
+        .doc(feeding_uid)
+        .set(feedingModel.toMap());
+    ////await uid = users model<-doc users->collec access array add "baby" + d
+    //Fluttertoast.showToast(msg: "Baby Registered");
+
+    await firebaseFirestore
+        .collection("Babies")
+        .doc(loggedInbaby.baby_uid)
+        .update(loggedInbaby.addnewfeedinguid(feeding_uid));
+
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => HomePage(loggedInbaby.baby_uid ?? '')));
   }
 
   Future<void> logout(BuildContext context) async {

@@ -238,6 +238,10 @@ class _newTaskState extends State<NewTask> {
                         ),
                       ],
                     ),
+                    // Text(
+                    //   "Name of the Vaccine :",
+                    //   style: TextStyle(fontSize: 18),
+                    // ),
                     Container(
                       padding: EdgeInsets.all(10),
                       //color: Colors.blue.withOpacity(0.2),
@@ -257,9 +261,17 @@ class _newTaskState extends State<NewTask> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      "Vaccination Date :",
-                      style: TextStyle(fontSize: 18),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          "Vaccination Date : ",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        SizedBox(
+                          width: 50,
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 10,
@@ -361,9 +373,17 @@ class _newTaskState extends State<NewTask> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      "Number of Dose :",
-                      style: TextStyle(fontSize: 18),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          "Number of Doses :",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        SizedBox(
+                          width: 50,
+                        ),
+                      ],
                     ),
 
                     // ListView(
