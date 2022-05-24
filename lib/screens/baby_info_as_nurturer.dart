@@ -2,6 +2,7 @@ import 'package:email_password_login/model/babies_model.dart';
 import 'package:email_password_login/screens/FeedingList.dart';
 import 'package:email_password_login/screens/Vaccine_Feeding.dart';
 import 'package:email_password_login/screens/notification_screen.dart';
+import 'package:email_password_login/screens/request.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -22,7 +23,7 @@ String dropdownValue = 'One';
 class nurturer_homepage extends StatefulWidget {
   final String text;
 
-  const nurturer_homepage(@required this.text,{Key? key}) : super(key: key);
+  const nurturer_homepage(@required this.text, {Key? key}) : super(key: key);
 
   @override
   State<nurturer_homepage> createState() => _nurturer_homepageState();
@@ -172,8 +173,7 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                             ])),
                   ),
                   Expanded(
-                    child: Text(
-                        "${loggedInbaby.name}",
+                    child: Text("${loggedInbaby.name}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
@@ -257,7 +257,8 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                   Card(
                     elevation: 4,
                     child: InkWell(
-                      onTap: () => null,
+                      onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(builder: (c) => AddRequest())),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
