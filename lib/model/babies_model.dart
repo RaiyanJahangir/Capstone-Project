@@ -21,8 +21,10 @@ class ChildModel {
   String? baby_uid;
   List? guardian;
   List? nurturer;
+  List? req;
   List? newvaccineuid;
   List? newfeedinguid;
+
 
   ChildModel(
       {this.uid,
@@ -40,8 +42,10 @@ class ChildModel {
       this.age,
       this.guardian,
       this.nurturer,
+      this.req,
       this.newvaccineuid,
       this.newfeedinguid});
+
 
   ///Receiving data from server
   factory ChildModel.fromMap(map) {
@@ -61,6 +65,7 @@ class ChildModel {
         baby_uid: map['baby_uid'],
         guardian: map['guardian'],
         nurturer: map['nurturer'],
+        req: map['req'],
         newvaccineuid: map['vaccinelist'],
         newfeedinguid: map['feedinglist']);
   }

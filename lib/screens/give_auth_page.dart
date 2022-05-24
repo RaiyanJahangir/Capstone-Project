@@ -19,6 +19,9 @@ class auth extends StatefulWidget {
 class _authState extends State<auth> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  ChildModel loggedInBaby= ChildModel();
+  List? Access;
+  int itemCount = 0;
 
   @override
   void initState() {
@@ -31,6 +34,21 @@ class _authState extends State<auth> {
       this.loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
+    FirebaseFirestore.instance
+        .collection("Babies")
+        .doc(widget.text)
+        .get()
+        .then((value) {
+      // ignore: unnecessary_this
+      this.loggedInBaby = ChildModel.fromMap(value.data());
+      setState(() {
+        Access=loggedInBaby.req;
+        if (Access!.isNotEmpty) {
+          itemCount = Access!.length;
+        }
+      });
+    });
+    print(Access);
   }
 
 
@@ -194,88 +212,80 @@ class _authState extends State<auth> {
       ),
       //resizeToAvoidBottomInset: false,
       body: Container(
-        margin: EdgeInsets.all(24),
-        child: SingleChildScrollView(
-          reverse: true,
-          padding: EdgeInsets.all(32),
-          child: Column(
-            children: [
-              Text("Authorize Permission",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic,
-                      shadows: [
-                        Shadow(
-                            color: Colors.lightBlueAccent,
-                            offset: Offset(2, 1),
-                            blurRadius: 10)
-                      ])),
-              SizedBox(
-                height: 50,
-              ),
-              Form(
-                  key: _formKey,
-                  child: Column(
-                    //mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      _buildemail(),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                          children: <Widget>[
-                        Padding(padding: EdgeInsets.only(right: 0 * wo)),
-                        Text('Give Authorization as:    ',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue,
-                                fontSize: wh * 0.02,
-                                height: 1.5)),
-                                _authlist(),
-                      ]),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TextButton(
-                        child: Text(
-                          'Authorize',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+        padding: EdgeInsets.all(25),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Text("Authorize Permission",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                          shadows: [
+                            Shadow(
+                                color: Colors.lightBlueAccent,
+                                offset: Offset(2, 1),
+                                blurRadius: 10)
+                          ])),
+                ),
+                Expanded(
+                  flex: 5,
+                  child: (itemCount > 0)
+                      ? ListView(
+                    children: Access!.map((strone) {
+                      return Container(
+                        child: InkWell(
+                          onTap: () {
+                            //print('hei');
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                            Text(
+                            strone,
+                          ),
+                          Spacer(),
+                          RawMaterialButton(
+                            onPressed: () {},
+                            //elevation: 1.0,
+                            fillColor: Colors.green,
+                            child: Icon(
+                              Icons.check,
+                              size: 25.0,
+                             ),
+                              padding: EdgeInsets.all(0),
+                              shape: CircleBorder(),
+                              ),
+                              RawMaterialButton(
+                            onPressed: () {},
+                            //elevation: 2.0,
+                            fillColor: Colors.red,
+                            child: Icon(
+                              Icons.cancel_outlined,
+                              size: 25.0,
+                              color: Colors.white,
+                             ),
+                              padding: EdgeInsets.all(0),
+                              shape: CircleBorder(),
+                              )
+                            ],
+                          )
                         ),
-                        style: TextButton.styleFrom(
-                            primary: Colors.orange,
-                            elevation: 2,
-                            backgroundColor: Colors.blueAccent
-                        ),
-                        onPressed: () {
-                          if (!_formKey.currentState!.validate()) {
-                            return;
-                          } else {
-                            _formKey.currentState!.save();
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                duration: const Duration(seconds: 1),
-                                content: Text(
-                                    'Sending Data to the Cloud Firestore')));
-                          }
-                          print(_email);
-
-                          ///authetication trial
-                          sendData(
-                              emailEditingController.text,
-                              _box!
-                          );
-                        },
-                      )
-                    ],
-                  ))
-            ],
-          ),
-        ),
+                        margin: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(15),
+                        color: Colors.blue[100],
+                      );
+                    }).toList(),
+                  )
+                      : Center(child: const Text('Don\'t have any child')),
+                ),
+              ],
+            ),
       ),
     );
   }
