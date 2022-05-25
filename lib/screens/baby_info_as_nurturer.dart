@@ -11,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_password_login/screens/sensor_screen.dart';
 import 'package:email_password_login/model/user_model.dart';
 import 'package:email_password_login/screens/profile.dart';
+import 'package:email_password_login/screens/req_auth_page.dart';
 import 'package:email_password_login/model/babies_model.dart';
 
 enum _MenuValues {
@@ -259,7 +260,7 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                     elevation: 4,
                     child: InkWell(
                       onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(builder: (c) => AddRequest())),
+                          MaterialPageRoute(builder: (c) => reqauth(widget.text))),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
