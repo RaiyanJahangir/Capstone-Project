@@ -260,7 +260,7 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                     elevation: 4,
                     child: InkWell(
                       onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(builder: (c) => reqauth(widget.text))),
+                          MaterialPageRoute(builder: (c) => reqauth())),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

@@ -9,6 +9,7 @@ import 'package:email_password_login/screens/home_screen.dart';
 import 'package:email_password_login/screens/register_child.dart';
 import 'package:email_password_login/screens/registration_screen.dart';
 import 'package:email_password_login/model/user_model.dart';
+import 'package:email_password_login/screens/req_auth_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -340,7 +341,18 @@ class _UserHomeState extends State<UserHome> {
                     }).toList(),
                   )
                       : Center(child: const Text('Don\'t have any child')),
-                )
+                ),
+                Expanded(
+                  flex: 1,
+                    child: TextButton(
+                  style: TextButton.styleFrom(
+                    primary: Colors.blue,
+                    onSurface: Colors.blue[900],
+                  ),
+                  onPressed: () {Navigator.of(context).push(
+                      MaterialPageRoute(builder: (c) => reqauth()));},
+                  child: Text('Req For Auth'),
+                ))
               ]
           ),
         )

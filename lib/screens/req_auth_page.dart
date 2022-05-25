@@ -9,8 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 
 class reqauth extends StatefulWidget {
-  final String text;
-  const reqauth(@required this.text , {Key? key}) : super(key: key);
+  const reqauth( {Key? key}) : super(key: key);
 
   @override
   State<reqauth> createState() => _reqauthState();
@@ -34,21 +33,7 @@ class _reqauthState extends State<reqauth> {
       this.loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
-    FirebaseFirestore.instance
-        .collection("Babies")
-        .doc(widget.text)
-        .get()
-        .then((value) {
-      // ignore: unnecessary_this
-      this.loggedInBaby = ChildModel.fromMap(value.data());
-      setState(() {
-        Access=loggedInBaby.req;
-        if (Access!.isNotEmpty) {
-          itemCount = Access!.length;
-        }
-      });
-    });
-    print(Access);
+
   }
 
 
@@ -176,6 +161,8 @@ class _reqauthState extends State<reqauth> {
           return ListView(
             children: snapshot.data!.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+              (data['req']!=null) ? print(data['req']!.where((item) => item == loggedInUser.email)) : print('yo');
+              //(data['req']!=null) ? print(data['req'].contain('m@g.com')) : print('yo');
               return ListTile(
                 title: Text(data['name'] ?? ''),
                 trailing: ElevatedButton(
@@ -183,13 +170,17 @@ class _reqauthState extends State<reqauth> {
                       padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10))),
-                  child: Text(
-                    'Request',
-                    style: TextStyle(fontSize: 12),
-                  ),
+                  child:
+                  //     data['req']!=null ?
+                  // data['req']!.where((item) => item == loggedInUser.email)!= '(m@g.com)' ?
+                      Text(
+                        'Request',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                           // : Text('Requested') : Text('null'),
                   onPressed: () async {
-                    await FirebaseFirestore.instance.collection('Babies').doc(widget.text).update({"req": FieldValue.arrayUnion([loggedInUser.email])});
-                    await refresh();
+                    await FirebaseFirestore.instance.collection('Babies').doc(data['baby_uid']).update({"req": FieldValue.arrayUnion([loggedInUser.email])});
+                    //await refresh();
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       duration: const Duration(seconds: 2),
                       content: Text('Request Placed'),
@@ -210,23 +201,6 @@ class _reqauthState extends State<reqauth> {
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).popUntil((route) => route.isFirst);
-  }
-  Future refresh() async{
-    setState(() {
-      FirebaseFirestore.instance
-          .collection("Babies")
-          .doc(widget.text)
-          .get()
-          .then((value) {
-        this.loggedInBaby = ChildModel.fromMap(value.data());
-        setState(() {
-          Access=loggedInBaby.req;
-          if (Access!.isNotEmpty) {
-            itemCount = Access!.length;
-          }
-        });
-      });
-    });
   }
 }
 
