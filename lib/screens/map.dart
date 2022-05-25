@@ -259,10 +259,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-//var latitude = 23.8366;
-//var longitude = 90.3632;
-var latitude = null;
-var longitude = null;
+var latitude = 23.8366;
+var longitude = 90.3632;
+//var latitude = null;
+//var longitude = null;
 
 class MapSample extends StatefulWidget {
   @override

@@ -510,7 +510,7 @@ class _newTaskState extends State<FeedingList> {
                       padding: EdgeInsets.all(10),
                       //color: Colors.blue.withOpacity(0.2),
                       child: TextField(
-                        controller: feedingtype,
+                        controller: medicinename,
                         decoration: InputDecoration(
                             fillColor: Colors.blue.withOpacity(0.2),
                             filled: true,

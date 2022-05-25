@@ -308,20 +308,20 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
                               fontSize: wh * 0.02,
                               height: 2))
                     ]),
-                    Row(children: <Widget>[
-                      Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
-                      Text('Father\'s Name : ',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue,
-                              fontSize: wh * 0.02,
-                              height: 2)),
-                      Text("${loggedInbaby.fathersName}",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: wh * 0.02,
-                              height: 2))
-                    ]),
+                    // Row(children: <Widget>[
+                    //   Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
+                    //   Text('Father\'s Name : ',
+                    //       style: TextStyle(
+                    //           fontWeight: FontWeight.bold,
+                    //           color: Colors.blue,
+                    //           fontSize: wh * 0.02,
+                    //           height: 2)),
+                    //   Text("${loggedInbaby.fathersName}",
+                    //       style: TextStyle(
+                    //           fontWeight: FontWeight.bold,
+                    //           fontSize: wh * 0.02,
+                    //           height: 2))
+                    // ]),
                     // Row(children: <Widget>[
                     //   Padding(padding: EdgeInsets.only(right: 0.1 * wo)),
                     //   Text('Mother\'s Name : ',
