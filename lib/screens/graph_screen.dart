@@ -145,44 +145,46 @@ class GraphScreenState extends State<GraphScreen> {
             ),
           ],
         ),
-        body: Center(
-            child: Column(
-          children: [
-            SizedBox(height: 15),
-            Text(
-              "Baby Pulse Rate Curve",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                  color: Colors.blueAccent,
-                  fontSize: 25),
-            ),
-            Container(
-                child: SfCartesianChart(series: <ChartSeries>[
-              // Renders line chart
-              LineSeries<ChartData, int>(
-                  dataSource: Pulse_list,
-                  xValueMapper: (ChartData data, _) => data.x,
-                  yValueMapper: (ChartData data, _) => data.y)
-            ])),
-            Text(
-              "Baby Temperature Curve",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                  color: Colors.blueAccent,
-                  fontSize: 25),
-            ),
-            Container(
-                child: SfCartesianChart(series: <ChartSeries>[
-              // Renders line chart
-              LineSeries<ChartData, int>(
-                  dataSource: Temp_list,
-                  xValueMapper: (ChartData data, _) => data.x,
-                  yValueMapper: (ChartData data, _) => data.y)
-            ])),
-          ],
-        )));
+        body: SingleChildScrollView(
+          child: Center(
+              child: Column(
+            children: [
+              SizedBox(height: 15),
+              Text(
+                "Baby Pulse Rate Curve",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.blueAccent,
+                    fontSize: 25),
+              ),
+              Container(
+                  child: SfCartesianChart(series: <ChartSeries>[
+                // Renders line chart
+                LineSeries<ChartData, int>(
+                    dataSource: Pulse_list,
+                    xValueMapper: (ChartData data, _) => data.x,
+                    yValueMapper: (ChartData data, _) => data.y)
+              ])),
+              Text(
+                "Baby Temperature Curve",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.blueAccent,
+                    fontSize: 25),
+              ),
+              Container(
+                  child: SfCartesianChart(series: <ChartSeries>[
+                // Renders line chart
+                LineSeries<ChartData, int>(
+                    dataSource: Temp_list,
+                    xValueMapper: (ChartData data, _) => data.x,
+                    yValueMapper: (ChartData data, _) => data.y)
+              ])),
+            ],
+          )),
+        ));
   }
 
   Future<void> logout(BuildContext context) async {
