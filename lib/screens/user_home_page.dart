@@ -188,70 +188,138 @@ class _UserHomeState extends State<UserHome> {
           //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
         ),
         body: Container(
-          child: Column(
-              children: [
-                Expanded(
-                  flex: 5,
-                  child: GridView.count(
-                    crossAxisCount: 1,
-                    mainAxisSpacing: 5,
-                    crossAxisSpacing: 5,
-                    padding: EdgeInsets.all(8),
-                    primary: false,
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: Card(
-                          elevation: 1,
-                          child: InkWell(
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => RegisterChild(),
-                              ),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              // ignore: prefer_const_literals_to_create_immutables
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: Lottie.asset(
-                                    "assets/child_animation.json",
-                                    width: 200,
-                                    height: 200,
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    'Register Baby',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.blue[400],
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FontStyle.normal,
-                                    ),
-                                  ),
-                                ),
-                              ],
+          child: Column(children: [
+            Expanded(
+              flex: 3,
+              child: GridView.count(
+                crossAxisCount: 1,
+                mainAxisSpacing: 5,
+                crossAxisSpacing: 5,
+                padding: EdgeInsets.all(8),
+                primary: false,
+                children: [
+                  Card(
+                    elevation: 1,
+                    child: InkWell(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RegisterChild(),
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        // ignore: prefer_const_literals_to_create_immutables
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: Lottie.asset(
+                              "assets/child_animation.json",
+                              width: 150,
+                              height: 150,
+                              fit: BoxFit.fill,
                             ),
                           ),
-                        ),
+                          // Container(
+                          //   height: 30,
+                          //   width: 80,
+                          //   child: Text(
+                          //     'Register Baby',
+                          //     style: TextStyle(
+                          //       fontSize: 16,
+                          //       color: Colors.blue[400],
+                          //       fontWeight: FontWeight.bold,
+                          //       fontStyle: FontStyle.normal,
+                          //     ),
+                          //   ),
+                          // ),
+                          // Text(
+                          //   'Register Baby',
+                          //   style: TextStyle(
+                          //     fontSize: 20,
+                          //     color: Colors.blue[400],
+                          //     fontWeight: FontWeight.bold,
+                          //     fontStyle: FontStyle.normal,
+                          //   ),
+                          // ),
+                          // Text(
+                          //   'Register Baby',
+                          //   style: TextStyle(
+                          //     fontSize: 16,
+                          //     color: Colors.blue[400],
+                          //     fontWeight: FontWeight.bold,
+                          //     fontStyle: FontStyle.normal,
+                          //   ),
+                          // ),
+                          // Text(
+                          //   'List Of Babies',
+                          //   style: TextStyle(
+                          //     fontSize: 16,
+                          //     color: Colors.blueGrey[400],
+                          //     fontWeight: FontWeight.bold,
+                          //     fontStyle: FontStyle.normal,
+                          //     decoration: TextDecoration.underline,
+                          //   ),
+                          // ),
+                        ],
                       ),
                     ],
                   ),
-                ),
-                Expanded(
-                    flex: 1,
-                    child: Container(
-                        margin: EdgeInsets.all(10),
-                        child: Text('Guardians of ',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue[800],
-                              fontSize: 20
+                ],
+              ),
+            ),
+            //Expanded(flex: 1, child: Text('Register Baby')),
+            Text(
+              'Register Baby',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.blue[400],
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.normal,
+              ),
+            ),
+            SizedBox(height: 5),
+
+            Text(
+              'List Of Babies',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.blueGrey[400],
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.normal,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+            SizedBox(height: 5),
+            Text(
+              "Guardians of:",
+              style: TextStyle(
+                  color: Colors.blue[400],
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.normal),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Expanded(
+              flex: 2,
+              child: itemCount > 0
+                  ? ListView(
+                      children: Access!.map((strone) {
+                        return Container(
+                          child: InkWell(
+                            onTap: () {
+                              //print('hei');
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          guardian_homepage(strone)));
+                            },
+                            child: new Text(
+                              strone + " " + " " + " " + "(G)",
+                            ),
                           ),
                         )
                     )
