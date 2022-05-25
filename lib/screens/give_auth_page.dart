@@ -60,57 +60,8 @@ class _authState extends State<auth> {
   final nameEditingController = TextEditingController();
   final emailEditingController = TextEditingController();
   final authas = TextEditingController();
-  var data;
+  List items=['Guardian','Nurturer'];
 
-  Widget _authlist() {
-    return DropdownButton<String>(
-      value: _box,
-      icon: Icon(
-        Icons.arrow_downward,
-        color: Colors.grey.shade900,
-      ),
-      iconSize: 24,
-      elevation: 16,
-      style: TextStyle(color: Colors.grey.shade900),
-      onChanged: (newValue) {
-        setState(() {
-          _box = newValue!;
-          authas.text = newValue;
-        });
-      },
-      items: <String>['Guardian', 'Nurturer']
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
-  }
-
-  Widget _buildemail() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Email Address'),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Email is Required';
-        }
-
-        if (!RegExp(
-                r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-            .hasMatch(value)) {
-          return 'Please enter a valid email Address';
-        }
-
-        return null;
-      },
-      controller: emailEditingController,
-      onSaved: (value) {
-        _email = value;
-        emailEditingController.text = value!;
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -234,55 +185,127 @@ class _authState extends State<auth> {
                           ])),
                 ),
                 Expanded(
-                  flex: 5,
+                  flex: 6,
                   child: (itemCount > 0)
-                      ? ListView(
-                    children: Access!.map((strone) {
-                      return Container(
-                        child: InkWell(
-                          onTap: () {
-                            //print('hei');
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                            Text(
-                            strone,
-                          ),
-                          Spacer(),
-                          RawMaterialButton(
-                            onPressed: () {},
-                            //elevation: 1.0,
-                            fillColor: Colors.green,
-                            child: Icon(
-                              Icons.check,
-                              size: 25.0,
-                             ),
-                              padding: EdgeInsets.all(0),
-                              shape: CircleBorder(),
-                              ),
-                              RawMaterialButton(
-                            onPressed: () {},
-                            //elevation: 2.0,
-                            fillColor: Colors.red,
-                            child: Icon(
-                              Icons.cancel_outlined,
-                              size: 25.0,
-                              color: Colors.white,
-                             ),
-                              padding: EdgeInsets.all(0),
-                              shape: CircleBorder(),
-                              )
-                            ],
-                          )
-                        ),
-                        margin: EdgeInsets.all(5),
-                        padding: EdgeInsets.all(15),
-                        color: Colors.blue[100],
-                      );
-                    }).toList(),
-                  )
-                      : Center(child: const Text('Don\'t have any child')),
+                      ? RefreshIndicator(
+                    onRefresh: refresh,
+                        child: ListView.builder(
+                        itemCount: Access!.length,
+                        itemBuilder: (BuildContext ctxt, int index) {
+                          return Card(
+                            color: Colors.blue[50],
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    flex: 2,
+                                    child: Container(
+                                      margin: EdgeInsets.all(8),
+                                        child: Text(Access![index])
+                                    )
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                    child: Container(
+                                      margin: const EdgeInsets.all(5),
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(10))),
+                                        child: const Text(
+                                          'Guardian',
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                        onPressed: () async {
+                                          print(Access![index]);
+                                          final snapshot = await FirebaseFirestore.instance
+                                              .collection('Users')
+                                              .where('Email', isEqualTo: Access![index])
+                                              .get().catchError((error) {
+                                            Fluttertoast.showToast(msg: error!.message);
+                                            print("Something went wrong: ${error.message}");
+                                          });
+                                          String euid=snapshot.docs.first['uid'].toString();
+                                          print(euid);
+                                          await FirebaseFirestore.instance.collection('Users').doc(euid).update({"gaccess": FieldValue.arrayUnion([widget.text])});
+                                          await FirebaseFirestore.instance.collection('Babies').doc(widget.text).update({"guardian": FieldValue.arrayUnion([euid])});
+                                          await FirebaseFirestore.instance.collection('Babies').doc(widget.text).update({"req": FieldValue.arrayRemove([Access![index]])});
+                                          await refresh();
+                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                            duration: const Duration(seconds: 2),
+                                            content: Text('Authorized as Guardian'),
+                                          ),);
+                                        },
+                                      ),
+                                    ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    margin: const EdgeInsets.all(5),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10))),
+                                      child: const Text(
+                                        'Nurturer',
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                      onPressed: () async {
+                                        print(Access![index]);
+                                        final snapshot = await FirebaseFirestore.instance
+                                            .collection('Users')
+                                            .where('Email', isEqualTo: Access![index])
+                                            .get().catchError((error) {
+                                          Fluttertoast.showToast(msg: error!.message);
+                                          print("Something went wrong: ${error.message}");
+                                        });
+                                        String euid=snapshot.docs.first['uid'].toString();
+                                        print(euid);
+                                        await FirebaseFirestore.instance.collection('Users').doc(euid).update({"naccess": FieldValue.arrayUnion([widget.text])});
+                                        await FirebaseFirestore.instance.collection('Babies').doc(widget.text).update({"nurturer": FieldValue.arrayUnion([euid])});
+                                        await FirebaseFirestore.instance.collection('Babies').doc(widget.text).update({"req": FieldValue.arrayRemove([Access![index]])});
+                                        await refresh();
+                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                          duration: const Duration(seconds: 2),
+                                          content: Text('Authorized as Nurturer'),
+                                        ),);
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    margin: const EdgeInsets.all(5),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10))),
+                                      child: const Text(
+                                        'Cancel',
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                      onPressed: () async {
+                                        await FirebaseFirestore.instance.collection('Babies').doc(widget.text).update({"req": FieldValue.arrayRemove([Access![index]])});
+                                        await refresh();
+                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                          duration: const Duration(seconds: 2),
+                                          content: Text('Request Canceled'),
+                                        ),);
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          );
+                        }
+                  ),
+                      )
+                      : Center(child: const Text('No request')),
                 ),
               ],
             ),
@@ -333,4 +356,31 @@ class _authState extends State<auth> {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
+  Future refresh() async{
+    setState(() {
+      FirebaseFirestore.instance
+          .collection("Babies")
+          .doc(widget.text)
+          .get()
+          .then((value) {
+        this.loggedInBaby = ChildModel.fromMap(value.data());
+        setState(() {
+          Access=loggedInBaby.req;
+          if (Access!.isNotEmpty) {
+            itemCount = Access!.length;
+          }
+        });
+      });
+    });
+  }
+}
+
+List<DropdownMenuItem<String>> _dropDownItem() {
+  List<String> ddl = ["Guardian", "Nurturer"];
+  return ddl
+      .map((value) => DropdownMenuItem(
+    value: value,
+    child: Text(value),
+  ))
+      .toList();
 }

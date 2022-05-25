@@ -89,6 +89,7 @@ class ChildModel {
         uid,
       ]),
       'nurturer': FieldValue.arrayUnion([]),
+      'req': FieldValue.arrayUnion([]),
       'vaccinelist': FieldValue.arrayUnion([]),
       'feedinglist': FieldValue.arrayUnion([])
     };
