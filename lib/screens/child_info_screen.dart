@@ -247,6 +247,31 @@ class ChildInfoScreenState extends State<ChildInfoScreen> {
                                 text: "${loggedInbaby.birthCertNo}",
                                 icon: Icons.photo,
                                 onPressed: () async {}),
+                            InfoCard(
+                                text: "List of Guardians:",
+                                icon: Icons.man,
+                                onPressed: () async {}),
+                            // Row(children: <Widget>[
+                            //   Padding(
+                            //       padding: EdgeInsets.only(right: 0.1 * wo)),
+                            //   Text('List Of Guardians: ',
+                            //       style: TextStyle(
+                            //           fontWeight: FontWeight.bold,
+                            //           color: Colors.blue,
+                            //           fontSize: wh * 0.02,
+                            //           height: 1.5)),
+                            // ]),
+                            // Expanded(
+                            //   child: itemCount > 0
+                            //       ? ListView.builder(
+                            //           padding: const EdgeInsets.all(8),
+                            //           itemCount: baby_guardian!.length,
+                            //           itemBuilder:
+                            //               (BuildContext context, int index) {
+                            //             return Text(baby_guardian![index]);
+                            //           })
+                            //       : Text(' Error Loading Guardian... '),
+                            // ),
                           ],
                         ),
                       ),
