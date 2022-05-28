@@ -61,7 +61,7 @@ class _reqauthState extends State<reqauth> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Expanded(child: Text('Request for Authorization')),
+              Expanded(child: Text('Auth Request')),
               IconButton(
                 icon: Icon(
                   Icons.circle_notifications,
