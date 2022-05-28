@@ -14,6 +14,22 @@ from baby_cry_detection.rpi_methods.majority_voter import MajorityVoter
 
 from baby_cry_detection.rpi_methods.baby_cry_predictor import BabyCryPredictor
 
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
+
+
+cred = credentials.Certificate("D:\Android_Studio_Projects\Capstone-Project\Hardware Codes\Baby_Cry_Detection\\baby_cry_detection\prediction_simulation\\firebase-python-sdk.json")
+#firebase_admin.initialize_app(cred)
+default_app = firebase_admin.initialize_app(cred, {
+	'databaseURL':'https://integrated-design-projec-1e9b8-default-rtdb.firebaseio.com'
+	})
+
+ref = db.reference("/Sensor Data")
+# cry_state=ref.get()
+# print(cry_state)
+#ref.update({"Cry":"YES"})
+
 
 def main():
     
@@ -118,6 +134,7 @@ def main():
  
 
        engine.say('Baby is crying')
+       ref.update({"Cry":"YES"})
  
 
        engine.runAndWait()
@@ -126,6 +143,7 @@ def main():
        
 
         engine.say('This not a baby cry')
+        ref.update({"Cry":"NO"})
  
 
         engine.runAndWait()

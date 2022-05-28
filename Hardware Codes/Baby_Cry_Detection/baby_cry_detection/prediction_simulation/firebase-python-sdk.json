@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "integrated-design-projec-1e9b8",
+  "private_key_id": "d652a537b830b7f4abd9804390c4678985b0fe37",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDxoKOlXdUeXSYy\nvkdxod0BOZ5rZGSctJsUaKA5y0K/ch0aELu9T/gacsyKF91b6XUsYgiVGWLRz+rJ\nk+43YX8lFjU7awnlP37rWAVxkMcQvO/l2cqT/9h+5DRDOYD37E+FmOyN+pmsY3qg\nwqIHkcuzPNjIdNrKMmnAktEna5qA4WoUGqkq2WRa2wd4FY2paSPg1mx7oEpOJXa0\npkp1m1F2s+36ndboTurGy/DrBW2qD1TWV0wekQVR7FDI/7Hh7ffF/wzmBjFM13Po\nkeTMV49klcXjPiVBjaIv+1bttawK4GahVr4In51RuVYwr58FceQFmVoLI6RbVktE\nXfEz5aOXAgMBAAECggEADK2bP2vkRGQF+hLGIcBfwmkf+0Uh+J+LEv1+ZQVZs/Pj\nTioaUf1UDSvJuIpbKgtMTMYED0RtA/dIKX6ruLx3UGeRMFQ6wENVEjkJaBWhoyrE\ncMxPZKxR01M2Ts3UCvdSRWz8lIcep6qFufX33saqDNGy7s5D/A1zHsd56I0s+TAc\nA13f+QV9o9Fx/pw7X2jo2xpzPGkhsGTXe8m3LV2hIcxfW3yfUcPG62fYqmIovNR/\nhe6bewqkQr/l68h12sNFLnCYuoLXxodVo4JgZtCkQKb6FG1lqJPj3AG9fuJH3LL7\nYFwE/yHlnuhMl1TEGi3keUyKHagZ/RY9y1tAEoCX0QKBgQD68td/71A94zVgCBob\n5PHrXSGZnU5VwOCHIkTBCY9xreOtA7cIiPkL5vNvnlQICGpcMFtf0Uo24bOM8IIg\nKVpdckQ9HexnHfqS362mtQE9tab0GuygYlTCsyw3twv6ad8KcHmdGsyGh99WVvCU\nZjYzG2WFrruRy0Vq06QRUg58bwKBgQD2fcPaii4zsiJlza7JgK1a/itRMXBVJ6G0\niAzPCLejYGQy+qAbarqsXWaui8BiNStHO1XNZpx2CpR0UW1K3QDk9GFg2TPAEAXt\n2eS6ToUhVcg7zoEoifuSMBsa3tUtySoxlQSXM9Kg+cIr3YQ1Cg21gXHYLM72beN2\nbTlIxjwvWQKBgGUwKokhvF9YEJuqaKy6wnm/Ud8ZOQ8G+QJEZSjZbAfQsC+Bgfpl\nENclxx9I3mVmz0xhC1c1kxFSLQ41pKLHSfLIMo/aUwq5YeJ7YxAHiHqTlsBzYtrB\nC6B+kuPcYW4V5qPU+pTIy5OrkfjEkbmlBVHSSDuBW4zMRC9xK4T4a3LtAoGBAJRc\nQkQJo6Ft+JI56JhUIQOBtGTcUvaOMiBNOxhp8M4fOHAOtcuKw+z3EtTAPP1fbzsi\nlZRZzJan647Pa+8BcoZcKTh3w1Q40LjGy4rvs+XKkgidVNQnqQnmdooH0VwLlp/d\nR7QSdxZ4/cwVOnwKHxI+ZV1uKuvcXGptd2s8FgGRAoGAesL2WsLw9rHMAemLoMTe\nNGofHd/25RioY/O0PRSyckvo9Dku5wLc8ViRh+pRqWw8ZMT9f4n03eoQ3q4jUAHi\nXXLdXmkhoUJd2QZA8I87PEWw3sAgmrNO23H4sa4R0rGWJWNHiMDNpvexbBb92joi\nDf8MDmk2k6P/JPgl/ICquv4=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-chk9w@integrated-design-projec-1e9b8.iam.gserviceaccount.com",
+  "client_id": "115555047429469013958",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-chk9w%40integrated-design-projec-1e9b8.iam.gserviceaccount.com"
+}
