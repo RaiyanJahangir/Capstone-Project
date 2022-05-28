@@ -360,6 +360,13 @@ class _homePageState extends State<HomePage> {
                                       SizedBox(
                                         height: 10,
                                       ),
+                                      TableCalendar(
+                                        calendarController: ctrlr,
+                                        startingDayOfWeek:
+                                            StartingDayOfWeek.monday,
+                                        initialCalendarFormat:
+                                            CalendarFormat.week,
+                                      ),
                                       Container(
                                         padding: EdgeInsets.all(20),
                                         child: Column(
@@ -420,6 +427,13 @@ class _homePageState extends State<HomePage> {
                                     children: [
                                       SizedBox(
                                         height: 10,
+                                      ),
+                                      TableCalendar(
+                                        calendarController: ctrlr,
+                                        startingDayOfWeek:
+                                            StartingDayOfWeek.monday,
+                                        initialCalendarFormat:
+                                            CalendarFormat.week,
                                       ),
                                       Container(
                                         padding: EdgeInsets.all(20),
