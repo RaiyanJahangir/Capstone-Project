@@ -281,6 +281,7 @@ class _authState extends State<auth> {
                                     margin: const EdgeInsets.all(5),
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
+                                        primary: Colors.red,
                                           padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
                                           shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(10))),
