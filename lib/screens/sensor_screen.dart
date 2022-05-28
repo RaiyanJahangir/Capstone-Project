@@ -257,7 +257,6 @@ class SensorScreenState extends State<SensorScreen> {
                 color: Colors.blue,
                 thickness: 2,
               ),
-
               TextButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -286,49 +285,6 @@ class SensorScreenState extends State<SensorScreen> {
                   ),
                 ),
               ),
-
-              // Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: <Widget>[
-              //       Expanded(
-              //         child: Center(
-              //           child: FlutterGauge(
-              //             index: double.parse(pulse),
-              //             width: 280,
-              //             counterStyle: TextStyle(
-              //               color: Colors.black,
-              //               fontSize: 22,
-              //             ),
-              //             secondsMarker: SecondsMarker.secondsAndMinute,
-              //             number: Number.all,
-              //             numberInAndOut: NumberInAndOut.outside,
-              //           ),
-              //         ),
-              //       ),
-              //       VerticalDivider(
-              //         color: Colors.black,
-              //         thickness: 2,
-              //       ),
-              //       Expanded(
-              //         child: Center(
-              //           child: FlutterGauge(
-              //             index: double.parse(temperature),
-              //             width: 280,
-              //             counterStyle: TextStyle(
-              //               color: Colors.black,
-              //               fontSize: 22,
-              //             ),
-              //             secondsMarker: SecondsMarker.secondsAndMinute,
-              //             number: Number.all,
-              //             numberInAndOut: NumberInAndOut.outside,
-              //           ),
-              //         ),
-              //       ),
-              //     ]),
-              // Divider(
-              //   color: Colors.blue,
-              //   thickness: 2,
-              // ),
               Divider(
                 color: Colors.blue,
                 thickness: 2,
@@ -355,7 +311,12 @@ class SensorScreenState extends State<SensorScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Text("Pulse Rate"),
+                            Text("Pulse Rate",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.blueAccent,
+                                )),
                             Divider(
                               color: Colors.blue,
                               thickness: 2,
@@ -369,7 +330,14 @@ class SensorScreenState extends State<SensorScreen> {
                                       int index) {
                                     pulse_list.add(snapshot.value);
                                     return ListTile(
-                                      title: Text('${snapshot.value}' + " BPM"),
+                                      title: Text(
+                                        '${snapshot.value}' + " BPM",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.blueAccent,
+                                        ),
+                                      ),
                                     );
                                   }),
                             ),
@@ -385,7 +353,12 @@ class SensorScreenState extends State<SensorScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Text("Temperature"),
+                            Text("Temperature",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.blueAccent,
+                                )),
                             Divider(
                               color: Colors.blue,
                               thickness: 2,
@@ -399,7 +372,12 @@ class SensorScreenState extends State<SensorScreen> {
                                       int index) {
                                     temp_list.add(snapshot.value);
                                     return ListTile(
-                                      title: Text('${snapshot.value}' + " °C"),
+                                      title: Text('${snapshot.value}' + " °C",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontStyle: FontStyle.italic,
+                                            color: Colors.blueAccent,
+                                          )),
                                     );
                                   }),
                             ),
@@ -415,7 +393,12 @@ class SensorScreenState extends State<SensorScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Text("Timstamp"),
+                            Text("Timstamp",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.blueAccent,
+                                )),
                             Divider(
                               color: Colors.blue,
                               thickness: 2,
@@ -427,11 +410,17 @@ class SensorScreenState extends State<SensorScreen> {
                                       DataSnapshot snapshot,
                                       Animation<double> animation,
                                       int index) {
-                                    var timestamp =
-                                        snapshot.value.substring(0, 17);
+                                    var timestamp = snapshot.value;
                                     time_list.add(snapshot.value);
                                     return ListTile(
-                                      title: Text(timestamp),
+                                      title: Text(
+                                        timestamp,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontStyle: FontStyle.italic,
+                                            color: Colors.blueAccent,
+                                            fontSize: 13),
+                                      ),
                                     );
                                   }),
                             ),

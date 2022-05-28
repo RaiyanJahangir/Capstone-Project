@@ -130,7 +130,11 @@ exports.onMessageUpdate=functions.database.ref('Sensor Data').onUpdate((change,c
 
         var today = new Date();
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-        var time = ((parseInt(today.getHours())+6)%24)+ ":" + today.getMinutes() + ":" + today.getSeconds();
+        var seconds=today.getSeconds();
+        if(seconds<10){
+            seconds='0'+seconds;
+        }
+        var time = ((parseInt(today.getHours())+6)%24)+ ":" + today.getMinutes() + ":" + seconds;
         var Timestamp = date+' '+time;
 
         return change.after.ref.update({Timestamp});

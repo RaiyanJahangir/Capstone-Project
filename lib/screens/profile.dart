@@ -174,41 +174,45 @@ class _HomeState extends State<Home> {
                   child: Container(
                       color: Colors.white,
                       child: Center(
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              "$name",
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                color: Colors.blueGrey[800],
-                                fontWeight: FontWeight.bold,
-                                fontFamily: "Pacifico",
-                              ),
+                        child: Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  "$name",
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: Colors.blueGrey[800],
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "Pacifico",
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                  width: 200,
+                                  child: Divider(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                InfoCard(
+                                    text: "$myEmail",
+                                    icon: Icons.email,
+                                    onPressed: () async {}),
+                                InfoCard(
+                                    text: "$occupation",
+                                    icon: Icons.work,
+                                    onPressed: () async {}),
+                                InfoCard(
+                                    text: "$gender",
+                                    icon: Icons.man,
+                                    onPressed: () async {}),
+                                InfoCard(
+                                    text: "$age",
+                                    icon: Icons.confirmation_number_sharp,
+                                    onPressed: () async {}),
+                              ],
                             ),
-                            SizedBox(
-                              height: 5,
-                              width: 200,
-                              child: Divider(
-                                color: Colors.black,
-                              ),
-                            ),
-                            InfoCard(
-                                text: "$myEmail",
-                                icon: Icons.email,
-                                onPressed: () async {}),
-                            InfoCard(
-                                text: "$occupation",
-                                icon: Icons.work,
-                                onPressed: () async {}),
-                            InfoCard(
-                                text: "$gender",
-                                icon: Icons.man,
-                                onPressed: () async {}),
-                            InfoCard(
-                                text: "$age",
-                                icon: Icons.confirmation_number_sharp,
-                                onPressed: () async {}),
-                          ],
+                          ),
                         ),
                       ))),
             ],
