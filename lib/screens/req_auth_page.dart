@@ -61,7 +61,7 @@ class _reqauthState extends State<reqauth> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Expanded(child: Text('Request for Authorization')),
+              Expanded(child: Text('Auth Request')),
               IconButton(
                 icon: Icon(
                   Icons.circle_notifications,
@@ -161,30 +161,64 @@ class _reqauthState extends State<reqauth> {
           return ListView(
             children: snapshot.data!.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-              (data['req']!=null) ? print(data['req']!.where((item) => item == loggedInUser.email)) : print('yo');
-              //(data['req']!=null) ? print(data['req'].contain('m@g.com')) : print('yo');
+              List reqname=data['req'];
+              //print(reqname);
+              bool req=false;
+              //print(loggedInUser.email);
+              Iterable i= reqname.where((name)=>name.contains(loggedInUser.email.toString())).toList();
+              //print(i);
+              //print(i.toString()=='['+ loggedInUser.email.toString() +']');
+              req=i.toString()=='['+ loggedInUser.email.toString() +']';
+              reqname=data['guardian'];
+              print(reqname);
+              bool g=false;
+              print(loggedInUser.uid);
+              i= reqname.where((name)=>name.contains(loggedInUser.uid.toString())).toList();
+              print(i);
+              print(i.toString()=='['+ loggedInUser.uid.toString() +']');
+              g=i.toString()=='['+ loggedInUser.uid.toString() +']';
+              reqname=data['nurturer'];
+              print(reqname);
+              bool n=false;
+              print(loggedInUser.uid);
+              i= reqname.where((name)=>name.contains(loggedInUser.uid.toString())).toList();
+              print(i);
+              print(i.toString()=='['+ loggedInUser.uid.toString() +']');
+              n=i.toString()=='['+ loggedInUser.uid.toString() +']';
+              //print();
               return ListTile(
                 title: Text(data['name'] ?? ''),
                 trailing: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                    primary: (g==true || n==true) ? Colors.red[300] : req==false ? Colors.blue : Colors.blueGrey[300],
                       padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10))),
+                          borderRadius: BorderRadius.circular(10))
+                  ),
                   child:
                   //     data['req']!=null ?
                   // data['req']!.where((item) => item == loggedInUser.email)!= '(m@g.com)' ?
-                      Text(
-                        'Request',
-                        style: TextStyle(fontSize: 12),
-                      ),
+                  (g==true || n==true) ? Text(
+                        'Assigned',
+                        style: TextStyle(
+                            fontSize: 12,
+                        ),
+                      ) : req==false ? Text(
+                      'Request',
+                      style: TextStyle(fontSize: 12),
+                    ) : Text(
+                    'Requested',
+                    style: TextStyle(fontSize: 12),
+                  ),
                            // : Text('Requested') : Text('null'),
                   onPressed: () async {
-                    await FirebaseFirestore.instance.collection('Babies').doc(data['baby_uid']).update({"req": FieldValue.arrayUnion([loggedInUser.email])});
-                    //await refresh();
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      duration: const Duration(seconds: 2),
-                      content: Text('Request Placed'),
-                    ),);
+                    if(req==false && g==false && n==false){
+                      await FirebaseFirestore.instance.collection('Babies').doc(data['baby_uid']).update({"req": FieldValue.arrayUnion([loggedInUser.email])});
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        duration: const Duration(seconds: 2),
+                        content: Text('Request Placed'),
+                      ),);
+                    }
                   },
                 ),
                 //subtitle: Text(data['company']),
