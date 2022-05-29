@@ -6,7 +6,6 @@ import 'package:email_password_login/model/user_model.dart';
 import 'package:email_password_login/screens/req_auth_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:email_password_login/screens/profile.dart';
 import 'package:email_password_login/screens/notification_screen.dart';
@@ -36,9 +35,9 @@ class _UserHomeState extends State<UserHome> {
   UserModel loggedInUser = UserModel();
   ChildModel n= ChildModel();
   ChildModel logch=ChildModel();
+
   List? Access;
   List? nAccess;
-  List? bname;
   int itemCount = 0;
   int nitemCount = 0;
   @override
@@ -65,21 +64,6 @@ class _UserHomeState extends State<UserHome> {
         print(loggedInUser.name);
       });
     });
-    // for (int i = 0; i < Access!.length; i++) {
-    //   FirebaseFirestore.instance
-    //       .collection("Babies")
-    //       .doc(Access![i])
-    //       .get()
-    //       .then((value) {
-    //     // ignore: unnecessary_this
-    //     this.logch = ChildModel.fromMap(value.data());
-    //     setState(() {
-    //       print(logch.name);
-    //       bname = [logch.name];
-    //     });
-    //   });
-    //   print(bname);
-    // }
   }
   @override
   Widget build(BuildContext context) {
@@ -102,8 +86,8 @@ class _UserHomeState extends State<UserHome> {
                     size: 24.0,
                   ),
                   onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (c) => NotificationScreen()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (c) => NotificationScreen()));
                   },
                 ),
               ]),
@@ -233,7 +217,7 @@ class _UserHomeState extends State<UserHome> {
                           ),
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
                 Expanded(
@@ -246,28 +230,48 @@ class _UserHomeState extends State<UserHome> {
                               color: Colors.blue[800],
                               fontSize: 20
                           ),
-                        )
-                    )
-                ),
-                Expanded(
-                  flex: 2,
-                  child: itemCount > 0
-                      ? ListView.builder(
-                      itemCount: Access!.length,
-                      itemBuilder: (BuildContext context,int index){
-                        return Container(
                           margin: EdgeInsets.all(5),
-                          padding: EdgeInsets.all(0),
+                          padding: EdgeInsets.all(15),
                           color: Colors.blue[100],
-                          child: ListTile(
-                            title: Text(Access![index]),
+                        );
+                      }).toList(),
+                    )
+                  : Center(child: const Text('Don\'t have any child')),
+            ),
+            // Expanded(flex: 1, child: Text('Nurturer of ')),
+            Text(
+              "Nurturers of:",
+              style: TextStyle(
+                color: Colors.blue[400],
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            // SizedBox(
+            //   height: 5,
+            // ),
+            Expanded(
+              flex: 2,
+              child: nitemCount > 0
+                  ? ListView(
+                      children: nAccess!.map((nstrone) {
+                        return Container(
+                          child: InkWell(
                             onTap: () {
-                              Navigator.push(context,
+                              //print('hei');
+                              Navigator.push(
+                                  context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          guardian_homepage(Access![index])));
+                                          nurturer_homepage(nstrone)));
                             },
+                            child: new Text(
+                              nstrone + " " + " " + " " + "(N)",
+                            ),
                           ),
+                          margin: EdgeInsets.all(5),
+                          padding: EdgeInsets.all(15),
+                          color: Colors.cyanAccent[100],
                         );
                       }
                   )
@@ -330,14 +334,14 @@ class _UserHomeState extends State<UserHome> {
                     primary: Colors.blue,
                     onSurface: Colors.blue[900],
                   ),
-                  onPressed: () {Navigator.of(context).push(
-                      MaterialPageRoute(builder: (c) => reqauth()));},
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (c) => reqauth()));
+                  },
                   child: Text('Req For Auth'),
                 ))
-              ]
-          ),
-        )
-    );
+          ]),
+        ));
   }
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
