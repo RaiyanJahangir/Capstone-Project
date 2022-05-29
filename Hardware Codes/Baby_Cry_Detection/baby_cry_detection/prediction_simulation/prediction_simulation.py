@@ -40,7 +40,7 @@ def main():
                         default='{}/../../output/model/'.format(os.path.dirname(os.path.abspath(__file__))))
     parser.add_argument('--save_path',
                         default='{}/../../output/prediction/'.format(os.path.dirname(os.path.abspath(__file__))))
-    parser.add_argument('--file_name', default='baby.wav')
+    parser.add_argument('--file_name', default='cat.wav')
     parser.add_argument('--log_path',
                         default='{}/../../'.format(os.path.dirname(os.path.abspath(__file__))))
 
