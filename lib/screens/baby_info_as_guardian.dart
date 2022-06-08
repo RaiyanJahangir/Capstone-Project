@@ -16,6 +16,17 @@ import 'package:email_password_login/screens/notification_screen.dart';
 import '../model/user_model.dart';
 import '../model/babies_model.dart';
 
+class GradientColors {
+  final List<Color> colors;
+  GradientColors(this.colors);
+
+  static List<Color> sky = [Color(0xFF6448FE), Color(0xFF5FC6FF)];
+  static List<Color> sunset = [Color(0xFFFE6197), Color(0xFFFFB463)];
+  static List<Color> sea = [Color(0xFF61A3FE), Color(0xFF63FFD5)];
+  static List<Color> mango = [Color(0xFFFFA738), Color(0xFFFFE130)];
+  static List<Color> fire = [Color(0xFFFF5DCD), Color(0xFFFF8484)];
+}
+
 enum _MenuValues {
   logout,
 }
@@ -153,18 +164,20 @@ class guardian_homepageState extends State<guardian_homepage> {
         //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
       ),
       body: Container(
+        margin: const EdgeInsets.only(bottom: 20.0),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
         child: Column(
           children: [
             Expanded(
-              flex: 1,
               child: Row(
                 children: [
                   Expanded(
+                    flex: 2,
                     child: Text('Name : ',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 25,
-                            color: Colors.blue,
+                            fontSize: 20,
+                            color: Colors.blue[900],
                             fontWeight: FontWeight.bold,
                             //fontStyle: FontStyle.italic,
                             shadows: [
@@ -175,6 +188,7 @@ class guardian_homepageState extends State<guardian_homepage> {
                             ])),
                   ),
                   Expanded(
+                    flex: 3,
                     child: Text("${loggedInbaby.name}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -185,172 +199,239 @@ class guardian_homepageState extends State<guardian_homepage> {
                         )),
                   ),
                   Expanded(
+                    flex: 2,
                     child: TextButton(
-                      onPressed: () {
+                          onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (c) =>
                                 ChildInfoScreen(loggedInbaby.baby_uid ?? '')));
                       },
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: <Color>[
-                              Color(0xFF0D47A1),
-                              Color(0xFF1976D2),
-                              Color(0xFF42A5F5),
-                            ],
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: GradientColors.sky,
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                              ), borderRadius: BorderRadius.all(Radius.circular(20))
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            child: Text(
+                              'Check Info',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 25, vertical: 10),
-                        child: Text(
-                          'Check Info',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
                   ),
                 ],
               ),
             ),
             Expanded(
-              flex: 5,
-              child: GridView.count(
-                padding: EdgeInsets.all(8),
-                crossAxisCount: 2,
-                mainAxisSpacing: 5,
-                crossAxisSpacing: 5,
-                primary: false,
-                children: [
-                  Card(
-                    elevation: 4,
-                    child: InkWell(
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
                           builder: (c) =>
                               HomePage(loggedInbaby.baby_uid ?? ''))),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            flex: 4,
-                            child: Lottie.asset(
-                              "assets/food.json",
-                              width: 200,
-                              height: 200,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          Expanded(
-                              flex: 1,
-                              child: Text('Feeding Info',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold,
-                                    //fontStyle: FontStyle.italic,
-                                  )))
-                        ],
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 32),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: GradientColors.sea,
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
                       ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: GradientColors.sea.last.withOpacity(0.4),
+                          blurRadius: 8,
+                          spreadRadius: 2,
+                          offset: Offset(4, 4),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.all(Radius.circular(24)),
                     ),
-                  ),
-                  Card(
-                    elevation: 4,
-                    child: InkWell(
-                      onTap: () => Navigator.of(context).push(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Lottie.asset(
+                            "assets/food.json",
+                            width: 150,
+                            height: 150,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Text('Feeding Info',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                //fontStyle: FontStyle.italic,
+                              )),
+                        )
+                      ],
+                    ),
+                        ),
+                )
+            ),
+            Expanded(
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(builder: (c) => SensorScreen())),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            flex: 4,
-                            child: Lottie.asset(
-                              "assets/health.json",
-                              width: 200,
-                              height: 200,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          Expanded(
-                              flex: 1,
-                              child: Text('Health Record',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold,
-                                    //fontStyle: FontStyle.italic,
-                                  )))
-                        ],
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 32),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: GradientColors.sky,
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
                       ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: GradientColors.sky.last.withOpacity(0.4),
+                          blurRadius: 8,
+                          spreadRadius: 2,
+                          offset: Offset(4, 4),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.all(Radius.circular(24)),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Lottie.asset(
+                            "assets/health.json",
+                            width: 150,
+                            height: 150,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Text('Health Record',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                //fontStyle: FontStyle.italic,
+                              )),
+                        )
+                      ],
                     ),
                   ),
-                  Card(
-                    elevation: 4,
-                    child: InkWell(
-                      onTap: () => {
+                )
+            ),
+            Expanded(
+                child: GestureDetector(
+                  onTap: () => {
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (c) => MapSample()))
                       },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            flex: 4,
-                            child: Lottie.asset(
-                              "assets/map.json",
-                              width: 200,
-                              height: 200,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          Expanded(
-                              flex: 2,
-                              child: Text('Check Baby Location',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold,
-                                    //fontStyle: FontStyle.italic,
-                                  )))
-                        ],
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 32),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: GradientColors.sea,
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
                       ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: GradientColors.sea.last.withOpacity(0.4),
+                          blurRadius: 8,
+                          spreadRadius: 2,
+                          offset: Offset(4, 4),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.all(Radius.circular(24)),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Lottie.asset(
+                            "assets/map.json",
+                            width: 150,
+                            height: 150,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Text('Check Baby Location',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                //fontStyle: FontStyle.italic,
+                              )),
+                        )
+                      ],
                     ),
                   ),
-                  Card(
-                    elevation: 4,
-                    child: InkWell(
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                )
+            ),
+            Expanded(
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
                           builder: (c) => auth(loggedInbaby.baby_uid ?? ''))),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            flex: 4,
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 32),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: GradientColors.sky,
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: GradientColors.sky.last.withOpacity(0.4),
+                          blurRadius: 8,
+                          spreadRadius: 2,
+                          offset: Offset(4, 4),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.all(Radius.circular(24)),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
                             child: Lottie.asset(
                               "assets/user.json",
-                              width: 200,
-                              height: 200,
+                              width: 150,
+                              height: 150,
                               fit: BoxFit.fill,
                             ),
-                          ),
-                          Expanded(
-                              flex: 2,
-                              child: Text('Authorize New Users',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold,
-                                    //fontStyle: FontStyle.italic,
-                                  )))
-                        ],
-                      ),
+                        ),
+                    Expanded(
+                      flex: 3,
+                      child: Text('Authorize New Users',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          //fontStyle: FontStyle.italic,
+                        )),
+                    )
+                      ],
                     ),
                   ),
-                ],
-              ),
+                )
             ),
           ],
         ),

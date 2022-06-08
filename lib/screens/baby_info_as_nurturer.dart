@@ -14,6 +14,17 @@ import 'package:email_password_login/screens/profile.dart';
 import 'package:email_password_login/screens/req_auth_page.dart';
 import 'package:email_password_login/model/babies_model.dart';
 
+class GradientColors {
+  final List<Color> colors;
+  GradientColors(this.colors);
+
+  static List<Color> sky = [Color(0xFF6448FE), Color(0xFF5FC6FF)];
+  static List<Color> sunset = [Color(0xFFFE6197), Color(0xFFFFB463)];
+  static List<Color> sea = [Color(0xFF61A3FE), Color(0xFF63FFD5)];
+  static List<Color> mango = [Color(0xFFFFA738), Color(0xFFFFE130)];
+  static List<Color> fire = [Color(0xFFFF5DCD), Color(0xFFFF8484)];
+}
+
 enum _MenuValues {
   logout,
 }
@@ -152,6 +163,8 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
         //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
       ),
       body: Container(
+        margin: const EdgeInsets.only(bottom: 200.0),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
         child: Column(
           children: [
             Expanded(
@@ -187,107 +200,107 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
               ),
             ),
             Expanded(
-              flex: 5,
-              child: GridView.count(
-                padding: EdgeInsets.all(8),
-                crossAxisCount: 2,
-                mainAxisSpacing: 5,
-                crossAxisSpacing: 5,
-                primary: false,
-                children: [
-                  Card(
-                    elevation: 2,
-                    child: InkWell(
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+              flex: 2,
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
                           builder: (c) =>
                               HomePage(loggedInbaby.baby_uid ?? ''))),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            flex: 4,
-                            child: Lottie.asset(
-                              "assets/food.json",
-                              width: 200,
-                              height: 200,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          Expanded(
-                              flex: 1,
-                              child: Text('Feeding Info',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold,
-                                    //fontStyle: FontStyle.italic,
-                                  )))
-                        ],
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 32),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: GradientColors.sea,
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
                       ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: GradientColors.sea.last.withOpacity(0.4),
+                          blurRadius: 8,
+                          spreadRadius: 2,
+                          offset: Offset(4, 4),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.all(Radius.circular(24)),
                     ),
-                  ),
-                  Card(
-                    elevation: 2,
-                    child: InkWell(
-                      onTap: () => Navigator.of(context).push(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Lottie.asset(
+                            "assets/food.json",
+                            width: 150,
+                            height: 150,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Text('Feeding Info',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                //fontStyle: FontStyle.italic,
+                              )),
+                        )
+                      ],
+                    ),
+                        ),
+                )
+            ),
+            Expanded(
+              flex: 2,
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(builder: (c) => SensorScreen())),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            flex: 4,
-                            child: Lottie.asset(
-                              "assets/health.json",
-                              width: 200,
-                              height: 200,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          Expanded(
-                              flex: 1,
-                              child: Text('Health Record',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold,
-                                    //fontStyle: FontStyle.italic,
-                                  )))
-                        ],
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 32),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: GradientColors.sky,
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
                       ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: GradientColors.sky.last.withOpacity(0.4),
+                          blurRadius: 8,
+                          spreadRadius: 2,
+                          offset: Offset(4, 4),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.all(Radius.circular(24)),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Lottie.asset(
+                            "assets/health.json",
+                            width: 150,
+                            height: 150,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Text('Health Record',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                //fontStyle: FontStyle.italic,
+                              )),
+                        ),
+                      ],
                     ),
                   ),
-                  Card(
-                    elevation: 4,
-                    child: InkWell(
-                      onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(builder: (c) => reqauth())),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            flex: 4,
-                            child: Lottie.asset(
-                              "assets/user.json",
-                              width: 200,
-                              height: 200,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          Expanded(
-                              flex: 2,
-                              child: Text('Req for New Child',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold,
-                                    //fontStyle: FontStyle.italic,
-                                  )))
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                )
             ),
           ],
         ),

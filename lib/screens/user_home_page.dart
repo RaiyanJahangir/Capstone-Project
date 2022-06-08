@@ -534,6 +534,7 @@ class _UserHomeState extends State<UserHome> {
           //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
         ),
         body: Container(
+          margin: const EdgeInsets.only(bottom: 50.0),
           child: Column(children: [
             Expanded(
               flex: 5,
@@ -673,17 +674,28 @@ class _UserHomeState extends State<UserHome> {
             ),
             Expanded(
                 flex: 1,
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    primary: Colors.blue,
-                    onSurface: Colors.blue[900],
-                  ),
+                child: OutlinedButton(
                   onPressed: () {
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (c) => reqauth()));
                   },
-                  child: Text('Req For Auth'),
-                ))
+                  style: ButtonStyle(
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
+                  ),
+                  child: Text('Request Auth'),
+                  )
+                // TextButton(
+                //   style: TextButton.styleFrom(
+                //     primary: Colors.blue,
+                //     onSurface: Colors.blue[900],
+                //   ),
+                //   onPressed: () {
+                //     Navigator.of(context)
+                //         .push(MaterialPageRoute(builder: (c) => reqauth()));
+                //   },
+                //   child: Text('Req For Auth'),
+                // )
+                )
           ]),
         ));
   }
