@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_password_login/model/babies_model.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:email_password_login/screens/Vaccine_Feeding.dart';
 import 'package:intl/intl.dart';
@@ -261,11 +262,42 @@ class _newTaskState extends State<NewTask> {
                     SizedBox(
                       height: 10,
                     ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //   children: [
+                    //     Text(
+                    //       "Vaccination Date : ",
+                    //       style: TextStyle(fontSize: 18),
+                    //     ),
+                    //     SizedBox(
+                    //       width: 50,
+                    //     ),
+                    //   ],
+                    // ),
+                    // SizedBox(
+                    //   height: 10,
+                    // ),
+                    // Container(
+                    //   padding: EdgeInsets.all(10),
+                    //   //color: Colors.blue.withOpacity(0.2),
+                    //   child: TextField(
+                    //     //controller: vaccinedateEditingController,
+                    //     decoration: InputDecoration(
+                    //         fillColor: Colors.blue.withOpacity(0.2),
+                    //         filled: true,
+                    //         border: OutlineInputBorder(
+                    //           borderRadius: BorderRadius.circular(20),
+                    //         ),
+                    //         hintText: "Due Date"),
+                    //     style: TextStyle(fontSize: 18),
+                    //   ),
+                    // ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
-                          "Vaccination Date : ",
+                          "Vaccination Date :",
                           style: TextStyle(fontSize: 18),
                         ),
                         SizedBox(
@@ -273,23 +305,41 @@ class _newTaskState extends State<NewTask> {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
                     Container(
                       padding: EdgeInsets.all(10),
                       //color: Colors.blue.withOpacity(0.2),
                       child: TextField(
-                        //controller: vaccinedateEditingController,
+                        //controller: feedingtime,
                         decoration: InputDecoration(
-                            fillColor: Colors.blue.withOpacity(0.2),
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
+                          fillColor: Colors.blue.withOpacity(0.2),
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            //borderSide: BorderSide(color: Color.blue ,width: 5.0),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              Icons.calendar_today,
                             ),
-                            hintText: "Due Date"),
+                            onPressed: () {
+                              FocusScope.of(context)
+                                  .requestFocus(new FocusNode());
+                              showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(1999, 1),
+                                lastDate: DateTime(2030, 12),
+                              );
+                            },
+                          ),
+                          hintText: "Due Date",
+                        ),
+
                         style: TextStyle(fontSize: 18),
                       ),
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
 
                     // SizedBox(

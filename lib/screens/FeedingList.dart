@@ -37,6 +37,8 @@ class _newTaskState extends State<FeedingList> {
   TextEditingController reason = new TextEditingController();
   String colorgrp = '';
 
+  TimeOfDay timeofday = TimeOfDay.now();
+
   final auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   final feedingtype = TextEditingController();
@@ -209,7 +211,7 @@ class _newTaskState extends State<FeedingList> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
-                          "Meal Type(Breakfast,lunch etc)",
+                          "Meal Type(Breakfast etc)",
                           style: TextStyle(fontSize: 18),
                         ),
                         SizedBox(
@@ -245,11 +247,34 @@ class _newTaskState extends State<FeedingList> {
                     //   "Feeding Time",
                     //   style: TextStyle(fontSize: 18),
                     // ),
+
+                    //color: Colors.blue.withOpacity(0.2),
+                    // child: TextField(
+                    //   //controller: feedingtime,
+                    //   decoration: InputDecoration(
+                    //       fillColor: Colors.blue.withOpacity(0.2),
+                    //       filled: true,
+                    //       border: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.circular(20),
+                    //         //borderSide: BorderSide(color: Color.blue ,width: 5.0),
+                    //       ),
+                    //       hintText: "Feeding Time"),
+                    //   style: TextStyle(fontSize: 18),
+                    // ),
+                    // ),
+                    // SizedBox(
+                    //   height: 10,
+                    // ),
+                    // Text(
+                    //   "Feeding Item",
+                    //   style: TextStyle(fontSize: 18),
+                    // ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
-                          "Feeding Time : ",
+                          "Feeding Time",
                           style: TextStyle(fontSize: 18),
                         ),
                         SizedBox(
@@ -269,6 +294,21 @@ class _newTaskState extends State<FeedingList> {
                               borderRadius: BorderRadius.circular(20),
                               //borderSide: BorderSide(color: Color.blue ,width: 5.0),
                             ),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                Icons.punch_clock,
+                              ),
+                              onPressed: () {
+                                showTimePicker(
+                                        context: context,
+                                        initialTime: timeofday)
+                                    .then((value) {
+                                  setState(() {
+                                    timeofday = value!;
+                                  });
+                                });
+                              },
+                            ),
                             hintText: "Feeding Time"),
                         style: TextStyle(fontSize: 18),
                       ),
@@ -276,10 +316,7 @@ class _newTaskState extends State<FeedingList> {
                     SizedBox(
                       height: 10,
                     ),
-                    // Text(
-                    //   "Feeding Item",
-                    //   style: TextStyle(fontSize: 18),
-                    // ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
