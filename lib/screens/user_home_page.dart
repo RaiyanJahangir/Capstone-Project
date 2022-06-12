@@ -11,7 +11,6 @@ import 'package:lottie/lottie.dart';
 import 'package:email_password_login/screens/profile.dart';
 import 'package:email_password_login/screens/notification_screen.dart';
 
-
 import '../model/babies_model.dart';
 import 'baby_info_as_guardian.dart';
 
@@ -68,16 +67,20 @@ class _UserHomeState extends State<UserHome> with TickerProviderStateMixin {
         print(loggedInUser.name);
       });
     });
-    String a='hello';
-    FirebaseFirestore.instance.collection('Babies').doc('baby2').get().then((DocumentSnapshot ds) {
-      a=ds['name'];
+    String a = 'hello';
+    FirebaseFirestore.instance
+        .collection('Babies')
+        .doc('baby2')
+        .get()
+        .then((DocumentSnapshot ds) {
+      a = ds['name'];
     });
     print(a);
   }
 
   @override
   Widget build(BuildContext context) {
-    TabController tt=TabController(length: 4, vsync: this);
+    TabController tt = TabController(length: 4, vsync: this);
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -180,72 +183,79 @@ class _UserHomeState extends State<UserHome> with TickerProviderStateMixin {
           child: Column(children: [
             Container(
               color: Colors.blue,
-            child: TabBar(
-            controller: tt,
-            tabs: [
-              Tab(text: 'Reg Child' ),
-              Tab(text: 'Req Auth'),
-              Tab(text: 'Guardian',),
-              Tab(text: 'Nurturer',)
-            ],
+              child: TabBar(
+                controller: tt,
+                tabs: [
+                  Tab(text: 'Reg Child'),
+                  Tab(text: 'Req Auth'),
+                  Tab(
+                    text: 'Guardian',
+                  ),
+                  Tab(
+                    text: 'Nurturer',
+                  )
+                ],
+              ),
             ),
-          ),
-          Container(
-          width: double.maxFinite,
-          height: 500,
-          child: TabBarView(
-            controller: tt,
-            children: [
-              RegisterChild(),
-              reqauth(),
-              itemCount > 0
-                  ? ListView.builder(
-                      itemCount: Access!.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          margin: EdgeInsets.all(5),
-                          padding: EdgeInsets.all(0),
-                          color: Colors.blue[100],
-                          child: ListTile(
-                            title: Text(Access![index]),
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          guardian_homepage(Access![index])));
-                            },
-                          ),
-                        );
-                      })
-                  : Center(child: const Text('Don\'t have any child')),
-              nitemCount > 0
-                  ? ListView(
-                      children: nAccess!.map((nstrone) {
-                        return Container(
-                          child: InkWell(
-                            onTap: () {
-                              //print('hei');
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          nurturer_homepage(nstrone)));
-                            },
-                            child: Text(
-                              nstrone,
-                            ),
-                          ),
-                          margin: EdgeInsets.all(5),
-                          padding: EdgeInsets.all(15),
-                          color: Colors.green[100],
-                        );
-                      }).toList(),
-                    )
-                  : Center(child: const Text('Don\'t have any child'))
-          ],
-          ),
-          )
+            Expanded(
+              child: Container(
+                width: double.maxFinite,
+                height: 600,
+                child: TabBarView(
+                  controller: tt,
+                  children: [
+                    RegisterChild(),
+                    reqauth(),
+                    itemCount > 0
+                        ? ListView.builder(
+                            itemCount: Access!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(
+                                margin: EdgeInsets.all(5),
+                                padding: EdgeInsets.all(0),
+                                color: Colors.blue[100],
+                                child: ListTile(
+                                  title: Text(Access![index]),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                guardian_homepage(
+                                                    Access![index])));
+                                  },
+                                ),
+                              );
+                            })
+                        : Center(child: const Text('Don\'t have any child')),
+                    nitemCount > 0
+                        ? ListView(
+                            children: nAccess!.map((nstrone) {
+                              return Container(
+                                child: InkWell(
+                                  onTap: () {
+                                    //print('hei');
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                nurturer_homepage(nstrone)));
+                                  },
+                                  child: Text(
+                                    nstrone,
+                                  ),
+                                ),
+                                margin: EdgeInsets.all(5),
+                                padding: EdgeInsets.all(15),
+                                color: Colors.green[100],
+                              );
+                            }).toList(),
+                          )
+                        : Center(child: const Text('Don\'t have any child'))
+                  ],
+                ),
+              ),
+            )
           ]),
         ));
   }
