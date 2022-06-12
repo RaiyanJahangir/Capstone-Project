@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, duplicate_ignore, non_constant_identifier_names
 
 import 'dart:io';
-
+import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/babies_model.dart';
 import 'package:email_password_login/screens/user_home_page.dart';
@@ -729,6 +729,28 @@ class _RegisterChildState extends State<RegisterChild> {
         .update(userModel.updateBabyuid(baby_uid));
 
     uploadImage(_image!, childModel);
+
+    final databaseRef =
+        FirebaseDatabase.instance.reference().child("${baby_uid}/Sensor Data");
+    databaseRef.set({
+      "Cry": "NO",
+      "Pulse Rate": 72,
+      "Temperature": 29.0,
+      "Latitude": 2383765,
+      "Longitude": 9035776,
+      "Timestamp": DateTime.now().toString()
+    });
+    final PrevdatabaseRef = FirebaseDatabase.instance
+        .reference()
+        .child("${baby_uid}/Previous Sensor Data");
+    PrevdatabaseRef.set({
+      "Cry": "NO",
+      "Pulse Rate": 72,
+      "Temperature": 29.0,
+      "Latitude": 2383765,
+      "Longitude": 9035776,
+      "Timestamp": DateTime.now().toString()
+    });
 
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (context) => UserHome()));
