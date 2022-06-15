@@ -21,7 +21,6 @@ exports.highPulseRate = functions.database.ref('Sensor Data/Pulse Rate')
         };
     
         return admin.database().ref('fcm-token').once('value').then(allToken => {
-           // if(allToken.val() && evt.after.val() == 'yes'){
             if(allToken.val() && evt.after.val() >100){
                 console.log('token available');
                 const token = Object.keys(allToken.val());
@@ -44,7 +43,6 @@ exports.lowPulseRate = functions.database.ref('Sensor Data/Pulse Rate')
         };
     
         return admin.database().ref('fcm-token').once('value').then(allToken => {
-           // if(allToken.val() && evt.after.val() == 'yes'){
             if(allToken.val() && evt.after.val() <70){
                 console.log('token available');
                 const token = Object.keys(allToken.val());
@@ -67,7 +65,6 @@ exports.highTempRate = functions.database.ref('Sensor Data/Temperature')
         };
     
         return admin.database().ref('fcm-token').once('value').then(allToken => {
-           // if(allToken.val() && evt.after.val() == 'yes'){
             if(allToken.val() && evt.after.val() >36.8){
                 console.log('token available');
                 const token = Object.keys(allToken.val());
@@ -88,22 +85,9 @@ exports.lowTempRate = functions.database.ref('Sensor Data/Temperature')
                 sound : 'default'
             }
         };
-
-    //     var today = new Date();
-    //     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    //     var time = ((parseInt(today.getHours())+6)%24)+ ":" + today.getMinutes() + ":" + today.getSeconds();
-    //     var Timestamp = date+' '+time;
-
-    // var notifRef=admin.database().ref(notification);
-    // notifRef.set({
-    //     title: "Health Alert",
-    //     body: 'Your baby\'s body temperature is very low',
-    //     timestamp: Timestamp
-    // });
     
     
         return admin.database().ref('fcm-token').once('value').then(allToken => {
-           // if(allToken.val() && evt.after.val() == 'yes'){
             if(allToken.val() && evt.after.val() <28.0){
                 console.log('token available');
                 const token = Object.keys(allToken.val());
@@ -121,12 +105,6 @@ exports.onMessageUpdate=functions.database.ref('Sensor Data').onUpdate((change,c
             console.log(before.text+' '+after.text);
             return null;
         }
-
-        //calculating timestamp
-        // var timeStamp = Date.now();
-        // var date = new Date(timeStamp);
-        // let Timestamp = date.toString();        
-        // Timestamp=Timestamp.slice(0,24);
 
         var today = new Date();
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -152,7 +130,6 @@ exports.onCryDetection = functions.database.ref('Sensor Data/Cry')
         };
     
         return admin.database().ref('fcm-token').once('value').then(allToken => {
-           // if(allToken.val() && evt.after.val() == 'yes'){
             if(allToken.val() && evt.after.val()=== 'YES'){
                 console.log('token available');
                 const token = Object.keys(allToken.val());

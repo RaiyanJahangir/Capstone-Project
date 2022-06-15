@@ -47,12 +47,12 @@ class GraphScreenState extends State<GraphScreen> {
 
   Widget build(BuildContext context) {
     final List<ChartData> Pulse_list = [];
-    for (var i = 0; i < widget.pulse_list.length; i++) {
-      Pulse_list.add(ChartData(i, double.parse(widget.pulse_list[i])));
+    for (int i = 0; i < widget.pulse_list.length; i++) {
+      Pulse_list.add(ChartData(i, widget.pulse_list[i].toDouble()));
     }
     final List<ChartData> Temp_list = [];
-    for (var i = 0; i < widget.temp_list.length; i++) {
-      Temp_list.add(ChartData(i, double.parse(widget.temp_list[i])));
+    for (int i = 0; i < widget.temp_list.length; i++) {
+      Temp_list.add(ChartData(i, widget.temp_list[i]));
     }
 
     return Scaffold(
