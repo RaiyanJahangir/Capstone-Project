@@ -84,7 +84,7 @@ class SensorScreenState extends State<SensorScreen> {
           // if (prevPulse != pulse) {
           //   _updatevalue();
           // }
-          print('Pulse Rate ' + pulse);
+          print('Pulse Rate ' + pulse.toString());
         }
         if (key == 'Temperature') {
           prevTemp = temperature;
@@ -92,7 +92,7 @@ class SensorScreenState extends State<SensorScreen> {
           // if (prevTemp != temperature) {
           //   _updatevalue();
           // }
-          print('Temperature ' + temperature);
+          print('Temperature ' + temperature.toString());
         }
         if (key == 'Latitude') {
           print('Latitude ');
