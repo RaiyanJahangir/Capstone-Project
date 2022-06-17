@@ -9,7 +9,7 @@ const functions = require('firebase-functions');
 admin.initializeApp(functions.config().firebase);
 
 
-exports.highPulseRate = functions.database.ref('Sensor Data/Pulse Rate')
+exports.highPulseRate = functions.database.ref('baby0/Sensor Data/Pulse Rate')
     .onUpdate(evt => {
         const payload = {
             notification:{
@@ -31,7 +31,7 @@ exports.highPulseRate = functions.database.ref('Sensor Data/Pulse Rate')
         });
     });
 
-exports.lowPulseRate = functions.database.ref('Sensor Data/Pulse Rate')
+exports.lowPulseRate = functions.database.ref('baby0/Sensor Data/Pulse Rate')
     .onUpdate(evt => {
         const payload = {
             notification:{
@@ -53,7 +53,7 @@ exports.lowPulseRate = functions.database.ref('Sensor Data/Pulse Rate')
         });
     });
 
-exports.highTempRate = functions.database.ref('Sensor Data/Temperature')
+exports.highTempRate = functions.database.ref('baby0/Sensor Data/Temperature')
     .onUpdate(evt => {
         const payload = {
             notification:{
@@ -75,7 +75,7 @@ exports.highTempRate = functions.database.ref('Sensor Data/Temperature')
         });
     });
 
-exports.lowTempRate = functions.database.ref('Sensor Data/Temperature')
+exports.lowTempRate = functions.database.ref('baby0/Sensor Data/Temperature')
     .onUpdate(evt => {
         const payload = {
             notification:{
@@ -118,7 +118,7 @@ exports.onMessageUpdate=functions.database.ref('Sensor Data').onUpdate((change,c
         return change.after.ref.update({Timestamp});
     });
 
-exports.onCryDetection = functions.database.ref('Sensor Data/Cry')
+exports.onCryDetection = functions.database.ref('baby0/Sensor Data/Cry')
     .onUpdate(evt => {
         const payload = {
             notification:{
