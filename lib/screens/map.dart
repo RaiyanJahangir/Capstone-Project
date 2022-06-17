@@ -21,7 +21,7 @@ class MapSampleState extends State<MapSample> {
   UserModel loggedInUser = UserModel();
 
   final databaseRef =
-      FirebaseDatabase.instance.reference().child("Sensor Data");
+      FirebaseDatabase.instance.reference().child("baby0").child("Sensor Data");
 
   static Marker _kmark = Marker(
       markerId: MarkerId('_kmark'),
@@ -117,18 +117,9 @@ class MapSampleState extends State<MapSample> {
   int _polygonIdCounter = 1;
 
   static CameraPosition _kGooglePlex = CameraPosition(
-    // target: LatLng(37.42796133580664, -122.085749655962),
-    //target: LatLng(23.748742, 90.373972),
-    //target: LatLng(23.83780840691303, 90.35788633293909),
     target: LatLng(latitude, longitude),
     zoom: 18.5,
   );
-
-  /*static CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(latitude, longitude),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);*/
 
   void _setMarker(LatLng point) {
     var markerIdVal = markers.length + 1;
@@ -142,7 +133,6 @@ class MapSampleState extends State<MapSample> {
 
   @override
   Widget build(BuildContext context) {
-    //for debugging fetching
     //for debugging fetching
 
     return new Scaffold(
@@ -238,13 +228,6 @@ class MapSampleState extends State<MapSample> {
         ],
         //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
       ),
-      // body: GoogleMap(
-      //   mapType: MapType.hybrid,
-      //   initialCameraPosition: _kGooglePlex,
-      //   onMapCreated: (GoogleMapController controller) {
-      //     _controller.complete(controller);
-      //   },
-      // ),
       body: GoogleMap(
         mapType: MapType.normal,
         markers: Set<Marker>.of(markers.values),
@@ -268,7 +251,6 @@ class MapSampleState extends State<MapSample> {
         bearing: 192.8334901395799,
         target: LatLng(latitude, longitude),
         tilt: 59.440717697143555,
-        //zoom: 19.151926040649414
         zoom: 17.5);
     controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
     print(latitude.toString() + "@" + longitude.toString() + "\n");

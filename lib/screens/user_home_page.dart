@@ -25,14 +25,14 @@ class _UserHomeState extends State<UserHome> with TickerProviderStateMixin {
   var selectType, selectGurd;
   var selectedType, selectedCat;
   // ignore: prefer_final_fields
-  List<String> _gurdType = <String>[
-    'Baby1',
-    'Baby2',
-    'Baby3',
-    'Baby4',
-    'Baby5',
-    'Baby6',
-  ];
+  // List<String> _gurdType = <String>[
+  //   'Baby1',
+  //   'Baby2',
+  //   'Baby3',
+  //   'Baby4',
+  //   'Baby5',
+  //   'Baby6',
+  // ];
   final selectedTypeEditingController = TextEditingController();
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
@@ -65,17 +65,18 @@ class _UserHomeState extends State<UserHome> with TickerProviderStateMixin {
           nitemCount = nAccess!.length;
         }
         print(loggedInUser.name);
+        // print(Access?.length);
       });
     });
-    String a = 'hello';
-    FirebaseFirestore.instance
-        .collection('Babies')
-        .doc('baby2')
-        .get()
-        .then((DocumentSnapshot ds) {
-      a = ds['name'];
-    });
-    print(a);
+    // String a = 'hello';
+    // FirebaseFirestore.instance
+    //     .collection('Babies')
+    //     .doc('baby2')
+    //     .get()
+    //     .then((DocumentSnapshot ds) {
+    //   a = ds['name'];
+    // });
+    // print(a);
   }
 
   @override
@@ -186,14 +187,14 @@ class _UserHomeState extends State<UserHome> with TickerProviderStateMixin {
               child: TabBar(
                 controller: tt,
                 tabs: [
-                  Tab(text: 'Reg Child'),
-                  Tab(text: 'Req Auth'),
                   Tab(
                     text: 'Guardian',
                   ),
                   Tab(
                     text: 'Nurturer',
-                  )
+                  ),
+                  Tab(text: 'Reg Child'),
+                  Tab(text: 'Req Auth'),
                 ],
               ),
             ),
@@ -204,8 +205,6 @@ class _UserHomeState extends State<UserHome> with TickerProviderStateMixin {
                 child: TabBarView(
                   controller: tt,
                   children: [
-                    RegisterChild(),
-                    reqauth(),
                     itemCount > 0
                         ? ListView.builder(
                             itemCount: Access!.length,
@@ -234,7 +233,6 @@ class _UserHomeState extends State<UserHome> with TickerProviderStateMixin {
                               return Container(
                                 child: InkWell(
                                   onTap: () {
-                                    //print('hei');
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -246,12 +244,14 @@ class _UserHomeState extends State<UserHome> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 margin: EdgeInsets.all(5),
-                                padding: EdgeInsets.all(15),
+                                padding: EdgeInsets.all(20),
                                 color: Colors.green[100],
                               );
                             }).toList(),
                           )
-                        : Center(child: const Text('Don\'t have any child'))
+                        : Center(child: const Text('Don\'t have any child')),
+                    RegisterChild(),
+                    reqauth(),
                   ],
                 ),
               ),

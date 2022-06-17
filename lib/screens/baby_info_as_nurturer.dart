@@ -200,15 +200,14 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
               ),
             ),
             Expanded(
-              flex: 2,
+                flex: 2,
                 child: GestureDetector(
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                          builder: (c) =>
-                              HomePage(loggedInbaby.baby_uid ?? ''))),
+                      builder: (c) => HomePage(loggedInbaby.baby_uid ?? ''))),
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 32),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: GradientColors.sea,
@@ -238,7 +237,7 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                         ),
                         Expanded(
                           flex: 3,
-                          child: Text('Feeding Info',
+                          child: Text('Feeding Information',
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
@@ -248,18 +247,17 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                         )
                       ],
                     ),
-                        ),
-                )
-            ),
+                  ),
+                )),
             Expanded(
-              flex: 2,
+                flex: 2,
                 child: GestureDetector(
-                  onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(builder: (c) => SensorScreen())),
+                  onTap: () => Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (c) => SensorScreen())),
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 32),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: GradientColors.sky,
@@ -300,8 +298,7 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
                       ],
                     ),
                   ),
-                )
-            ),
+                )),
           ],
         ),
       ),

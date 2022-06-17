@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/user_model.dart';
-import 'package:email_password_login/screens/home_screen.dart';
 import 'package:email_password_login/screens/login_screen.dart';
 import 'package:email_password_login/screens/notification_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
@@ -11,7 +10,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gauge/flutter_gauge.dart';
 import 'package:email_password_login/screens/graph_screen.dart';
-
 import 'graph_screen.dart';
 
 class SensorScreen extends StatefulWidget {
@@ -29,17 +27,20 @@ class SensorScreenState extends State<SensorScreen> {
   List time_list = [];
 
   final databaseRef =
-      FirebaseDatabase.instance.reference().child("Sensor Data");
+      FirebaseDatabase.instance.reference().child("baby0").child("Sensor Data");
   final prevPulseRef = FirebaseDatabase.instance
       .reference()
+      .child("baby0")
       .child("Previous Sensor Data")
       .child("Pulse Rate");
   final prevTempRef = FirebaseDatabase.instance
       .reference()
+      .child("baby0")
       .child("Previous Sensor Data")
       .child("Temperature");
   final prevTimeRef = FirebaseDatabase.instance
       .reference()
+      .child("baby0")
       .child("Previous Sensor Data")
       .child("Timestamp");
 
@@ -60,20 +61,6 @@ class SensorScreenState extends State<SensorScreen> {
       setState(() {});
     });
 
-    // databaseRef.once().then((DataSnapshot snapshot) {
-    //   Map<dynamic, dynamic> values = snapshot.value;
-    //   values.forEach((key, values) {
-    //     if (key == 'Pulse Rate') {
-    //       print(key + values.toString());
-    //       pulse = values;
-    //       print(pulse);
-    //     }
-    //     if (key == 'Temperature') {
-    //       temperature = values;
-    //       print(temperature);
-    //     }
-    //   });
-    // });
     databaseRef.onValue.listen((event) {
       var snapshot = event.snapshot;
       Map<dynamic, dynamic> values = snapshot.value;
@@ -81,17 +68,13 @@ class SensorScreenState extends State<SensorScreen> {
         if (key == 'Pulse Rate') {
           prevPulse = pulse;
           pulse = values;
-          // if (prevPulse != pulse) {
-          //   _updatevalue();
-          // }
+
           print('Pulse Rate ' + pulse.toString());
         }
         if (key == 'Temperature') {
           prevTemp = temperature;
           temperature = values;
-          // if (prevTemp != temperature) {
-          //   _updatevalue();
-          // }
+
           print('Temperature ' + temperature.toString());
         }
         if (key == 'Latitude') {
@@ -101,9 +84,6 @@ class SensorScreenState extends State<SensorScreen> {
           print('Longitude ');
         }
         setState(() {});
-        // print(pulse_list);
-        // print(temp_list);
-        // print(time_list);
       });
     });
 
@@ -160,20 +140,17 @@ class SensorScreenState extends State<SensorScreen> {
               itemBuilder: (BuildContext context) => <PopupMenuEntry>[
                 PopupMenuItem(
                   child: ListTile(
-                    //var a;
                     leading: Icon(
                       Icons.account_circle,
                       color: Colors.blue,
                       size: 24.0,
                     ),
-                    //title: const Text(size ?? ''),
                     title: Text(
                       "User Profile",
                     ),
                     subtitle: Text(
                       "${loggedInUser.name}",
                     ),
-                    //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => SensorScreen())),
                     onTap: () => Navigator.of(context)
                         .push(MaterialPageRoute(builder: (c) => Home())),
                   ),
@@ -435,56 +412,8 @@ class SensorScreenState extends State<SensorScreen> {
             ])));
   }
 
-  _updatevalue() {
-    var now = DateTime.now();
-    databaseRef.update({"Timestamp": now.toString()});
-  }
-
-  //Logout function
-  // Future<void> logout(BuildContext context) async {
-  //   await FirebaseAuth.instance.signOut();
-  //   Navigator.of(context).pushReplacement(
-  //       MaterialPageRoute(builder: (context) => LoginScreen()));
-  // }
-
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
 }
-
-//for adding data to realtime database
-// void addData(String data) {
-//   //databaseRef.push().set({'name': data, 'comment': 'a good season'});
-//   //databaseRef.push().set({'Pulse Rate': 140});
-// }
-// body: FutureBuilder(
-//     future: _future,
-//     builder: (context, snapshot) {
-//       if (snapshot.hasError) {
-//         return Text(snapshot.error.toString());
-//       } else {
-//         return Container(
-//           child: Column(
-//             children: <Widget>[
-//               SizedBox(height: 250.0),
-//               Padding(
-//                 padding: EdgeInsets.all(10.0),
-//                 child: TextField(),
-//               ),
-//               SizedBox(height: 30.0),
-//               Center(
-//                 child: ElevatedButton(
-//                   //color: Colors.pinkAccent,
-//                   child: Text("Save to Database"),
-//                   onPressed: () {
-//                     addData(textcontroller.text);
-//                     printFirebase();
-//                   },
-//                 ),
-//               )
-//             ],
-//           ),
-//         );
-//       }
-//     }),

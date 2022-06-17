@@ -15,20 +15,8 @@ class FeedingList extends StatefulWidget {
   final String text;
 
   const FeedingList(@required this.text, {Key? key}) : super(key: key);
-  // Widget build(BuildContext context) {
-  //   return MaterialApp(
-  //     debugShowCheckedModeBanner: false,
-  //     theme: ThemeData(fontFamily: 'avenir'),
-  //     home: feedingList(),
-  //   );
-  // }
   _newTaskState createState() => _newTaskState();
 }
-
-// class feedingList extends StatefulWidget {
-//   @override
-//   _newTaskState createState() => _newTaskState();
-// }
 
 class _newTaskState extends State<FeedingList> {
   // CollectionReference users = FirebaseFirestore.instance.collection("users");
@@ -243,32 +231,6 @@ class _newTaskState extends State<FeedingList> {
                     SizedBox(
                       height: 10,
                     ),
-                    // Text(
-                    //   "Feeding Time",
-                    //   style: TextStyle(fontSize: 18),
-                    // ),
-
-                    //color: Colors.blue.withOpacity(0.2),
-                    // child: TextField(
-                    //   //controller: feedingtime,
-                    //   decoration: InputDecoration(
-                    //       fillColor: Colors.blue.withOpacity(0.2),
-                    //       filled: true,
-                    //       border: OutlineInputBorder(
-                    //         borderRadius: BorderRadius.circular(20),
-                    //         //borderSide: BorderSide(color: Color.blue ,width: 5.0),
-                    //       ),
-                    //       hintText: "Feeding Time"),
-                    //   style: TextStyle(fontSize: 18),
-                    // ),
-                    // ),
-                    // SizedBox(
-                    //   height: 10,
-                    // ),
-                    // Text(
-                    //   "Feeding Item",
-                    //   style: TextStyle(fontSize: 18),
-                    // ),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -351,90 +313,6 @@ class _newTaskState extends State<FeedingList> {
                     SizedBox(
                       height: 10,
                     ),
-                    // Text(
-                    //   "Which food was provided :",
-                    //   style: TextStyle(fontSize: 18),
-                    // ),
-                    // CheckboxListTile(
-                    //   title: Text(
-                    //     "Rice",
-                    //   ),
-                    //   controlAffinity: ListTileControlAffinity.leading,
-                    //   onChanged: (bool? value) {
-                    //     setState(() {
-                    //       if (value!) {
-                    //         selectedList.add(1);
-                    //       } else {
-                    //         selectedList.remove(1);
-                    //       }
-                    //     });
-                    //   },
-                    //   value: selectedList.contains(1),
-                    // ),
-                    // CheckboxListTile(
-                    //   title: Text(
-                    //     "Milk",
-                    //   ),
-                    //   controlAffinity: ListTileControlAffinity.leading,
-                    //   onChanged: (bool? value) {
-                    //     setState(() {
-                    //       if (value!) {
-                    //         selectedList.add(2);
-                    //       } else {
-                    //         selectedList.remove(2);
-                    //       }
-                    //     });
-                    //   },
-                    //   value: selectedList.contains(2),
-                    // ),
-                    // CheckboxListTile(
-                    //   title: Text(
-                    //     "Meat",
-                    //   ),
-                    //   controlAffinity: ListTileControlAffinity.leading,
-                    //   onChanged: (bool? value) {
-                    //     setState(() {
-                    //       if (value!) {
-                    //         selectedList.add(3);
-                    //       } else {
-                    //         selectedList.remove(3);
-                    //       }
-                    //     });
-                    //   },
-                    //   value: selectedList.contains(3),
-                    // ),
-                    // CheckboxListTile(
-                    //   title: Text(
-                    //     "Vegetables",
-                    //   ),
-                    //   controlAffinity: ListTileControlAffinity.leading,
-                    //   onChanged: (bool? value) {
-                    //     setState(() {
-                    //       if (value!) {
-                    //         selectedList.add(4);
-                    //       } else {
-                    //         selectedList.remove(4);
-                    //       }
-                    //     });
-                    //   },
-                    //   value: selectedList.contains(4),
-                    // ),
-                    // CheckboxListTile(
-                    //   title: Text(
-                    //     "Others",
-                    //   ),
-                    //   controlAffinity: ListTileControlAffinity.leading,
-                    //   onChanged: (bool? value) {
-                    //     setState(() {
-                    //       if (value!) {
-                    //         selectedList.add(5);
-                    //       } else {
-                    //         selectedList.remove(5);
-                    //       }
-                    //     });
-                    //   },
-                    //   value: selectedList.contains(5),
-                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -447,10 +325,6 @@ class _newTaskState extends State<FeedingList> {
                         ),
                       ],
                     ),
-                    // Text(
-                    //   "Any Medication ?",
-                    //   style: TextStyle(fontSize: 18),
-                    // ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -538,10 +412,6 @@ class _newTaskState extends State<FeedingList> {
                         ),
                       ],
                     ),
-                    // Text(
-                    //   "Medicine Name(If any?)",
-                    //   style: TextStyle(fontSize: 18),
-                    // ),
 
                     Container(
                       padding: EdgeInsets.all(10),
@@ -614,15 +484,6 @@ class _newTaskState extends State<FeedingList> {
                                       formatted3rd,
                                       feeding2nd.text,
                                       medicinename.text);
-                                  /*Map<String, dynamic> data = {
-                                    "Vaccine Name": name.text,
-                                    "Vaccination Date": date.text,
-                                    "Vaccination for": reason.text,
-                                  };
-                                  FirebaseFirestore.instance
-                                      .collection("vaccine")
-                                      .add(data);
-                                  ;*/
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -631,11 +492,6 @@ class _newTaskState extends State<FeedingList> {
                                   );
                                 },
                               ),
-                              //child: Text(
-                              //"Submit",
-                              //style:
-                              // TextStyle(color: Colors.white, fontSize: 18),
-                              //),
                             ),
                           )
                         ],

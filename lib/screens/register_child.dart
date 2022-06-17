@@ -738,7 +738,7 @@ class _RegisterChildState extends State<RegisterChild> {
       "Temperature": 29.0,
       "Latitude": 2383765,
       "Longitude": 9035776,
-      "Timestamp": DateTime.now().toString()
+      "Timestamp": DateTime.now().toString().substring(0, 19)
     });
     final PrevdatabaseRef = FirebaseDatabase.instance
         .reference()
@@ -749,7 +749,7 @@ class _RegisterChildState extends State<RegisterChild> {
       "Temperature": 29.0,
       "Latitude": 2383765,
       "Longitude": 9035776,
-      "Timestamp": DateTime.now().toString()
+      "Timestamp": DateTime.now().toString().substring(0, 19)
     });
 
     Navigator.of(context)
