@@ -98,7 +98,7 @@ exports.lowTempRate = functions.database.ref('baby0/Sensor Data/Temperature')
         });
     });
 
-exports.onMessageUpdate=functions.database.ref('Sensor Data').onUpdate((change,context)=>{
+exports.onMessageUpdate=functions.database.ref('baby0/Sensor Data').onUpdate((change,context)=>{
         const before=change.before.val();
         const after=change.after.val();
         if(before['Pulse Rate']===after['Pulse Rate']){

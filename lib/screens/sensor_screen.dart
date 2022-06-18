@@ -1,19 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/user_model.dart';
-import 'package:email_password_login/screens/login_screen.dart';
-import 'package:email_password_login/screens/notification_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gauge/flutter_gauge.dart';
 import 'package:email_password_login/screens/graph_screen.dart';
 import 'graph_screen.dart';
 
 class SensorScreen extends StatefulWidget {
-  const SensorScreen({Key? key}) : super(key: key);
+  final String text;
+  const SensorScreen(@required this.text, {Key? key}) : super(key: key);
 
   @override
   SensorScreenState createState() => SensorScreenState();
@@ -122,17 +119,6 @@ class SensorScreenState extends State<SensorScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(child: Text('Health Data')),
-                IconButton(
-                  icon: Icon(
-                    Icons.circle_notifications,
-                    color: Colors.white,
-                    size: 24.0,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (c) => NotificationScreen()));
-                  },
-                ),
               ]),
           actions: [
             PopupMenuButton(

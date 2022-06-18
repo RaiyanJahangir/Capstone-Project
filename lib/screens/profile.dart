@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:email_password_login/screens/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:email_password_login/screens/info_card.dart';
 import 'package:email_password_login/model/user_model.dart';
@@ -56,17 +55,6 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(child: Text('User Profile')),
-              IconButton(
-                icon: Icon(
-                  Icons.circle_notifications,
-                  color: Colors.white,
-                  size: 24.0,
-                ),
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (c) => NotificationScreen()));
-                },
-              ),
             ]),
         actions: [
           PopupMenuButton(

@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:email_password_login/screens/notification_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:email_password_login/screens/login_screen.dart';
 import 'package:email_password_login/screens/VaccinationList.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -18,20 +16,8 @@ class HomePage extends StatefulWidget {
   const HomePage(@required this.text, {Key? key}) : super(key: key);
 
   @override
-  // Widget build(BuildContext context) {
-  //   return MaterialApp(
-  //     debugShowCheckedModeBanner: false,
-  //     theme: ThemeData(fontFamily: 'avenir'),
-  //     home: homePage(),
-  //   );
-  // }
   _homePageState createState() => _homePageState();
 }
-
-// class homePage extends StatefulWidget {
-//   @override
-//   _homePageState createState() => _homePageState();
-// }
 
 class _homePageState extends State<HomePage> {
   final Stream<QuerySnapshot> vaccinestream =
@@ -131,17 +117,6 @@ class _homePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Expanded(child: Text('Baby Schedule')),
-                        IconButton(
-                          icon: Icon(
-                            Icons.circle_notifications,
-                            color: Colors.white,
-                            size: 24.0,
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (c) => NotificationScreen()));
-                          },
-                        ),
                       ]),
                   actions: [
                     PopupMenuButton(

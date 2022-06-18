@@ -13,7 +13,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:email_password_login/screens/profile.dart';
-import 'package:email_password_login/screens/notification_screen.dart';
 
 import '../model/user_model.dart';
 

@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'screens/user_home_page.dart';
 import './screens/login_screen.dart';
-import './screens/notification_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -51,26 +50,6 @@ Future<void> main() async {
 
   runApp(MyApp());
 }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     SystemChrome.setEnabledSystemUIMode(
-//       SystemUiMode.leanBack,
-//     );
-//     return MaterialApp(
-//       title: 'Baby Monitor',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       debugShowCheckedModeBanner: false,
-//       home: const LoginScreen(),
-//     );
-//   }
-// }
 
 class MyApp extends StatefulWidget {
   @override

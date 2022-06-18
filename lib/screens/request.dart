@@ -1,7 +1,4 @@
-// ignore_for_file: curly_braces_in_flow_control_structures
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:email_password_login/screens/notification_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -63,17 +60,6 @@ class _AddRequestState extends State<AddRequest> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(child: Text('Place Request')),
-              IconButton(
-                icon: Icon(
-                  Icons.circle_notifications,
-                  color: Colors.white,
-                  size: 20,
-                ),
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (c) => NotificationScreen()));
-                },
-              ),
             ]),
         actions: [
           PopupMenuButton(

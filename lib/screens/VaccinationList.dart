@@ -1,14 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/vaccine_model.dart';
-import 'package:email_password_login/screens/notification_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
-import 'package:firebase_database/ui/firebase_sorted_list.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_password_login/model/babies_model.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:email_password_login/screens/Vaccine_Feeding.dart';
 import 'package:intl/intl.dart';
@@ -82,17 +78,6 @@ class _newTaskState extends State<NewTask> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(child: Text('Vaccination List')),
-              IconButton(
-                icon: Icon(
-                  Icons.circle_notifications,
-                  color: Colors.white,
-                  size: 24.0,
-                ),
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (c) => NotificationScreen()));
-                },
-              ),
             ]),
         actions: [
           PopupMenuButton(
@@ -228,7 +213,6 @@ class _newTaskState extends State<NewTask> {
                     SizedBox(
                       height: 10,
                     ),
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -277,7 +261,6 @@ class _newTaskState extends State<NewTask> {
                     SizedBox(
                       height: 10,
                     ),
-
                     SizedBox(
                       height: 10,
                     ),
@@ -293,13 +276,6 @@ class _newTaskState extends State<NewTask> {
                         ),
                       ],
                     ),
-
-                    // ListView(
-                    //   children: [
-                    //     buildC
-                    //   ],
-                    // )
-
                     CheckboxListTile(
                       title: Text(
                         "First Dose",
@@ -348,7 +324,6 @@ class _newTaskState extends State<NewTask> {
                       },
                       value: selectedList.contains(3),
                     ),
-
                     Container(
                       padding: EdgeInsets.all(15),
                       child: Column(

@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:email_password_login/screens/profile.dart';
-import 'package:email_password_login/screens/notification_screen.dart';
 
 import '../model/babies_model.dart';
 import 'baby_info_as_guardian.dart';
@@ -94,17 +93,6 @@ class _UserHomeState extends State<UserHome> with TickerProviderStateMixin {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(child: Text('Home Page')),
-                IconButton(
-                  icon: Icon(
-                    Icons.circle_notifications,
-                    color: Colors.white,
-                    size: 24.0,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (c) => NotificationScreen()));
-                  },
-                ),
               ]),
           actions: [
             PopupMenuButton(
