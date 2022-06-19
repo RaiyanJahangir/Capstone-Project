@@ -497,7 +497,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     //     MaterialPageRoute(builder: (context) => const UserHome()),
     //     (route) => false);
     Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => UserHome()));
+        .pushReplacement(MaterialPageRoute(builder: (context) => UserHome(true)));
   }
 
   showSnackBar(String snackText, Duration d) {

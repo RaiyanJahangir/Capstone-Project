@@ -752,7 +752,7 @@ class _RegisterChildState extends State<RegisterChild> {
     });
 
     Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => UserHome()));
+        .pushReplacement(MaterialPageRoute(builder: (context) => UserHome(true)));
   }
 
   Future<void> logout(BuildContext context) async {

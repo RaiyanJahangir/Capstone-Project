@@ -14,7 +14,8 @@ import '../model/babies_model.dart';
 import 'baby_info_as_guardian.dart';
 
 class UserHome extends StatefulWidget {
-  const UserHome({Key? key}) : super(key: key);
+  final bool flag;
+  const UserHome(@required this.flag, {Key? key}) : super(key: key);
   @override
   State<UserHome> createState() => _UserHomeState();
 }
@@ -23,15 +24,6 @@ class _UserHomeState extends State<UserHome> with TickerProviderStateMixin {
   // ignore: prefer_typing_uninitialized_variables
   var selectType, selectGurd;
   var selectedType, selectedCat;
-  // ignore: prefer_final_fields
-  // List<String> _gurdType = <String>[
-  //   'Baby1',
-  //   'Baby2',
-  //   'Baby3',
-  //   'Baby4',
-  //   'Baby5',
-  //   'Baby6',
-  // ];
   final selectedTypeEditingController = TextEditingController();
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
@@ -197,6 +189,7 @@ class _UserHomeState extends State<UserHome> with TickerProviderStateMixin {
                         ? ListView.builder(
                             itemCount: Access!.length,
                             itemBuilder: (BuildContext context, int index) {
+                              if(widget.flag==true)refresh();
                               return Container(
                                 margin: EdgeInsets.all(5),
                                 padding: EdgeInsets.all(0),
@@ -245,11 +238,44 @@ class _UserHomeState extends State<UserHome> with TickerProviderStateMixin {
               ),
             )
           ]),
-        ));
+        ),
+        floatingActionButton: FloatingActionButton(
+        // isExtended: true,
+        child: Icon(Icons.refresh),
+        backgroundColor: Colors.blue,
+        onPressed: () {
+          setState(() async {
+            await refresh();
+          });
+        },
+      ),
+        );
   }
 
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
+  Future refresh() async {
+    setState(() {
+      FirebaseFirestore.instance
+        .collection("Users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      // ignore: unnecessary_this
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {
+        Access = loggedInUser.gaccess;
+        nAccess = loggedInUser.naccess;
+        if (Access!.isNotEmpty) {
+          itemCount = Access!.length;
+        }
+        if (nAccess!.isNotEmpty) {
+          nitemCount = nAccess!.length;
+        }
+        });
+    });
+  });
+}
 }
