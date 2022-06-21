@@ -1,3 +1,4 @@
+import 'package:email_password_login/screens/notifications_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'Vaccine_Feeding.dart';
@@ -79,6 +80,17 @@ class _newTaskState extends State<FeedingList> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(child: Text('Feeding List')),
+              IconButton(
+                icon: Icon(
+                  Icons.circle_notifications,
+                  color: Colors.white,
+                  size: 24.0,
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (c) => NotificationScreen()));
+                },
+              ),
             ]),
         actions: [
           PopupMenuButton(

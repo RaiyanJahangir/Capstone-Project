@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/user_model.dart';
+import 'package:email_password_login/screens/notifications_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -119,6 +120,17 @@ class SensorScreenState extends State<SensorScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(child: Text('Health Data')),
+                IconButton(
+                  icon: Icon(
+                    Icons.circle_notifications,
+                    color: Colors.white,
+                    size: 24.0,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (c) => NotificationScreen()));
+                  },
+                ),
               ]),
           actions: [
             PopupMenuButton(
@@ -292,13 +304,16 @@ class SensorScreenState extends State<SensorScreen> {
                                       Animation<double> animation,
                                       int index) {
                                     pulse_list.add(snapshot.value);
+                                    var typecolor =
+                                        getPulseColor(snapshot.value);
                                     return ListTile(
                                       title: Text(
                                         '${snapshot.value}' + " BPM",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontStyle: FontStyle.italic,
-                                          color: Colors.blueAccent,
+                                          //color: Colors.blueAccent,
+                                          color: typecolor,
                                         ),
                                       ),
                                     );
@@ -334,12 +349,15 @@ class SensorScreenState extends State<SensorScreen> {
                                       Animation<double> animation,
                                       int index) {
                                     temp_list.add(snapshot.value);
+                                    var typecolor =
+                                        getTempColor(snapshot.value);
                                     return ListTile(
                                       title: Text('${snapshot.value}' + " °C",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontStyle: FontStyle.italic,
-                                            color: Colors.blueAccent,
+                                            // color: Colors.blueAccent,
+                                            color: typecolor,
                                           )),
                                     );
                                   }),
@@ -396,6 +414,26 @@ class SensorScreenState extends State<SensorScreen> {
                 ),
               ),
             ])));
+  }
+
+  Color getPulseColor(int value) {
+    Color color = Theme.of(context).accentColor;
+    if (value > 100 || value < 70) {
+      color = Colors.red;
+      return color;
+    }
+    color = Colors.blueAccent;
+    return color;
+  }
+
+  Color getTempColor(double value) {
+    Color color = Theme.of(context).accentColor;
+    if (value > 36.8 || value < 28.0) {
+      color = Colors.red;
+      return color;
+    }
+    color = Colors.blueAccent;
+    return color;
   }
 
   Future<void> logout(BuildContext context) async {

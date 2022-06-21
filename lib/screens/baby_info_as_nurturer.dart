@@ -1,6 +1,7 @@
 import 'package:email_password_login/model/babies_model.dart';
 import 'package:email_password_login/screens/FeedingList.dart';
 import 'package:email_password_login/screens/Vaccine_Feeding.dart';
+import 'package:email_password_login/screens/notifications_screen.dart';
 import 'package:email_password_login/screens/request.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +77,17 @@ class _nurturer_homepageState extends State<nurturer_homepage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(child: Text('Baby Info Page')),
+              IconButton(
+                icon: Icon(
+                  Icons.circle_notifications,
+                  color: Colors.white,
+                  size: 24.0,
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (c) => NotificationScreen()));
+                },
+              ),
             ]),
         actions: [
           PopupMenuButton(

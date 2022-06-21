@@ -299,26 +299,6 @@ class _homePageState extends State<HomePage> {
                                                 ),
                                               ],
                                             ),
-
-                                      // taskWidget(
-                                      //     Colors.blue, "Breakfast", "9:00 AM"),
-                                      // taskWidget(
-                                      //     Colors.blue, "Lunch ", "1:00 PM"),
-                                      // taskWidget(
-                                      //     Colors.blue, "Dinner ", "9:00 PM"),
-                                      // Container(
-                                      //   child: ListView.builder(
-                                      //     itemCount: 1,
-                                      //     itemBuilder: (BuildContext context, int) {
-                                      //       return ListTile(title: Text('hello'));
-                                      //       // return taskWidget(
-                                      //       //   Color(0xfff96060),
-                                      //       //   "${storedocs[index]['name']}",
-                                      //       //   "${storedocs[index]['reason']}",
-                                      //       // );
-                                      //     },
-                                      //   ),
-                                      // ),
                                     ],
                                   ),
                                 ),
@@ -368,24 +348,6 @@ class _homePageState extends State<HomePage> {
                                                 )
                                               ],
                                             ),
-
-                                      // taskWidget(
-                                      //     Colors.blue, "Meeting with someone", "9:00 AM"),
-                                      // taskWidget(
-                                      //     Colors.green, "Take your medicines", "9:00 AM"),
-                                      // Container(
-                                      //   child: ListView.builder(
-                                      //     itemCount: 1,
-                                      //     itemBuilder: (BuildContext context, int) {
-                                      //       return ListTile(title: Text('hello'));
-                                      //       // return taskWidget(
-                                      //       //   Color(0xfff96060),
-                                      //       //   "${storedocs[index]['name']}",
-                                      //       //   "${storedocs[index]['reason']}",
-                                      //       // );
-                                      //     },
-                                      //   ),
-                                      // ),
                                     ],
                                   ),
                                 ),
@@ -436,24 +398,6 @@ class _homePageState extends State<HomePage> {
                                                 ),
                                               ],
                                             ),
-
-                                      // taskWidget(
-                                      //     Colors.blue, "Meeting with someone", "9:00 AM"),
-                                      // taskWidget(
-                                      //     Colors.green, "Take your medicines", "9:00 AM"),
-                                      // Container(
-                                      //   child: ListView.builder(
-                                      //     itemCount: 1,
-                                      //     itemBuilder: (BuildContext context, int) {
-                                      //       return ListTile(title: Text('hello'));
-                                      //       // return taskWidget(
-                                      //       //   Color(0xfff96060),
-                                      //       //   "${storedocs[index]['name']}",
-                                      //       //   "${storedocs[index]['reason']}",
-                                      //       // );
-                                      //     },
-                                      //   ),
-                                      // ),
                                     ],
                                   ),
                                 ),
@@ -504,15 +448,6 @@ class _homePageState extends State<HomePage> {
                               height: MediaQuery.of(context).size.height,
                               width: MediaQuery.of(context).size.width,
                               color: Colors.black.withOpacity(0.3),
-                              // InkWell(
-                              //             onTap: openVaccinationList,
-                              //             child: Container(
-                              //               child: Text(
-                              //                 "Add Vaccination",
-                              //                 style: TextStyle(fontSize: 18),
-                              //               ),
-                              //             ),
-                              //           ),
                               child: Center(
                                 child: InkWell(
                                   onTap: openTaskPop,

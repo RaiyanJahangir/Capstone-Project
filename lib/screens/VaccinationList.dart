@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_password_login/model/vaccine_model.dart';
+import 'package:email_password_login/screens/notifications_screen.dart';
 import 'package:email_password_login/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:email_password_login/model/user_model.dart';
@@ -78,6 +79,17 @@ class _newTaskState extends State<NewTask> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(child: Text('Vaccination List')),
+              IconButton(
+                icon: Icon(
+                  Icons.circle_notifications,
+                  color: Colors.white,
+                  size: 24.0,
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (c) => NotificationScreen()));
+                },
+              ),
             ]),
         actions: [
           PopupMenuButton(

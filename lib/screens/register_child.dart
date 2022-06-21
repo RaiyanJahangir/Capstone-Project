@@ -751,8 +751,8 @@ class _RegisterChildState extends State<RegisterChild> {
       "Timestamp": DateTime.now().toString().substring(0, 19)
     });
 
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => UserHome(true)));
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => UserHome(true)));
   }
 
   Future<void> logout(BuildContext context) async {
