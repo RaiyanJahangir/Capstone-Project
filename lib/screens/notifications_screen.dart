@@ -97,6 +97,7 @@ class NotificationScreenState extends State<NotificationScreen> {
         }
         if (key == 'Timestamp') {
           timestamp = values;
+          print(timestamp);
         }
 
         setState(() {});
@@ -277,6 +278,7 @@ class NotificationScreenState extends State<NotificationScreen> {
             child: FirebaseAnimatedList(
                 scrollDirection: Axis.vertical,
                 query: notifRef,
+                reverse: true,
                 itemBuilder: (BuildContext context, DataSnapshot snapshot,
                     Animation<double> animation, int index) {
                   Map contact = snapshot.value;
@@ -290,7 +292,7 @@ class NotificationScreenState extends State<NotificationScreen> {
     notifRef.push().set({
       "Title": "Health Alert",
       "Details": "Your baby's Pulse Rate is very high",
-      "Timestamp": timestamp
+      "Timestamp": DateTime.now().toString().substring(0, 19)
     });
   }
 
@@ -298,7 +300,7 @@ class NotificationScreenState extends State<NotificationScreen> {
     notifRef.push().set({
       "Title": "Health Alert",
       "Details": "Your baby's Pulse Rate is very low",
-      "Timestamp": timestamp
+      "Timestamp": DateTime.now().toString().substring(0, 19)
     });
   }
 
@@ -306,7 +308,7 @@ class NotificationScreenState extends State<NotificationScreen> {
     notifRef.push().set({
       "Title": "Health Alert",
       "Details": "Your baby's Body Temperature is very low",
-      "Timestamp": timestamp
+      "Timestamp": DateTime.now().toString().substring(0, 19)
     });
   }
 
@@ -314,7 +316,7 @@ class NotificationScreenState extends State<NotificationScreen> {
     notifRef.push().set({
       "Title": "Health Alert",
       "Details": "Your baby's Body Temperature is very high",
-      "Timestamp": timestamp
+      "Timestamp": DateTime.now().toString().substring(0, 19)
     });
   }
 
@@ -322,7 +324,7 @@ class NotificationScreenState extends State<NotificationScreen> {
     notifRef.push().set({
       "Title": "Cry Alert",
       "Details": "Your baby is crying. Give a check.",
-      "Timestamp": timestamp
+      "Timestamp": DateTime.now().toString().substring(0, 19)
     });
   }
 

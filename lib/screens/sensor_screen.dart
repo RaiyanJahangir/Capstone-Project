@@ -209,24 +209,40 @@ class SensorScreenState extends State<SensorScreen> {
                 children: <Widget>[
               SizedBox(height: 15),
               Text(
-                "Pulse Rate: " + pulse.toString() + " BPM",
+                "Pulse Rate: ",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.italic,
                     color: Colors.blueAccent,
-                    fontSize: 25),
+                    fontSize: 30),
+              ),
+              Text(
+                pulse.toString() + " BPM",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    color: Color.fromARGB(255, 20, 142, 243),
+                    fontSize: 50),
               ),
               Divider(
                 color: Colors.blue,
                 thickness: 2,
               ),
               Text(
-                "Temperature: " + temperature.toString() + " °C",
+                "Body Temperature: ",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.italic,
                     color: Colors.blueAccent,
-                    fontSize: 25),
+                    fontSize: 30),
+              ),
+              Text(
+                temperature.toString() + " °C",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    color: Color.fromARGB(255, 20, 142, 243),
+                    fontSize: 50),
               ),
               Divider(
                 color: Colors.blue,
@@ -286,6 +302,50 @@ class SensorScreenState extends State<SensorScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
+                            Text("Timstamp",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.blueAccent,
+                                )),
+                            Divider(
+                              color: Colors.blue,
+                              thickness: 2,
+                            ),
+                            Expanded(
+                              child: FirebaseAnimatedList(
+                                  query: prevTimeRef,
+                                  reverse: true,
+                                  itemBuilder: (BuildContext context,
+                                      DataSnapshot snapshot,
+                                      Animation<double> animation,
+                                      int index) {
+                                    var timestamp = snapshot.value;
+                                    time_list.add(snapshot.value);
+                                    return ListTile(
+                                      title: Text(
+                                        timestamp,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontStyle: FontStyle.italic,
+                                            color: Colors.blueAccent,
+                                            fontSize: 13),
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          ],
+                        ),
+                      ),
+                      VerticalDivider(
+                        color: Colors.black,
+                        thickness: 2,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
                             Text("Pulse Rate",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -299,6 +359,7 @@ class SensorScreenState extends State<SensorScreen> {
                             Expanded(
                               child: FirebaseAnimatedList(
                                   query: prevPulseRef,
+                                  reverse: true,
                                   itemBuilder: (BuildContext context,
                                       DataSnapshot snapshot,
                                       Animation<double> animation,
@@ -344,6 +405,7 @@ class SensorScreenState extends State<SensorScreen> {
                             Expanded(
                               child: FirebaseAnimatedList(
                                   query: prevTempRef,
+                                  reverse: true,
                                   itemBuilder: (BuildContext context,
                                       DataSnapshot snapshot,
                                       Animation<double> animation,
@@ -359,49 +421,6 @@ class SensorScreenState extends State<SensorScreen> {
                                             // color: Colors.blueAccent,
                                             color: typecolor,
                                           )),
-                                    );
-                                  }),
-                            ),
-                          ],
-                        ),
-                      ),
-                      VerticalDivider(
-                        color: Colors.black,
-                        thickness: 2,
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Text("Timstamp",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.blueAccent,
-                                )),
-                            Divider(
-                              color: Colors.blue,
-                              thickness: 2,
-                            ),
-                            Expanded(
-                              child: FirebaseAnimatedList(
-                                  query: prevTimeRef,
-                                  itemBuilder: (BuildContext context,
-                                      DataSnapshot snapshot,
-                                      Animation<double> animation,
-                                      int index) {
-                                    var timestamp = snapshot.value;
-                                    time_list.add(snapshot.value);
-                                    return ListTile(
-                                      title: Text(
-                                        timestamp,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontStyle: FontStyle.italic,
-                                            color: Colors.blueAccent,
-                                            fontSize: 13),
-                                      ),
                                     );
                                   }),
                             ),
