@@ -291,7 +291,7 @@ class NotificationScreenState extends State<NotificationScreen> {
   highPulseAlert() {
     notifRef.push().set({
       "Title": "Health Alert",
-      "Details": "Your baby's Pulse Rate is very high",
+      "Details": "Baby's Pulse Rate is high",
       "Timestamp": DateTime.now().toString().substring(0, 19)
     });
   }
@@ -299,7 +299,7 @@ class NotificationScreenState extends State<NotificationScreen> {
   lowPulseAlert() {
     notifRef.push().set({
       "Title": "Health Alert",
-      "Details": "Your baby's Pulse Rate is very low",
+      "Details": "Baby's Pulse Rate is low",
       "Timestamp": DateTime.now().toString().substring(0, 19)
     });
   }
@@ -307,7 +307,7 @@ class NotificationScreenState extends State<NotificationScreen> {
   lowTempAlert() {
     notifRef.push().set({
       "Title": "Health Alert",
-      "Details": "Your baby's Body Temperature is very low",
+      "Details": "Baby's Body Temperature is low",
       "Timestamp": DateTime.now().toString().substring(0, 19)
     });
   }
@@ -315,7 +315,7 @@ class NotificationScreenState extends State<NotificationScreen> {
   highTempAlert() {
     notifRef.push().set({
       "Title": "Health Alert",
-      "Details": "Your baby's Body Temperature is very high",
+      "Details": "Baby's Body Temperature is high",
       "Timestamp": DateTime.now().toString().substring(0, 19)
     });
   }
