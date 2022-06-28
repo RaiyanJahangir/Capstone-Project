@@ -10,6 +10,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key}) : super(key: key);
@@ -26,6 +27,24 @@ class NotificationScreenState extends State<NotificationScreen> {
 
   final databaseRef =
       FirebaseDatabase.instance.reference().child("baby0").child("Sensor Data");
+
+  final pulseRef = FirebaseDatabase.instance
+      .reference()
+      .child("baby0")
+      .child("Sensor Data")
+      .child("Pulse Rate");
+
+  final tempRef = FirebaseDatabase.instance
+      .reference()
+      .child("baby0")
+      .child("Sensor Data")
+      .child("Temperature");
+
+  final cryRef = FirebaseDatabase.instance
+      .reference()
+      .child("baby0")
+      .child("Sensor Data")
+      .child("Cry");
 
   var pulse;
   var temperature;
@@ -63,45 +82,81 @@ class NotificationScreenState extends State<NotificationScreen> {
       });
     });
 
-    databaseRef.onValue.listen((event) {
+    // databaseRef.onValue.listen((event) {
+    //   var snapshot = event.snapshot;
+    //   Map<dynamic, dynamic> values = snapshot.value;
+    //   values.forEach((key, values) {
+    //     if (key == 'Pulse Rate') {
+    //       prevPulse = pulse;
+    //       pulse = values;
+    //       if (pulse > 100) {
+    //         highPulseAlert();
+    //       } else if (pulse < 70) {
+    //         lowPulseAlert();
+    //       }
+
+    //       print('Pulse Rate ' + pulse.toString());
+    //     }
+    //     if (key == 'Temperature') {
+    //       prevTemp = temperature;
+    //       temperature = values;
+    //       if (temperature > 36.8) {
+    //         highTempAlert();
+    //       } else if (temperature < 28.0) {
+    //         lowTempAlert();
+    //       }
+
+    //       print('Temperature ' + temperature.toString());
+    //     }
+    //     if (key == 'Cry') {
+    //       cry = values;
+    //       if (cry == "YES") {
+    //         cryAlert();
+    //       }
+    //     }
+    //     if (key == 'Timestamp') {
+    //       timestamp = values;
+    //       print(timestamp);
+    //     }
+
+    //     setState(() {});
+    //   });
+    // });
+
+    pulseRef.onValue.listen((event) {
       var snapshot = event.snapshot;
-      Map<dynamic, dynamic> values = snapshot.value;
-      values.forEach((key, values) {
-        if (key == 'Pulse Rate') {
-          prevPulse = pulse;
-          pulse = values;
-          if (pulse > 100) {
-            highPulseAlert();
-          } else if (pulse < 70) {
-            lowPulseAlert();
-          }
+      int values = snapshot.value;
+      pulse = values;
+      if (pulse > 100) {
+        highPulseAlert();
+      } else if (pulse < 70) {
+        lowPulseAlert();
+      }
+      print('Pulse Rate ' + pulse.toString());
+      setState(() {});
+    });
 
-          print('Pulse Rate ' + pulse.toString());
-        }
-        if (key == 'Temperature') {
-          prevTemp = temperature;
-          temperature = values;
-          if (temperature > 36.8) {
-            highTempAlert();
-          } else if (temperature < 28.0) {
-            lowTempAlert();
-          }
+    tempRef.onValue.listen((event) {
+      var snapshot = event.snapshot;
+      double values = snapshot.value;
+      temperature = values;
+      if (temperature > 36.8) {
+        highTempAlert();
+      } else if (temperature < 28.0) {
+        lowTempAlert();
+      }
+      print('Temperature ' + temperature.toString());
+      setState(() {});
+    });
 
-          print('Temperature ' + temperature.toString());
-        }
-        if (key == 'Cry') {
-          cry = values;
-          if (cry == "YES") {
-            cryAlert();
-          }
-        }
-        if (key == 'Timestamp') {
-          timestamp = values;
-          print(timestamp);
-        }
-
-        setState(() {});
-      });
+    cryRef.onValue.listen((event) {
+      var snapshot = event.snapshot;
+      String values = snapshot.value;
+      cry = values;
+      if (cry == "YES") {
+        cryAlert();
+      }
+      setState(() {});
     });
   }
 
@@ -109,7 +164,7 @@ class NotificationScreenState extends State<NotificationScreen> {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 2),
       padding: EdgeInsets.fromLTRB(1, 1, 1, 1),
-      // height: 130,
+      //height: 130,
       color: Colors.white,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -271,16 +326,17 @@ class NotificationScreenState extends State<NotificationScreen> {
             ),
           ],
         ),
-        //body: listView(),
         body: SingleChildScrollView(
           child: Container(
-            height: 500,
+            height: 720,
             child: FirebaseAnimatedList(
                 scrollDirection: Axis.vertical,
                 query: notifRef,
                 reverse: true,
                 itemBuilder: (BuildContext context, DataSnapshot snapshot,
                     Animation<double> animation, int index) {
+                  print('Hello');
+                  print('${snapshot.value}');
                   Map contact = snapshot.value;
                   return _buildNotificationItem(contact: contact);
                 }),
@@ -326,97 +382,6 @@ class NotificationScreenState extends State<NotificationScreen> {
       "Details": "Your baby is crying. Give a check.",
       "Timestamp": DateTime.now().toString().substring(0, 19)
     });
-  }
-
-  Widget listView() {
-    return ListView.separated(
-      itemCount: 15,
-      separatorBuilder: (context, index) {
-        return Divider(height: 0);
-      },
-      itemBuilder: (context, index) {
-        return listViewItem(index);
-      },
-    );
-  }
-
-  Widget listViewItem(int index) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          prefixIcon(),
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.only(left: 10),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    message(index),
-                    timeAnddata(index),
-                  ]),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget prefixIcon() {
-    return Container(
-      height: 50,
-      width: 50,
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.grey.shade300,
-      ),
-      child: Icon(
-        Icons.notifications,
-        size: 25,
-        color: Colors.grey.shade700,
-      ),
-    );
-  }
-
-  Widget message(int index) {
-    double textSize = 14;
-    return Container(
-      child: RichText(
-        maxLines: 3,
-        overflow: TextOverflow.ellipsis,
-        text: TextSpan(
-          text: 'message',
-          style: TextStyle(
-              fontSize: textSize,
-              color: Colors.black,
-              fontWeight: FontWeight.bold),
-          children: [
-            TextSpan(
-                text: 'Notification description',
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                ))
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget timeAnddata(int index) {
-    return Container(
-      margin: EdgeInsets.only(top: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            '23-01-2022',
-            style: TextStyle(fontSize: 10),
-          )
-        ],
-      ),
-    );
   }
 
   Future<void> logout(BuildContext context) async {
