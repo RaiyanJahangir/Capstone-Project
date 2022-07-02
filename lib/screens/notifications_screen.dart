@@ -329,7 +329,7 @@ class NotificationScreenState extends State<NotificationScreen> {
         ),
         body: SingleChildScrollView(
           child: Container(
-            height: 720,
+            height: 760,
             child: Column(
               children: [
                 Expanded(
