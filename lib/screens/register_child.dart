@@ -742,14 +742,14 @@ class _RegisterChildState extends State<RegisterChild> {
     final PrevdatabaseRef = FirebaseDatabase.instance
         .reference()
         .child("${baby_uid}/Previous Sensor Data");
-    PrevdatabaseRef.set({
+    PrevdatabaseRef.push().set(({
       "Cry": "NO",
       "Pulse Rate": 72,
       "Temperature": 29.0,
       "Latitude": 2383765,
       "Longitude": 9035776,
       "Timestamp": DateTime.now().toString().substring(0, 19)
-    });
+    }));
 
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => UserHome(true)));

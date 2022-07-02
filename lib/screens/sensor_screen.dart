@@ -26,21 +26,26 @@ class SensorScreenState extends State<SensorScreen> {
 
   final databaseRef =
       FirebaseDatabase.instance.reference().child("baby0").child("Sensor Data");
-  final prevPulseRef = FirebaseDatabase.instance
+
+  final prevDatabaseRef = FirebaseDatabase.instance
       .reference()
       .child("baby0")
-      .child("Previous Sensor Data")
-      .child("Pulse Rate");
-  final prevTempRef = FirebaseDatabase.instance
-      .reference()
-      .child("baby0")
-      .child("Previous Sensor Data")
-      .child("Temperature");
-  final prevTimeRef = FirebaseDatabase.instance
-      .reference()
-      .child("baby0")
-      .child("Previous Sensor Data")
-      .child("Timestamp");
+      .child("Previous Sensor Data");
+  // final prevPulseRef = FirebaseDatabase.instance
+  //     .reference()
+  //     .child("baby0")
+  //     .child("Previous Sensor Data")
+  //     .child("Pulse Rate");
+  // final prevTempRef = FirebaseDatabase.instance
+  //     .reference()
+  //     .child("baby0")
+  //     .child("Previous Sensor Data")
+  //     .child("Temperature");
+  // final prevTimeRef = FirebaseDatabase.instance
+  //     .reference()
+  //     .child("baby0")
+  //     .child("Previous Sensor Data")
+  //     .child("Timestamp");
 
   var pulse;
   var temperature;
@@ -85,23 +90,31 @@ class SensorScreenState extends State<SensorScreen> {
       });
     });
 
-    prevPulseRef.onValue.listen((event) {
-      var snapshot = event.snapshot;
-      Map<dynamic, dynamic> values = snapshot.value;
-      values.forEach((key, values) {
-        setState(() {});
-      });
-    });
+    // prevPulseRef.onValue.listen((event) {
+    //   var snapshot = event.snapshot;
+    //   Map<dynamic, dynamic> values = snapshot.value;
+    //   values.forEach((key, values) {
+    //     setState(() {});
+    //   });
+    // });
 
-    prevTempRef.onValue.listen((event) {
-      var snapshot = event.snapshot;
-      Map<dynamic, dynamic> values = snapshot.value;
-      values.forEach((key, values) {
-        setState(() {});
-      });
-    });
+    // prevTempRef.onValue.listen((event) {
+    //   var snapshot = event.snapshot;
+    //   Map<dynamic, dynamic> values = snapshot.value;
+    //   values.forEach((key, values) {
+    //     setState(() {});
+    //   });
+    // });
 
-    prevTimeRef.onValue.listen((event) {
+    // prevTimeRef.onValue.listen((event) {
+    //   var snapshot = event.snapshot;
+    //   Map<dynamic, dynamic> values = snapshot.value;
+    //   values.forEach((key, values) {
+    //     setState(() {});
+    //   });
+    // });
+
+    prevDatabaseRef.onValue.listen((event) {
       var snapshot = event.snapshot;
       Map<dynamic, dynamic> values = snapshot.value;
       values.forEach((key, values) {
@@ -290,145 +303,140 @@ class SensorScreenState extends State<SensorScreen> {
                     fontSize: 25),
               ),
               SizedBox(height: 15),
+              Divider(
+                color: Colors.blue,
+                thickness: 2,
+              ),
+              Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text("Timestamp",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 20,
+                          color: Colors.blueAccent,
+                        )),
+                    VerticalDivider(
+                      color: Colors.blue,
+                      thickness: 5,
+                    ),
+                    Text("Pulse Rate",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.blueAccent,
+                          fontSize: 20,
+                        )),
+                    VerticalDivider(
+                      color: Colors.blue,
+                      thickness: 5,
+                    ),
+                    Text("Temperature",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.blueAccent,
+                          fontSize: 20,
+                        )),
+                  ]),
               Expanded(
                 child: Container(
                   height: 500,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Text("Timstamp",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.blueAccent,
-                                )),
-                            Divider(
-                              color: Colors.blue,
-                              thickness: 2,
-                            ),
-                            Expanded(
-                              child: FirebaseAnimatedList(
-                                  query: prevTimeRef,
-                                  reverse: true,
-                                  itemBuilder: (BuildContext context,
-                                      DataSnapshot snapshot,
-                                      Animation<double> animation,
-                                      int index) {
-                                    var timestamp = snapshot.value;
-                                    time_list.add(snapshot.value);
-                                    return ListTile(
-                                      title: Text(
-                                        timestamp,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontStyle: FontStyle.italic,
-                                            color: Colors.blueAccent,
-                                            fontSize: 13),
-                                      ),
-                                    );
-                                  }),
-                            ),
-                          ],
-                        ),
-                      ),
-                      VerticalDivider(
-                        color: Colors.black,
+                  child: Column(
+                    children: [
+                      Divider(
+                        color: Colors.blue,
                         thickness: 2,
                       ),
                       Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Text("Pulse Rate",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.blueAccent,
-                                )),
-                            Divider(
-                              color: Colors.blue,
-                              thickness: 2,
-                            ),
-                            Expanded(
-                              child: FirebaseAnimatedList(
-                                  query: prevPulseRef,
-                                  reverse: true,
-                                  itemBuilder: (BuildContext context,
-                                      DataSnapshot snapshot,
-                                      Animation<double> animation,
-                                      int index) {
-                                    pulse_list.add(snapshot.value);
-                                    var typecolor =
-                                        getPulseColor(snapshot.value);
-                                    return ListTile(
-                                      title: Text(
-                                        '${snapshot.value}' + " BPM",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontStyle: FontStyle.italic,
-                                          //color: Colors.blueAccent,
-                                          color: typecolor,
+                        child: FirebaseAnimatedList(
+                            scrollDirection: Axis.vertical,
+                            query: prevDatabaseRef,
+                            reverse: false,
+                            itemBuilder: (BuildContext context,
+                                DataSnapshot snapshot,
+                                Animation<double> animation,
+                                int index) {
+                              var timestamp = snapshot.value['Timestamp'];
+                              time_list.add(timestamp);
+                              var pulse = snapshot.value['Pulse Rate'];
+                              pulse_list.add(pulse);
+                              var temperature = snapshot.value['Temperature'];
+                              temp_list.add(temperature);
+                              var pulseColor =
+                                  getPulseColor(snapshot.value['Pulse Rate']);
+                              var tempColor =
+                                  getTempColor(snapshot.value['Temperature']);
+                              return Column(
+                                children: [
+                                  Divider(
+                                    color: Colors.blue,
+                                    thickness: 2,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: ListTile(
+                                          title: Text(
+                                            timestamp,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontStyle: FontStyle.italic,
+                                                color: Colors.blueAccent,
+                                                fontSize: 13),
+                                          ),
                                         ),
                                       ),
-                                    );
-                                  }),
-                            ),
-                          ],
-                        ),
+                                      VerticalDivider(
+                                        color: Colors.white,
+                                        thickness: 2,
+                                      ),
+                                      Expanded(
+                                        child: ListTile(
+                                          title: Text(
+                                            pulse.toString() + " BPM",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontStyle: FontStyle.italic,
+                                              //color: Colors.blueAccent,
+                                              color: pulseColor,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      VerticalDivider(
+                                        color: Colors.white,
+                                        thickness: 2,
+                                      ),
+                                      Expanded(
+                                        child: ListTile(
+                                          title: Text(
+                                              temperature.toString() + " °C",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontStyle: FontStyle.italic,
+                                                // color: Colors.blueAccent,
+                                                color: tempColor,
+                                              )),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Divider(
+                                    color: Colors.blue,
+                                    thickness: 2,
+                                  ),
+                                ],
+                              );
+                            }),
                       ),
-                      VerticalDivider(
-                        color: Colors.black,
+                      Divider(
+                        color: Colors.blue,
                         thickness: 2,
                       ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Text("Temperature",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.blueAccent,
-                                )),
-                            Divider(
-                              color: Colors.blue,
-                              thickness: 2,
-                            ),
-                            Expanded(
-                              child: FirebaseAnimatedList(
-                                  query: prevTempRef,
-                                  reverse: true,
-                                  itemBuilder: (BuildContext context,
-                                      DataSnapshot snapshot,
-                                      Animation<double> animation,
-                                      int index) {
-                                    temp_list.add(snapshot.value);
-                                    var typecolor =
-                                        getTempColor(snapshot.value);
-                                    return ListTile(
-                                      title: Text('${snapshot.value}' + " °C",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontStyle: FontStyle.italic,
-                                            // color: Colors.blueAccent,
-                                            color: typecolor,
-                                          )),
-                                    );
-                                  }),
-                            ),
-                          ],
-                        ),
-                      ),
                     ],
-                    //SizedBox(height: 20),
                   ),
                 ),
               ),

@@ -22,6 +22,7 @@ class NotificationScreen extends StatefulWidget {
 class NotificationScreenState extends State<NotificationScreen> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  List<Map> listOfMaps = [];
 
   final notifRef = FirebaseDatabase.instance.reference().child("notifications");
 
@@ -329,17 +330,21 @@ class NotificationScreenState extends State<NotificationScreen> {
         body: SingleChildScrollView(
           child: Container(
             height: 720,
-            child: FirebaseAnimatedList(
-                scrollDirection: Axis.vertical,
-                query: notifRef,
-                reverse: true,
-                itemBuilder: (BuildContext context, DataSnapshot snapshot,
-                    Animation<double> animation, int index) {
-                  print('Hello');
-                  print('${snapshot.value}');
-                  Map contact = snapshot.value;
-                  return _buildNotificationItem(contact: contact);
-                }),
+            child: Column(
+              children: [
+                Expanded(
+                  child: FirebaseAnimatedList(
+                      scrollDirection: Axis.vertical,
+                      query: notifRef,
+                      reverse: false,
+                      itemBuilder: (BuildContext context, DataSnapshot snapshot,
+                          Animation<double> animation, int index) {
+                        Map contact = snapshot.value;
+                        return _buildNotificationItem(contact: contact);
+                      }),
+                ),
+              ],
+            ),
           ),
         ));
   }
