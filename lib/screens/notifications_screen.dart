@@ -83,47 +83,6 @@ class NotificationScreenState extends State<NotificationScreen> {
       });
     });
 
-    // databaseRef.onValue.listen((event) {
-    //   var snapshot = event.snapshot;
-    //   Map<dynamic, dynamic> values = snapshot.value;
-    //   values.forEach((key, values) {
-    //     if (key == 'Pulse Rate') {
-    //       prevPulse = pulse;
-    //       pulse = values;
-    //       if (pulse > 100) {
-    //         highPulseAlert();
-    //       } else if (pulse < 70) {
-    //         lowPulseAlert();
-    //       }
-
-    //       print('Pulse Rate ' + pulse.toString());
-    //     }
-    //     if (key == 'Temperature') {
-    //       prevTemp = temperature;
-    //       temperature = values;
-    //       if (temperature > 36.8) {
-    //         highTempAlert();
-    //       } else if (temperature < 28.0) {
-    //         lowTempAlert();
-    //       }
-
-    //       print('Temperature ' + temperature.toString());
-    //     }
-    //     if (key == 'Cry') {
-    //       cry = values;
-    //       if (cry == "YES") {
-    //         cryAlert();
-    //       }
-    //     }
-    //     if (key == 'Timestamp') {
-    //       timestamp = values;
-    //       print(timestamp);
-    //     }
-
-    //     setState(() {});
-    //   });
-    // });
-
     pulseRef.onValue.listen((event) {
       var snapshot = event.snapshot;
       int values = snapshot.value;

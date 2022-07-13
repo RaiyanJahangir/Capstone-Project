@@ -90,30 +90,6 @@ class SensorScreenState extends State<SensorScreen> {
       });
     });
 
-    // prevPulseRef.onValue.listen((event) {
-    //   var snapshot = event.snapshot;
-    //   Map<dynamic, dynamic> values = snapshot.value;
-    //   values.forEach((key, values) {
-    //     setState(() {});
-    //   });
-    // });
-
-    // prevTempRef.onValue.listen((event) {
-    //   var snapshot = event.snapshot;
-    //   Map<dynamic, dynamic> values = snapshot.value;
-    //   values.forEach((key, values) {
-    //     setState(() {});
-    //   });
-    // });
-
-    // prevTimeRef.onValue.listen((event) {
-    //   var snapshot = event.snapshot;
-    //   Map<dynamic, dynamic> values = snapshot.value;
-    //   values.forEach((key, values) {
-    //     setState(() {});
-    //   });
-    // });
-
     prevDatabaseRef.onValue.listen((event) {
       var snapshot = event.snapshot;
       Map<dynamic, dynamic> values = snapshot.value;
@@ -306,7 +282,7 @@ class SensorScreenState extends State<SensorScreen> {
                     decoration: TextDecoration.underline,
                     fontSize: 25),
               ),
-              SizedBox(height: 5),
+              // SizedBox(height: 2),
               Divider(
                 color: Colors.blue,
                 thickness: 2,
@@ -375,10 +351,6 @@ class SensorScreenState extends State<SensorScreen> {
                                   getTempColor(snapshot.value['Temperature']);
                               return Column(
                                 children: [
-                                  // Divider(
-                                  //   color: Colors.blue,
-                                  //   thickness: 2,
-                                  // ),
                                   Row(
                                     children: [
                                       Expanded(
