@@ -227,6 +227,7 @@ class SensorScreenState extends State<SensorScreen> {
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.italic,
                     color: Colors.blueAccent,
+                    //color: Color.fromARGB(255, 192, 109, 13),
                     fontSize: 30),
               ),
               Text(
@@ -234,7 +235,8 @@ class SensorScreenState extends State<SensorScreen> {
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.italic,
-                    color: Color.fromARGB(255, 20, 142, 243),
+                    //color: Color.fromARGB(255, 20, 142, 243),
+                    color: Color.fromARGB(238, 165, 33, 150),
                     fontSize: 50),
               ),
               Divider(
@@ -247,6 +249,7 @@ class SensorScreenState extends State<SensorScreen> {
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.italic,
                     color: Colors.blueAccent,
+                    //color: Color.fromARGB(255, 192, 109, 13),
                     fontSize: 30),
               ),
               Text(
@@ -254,7 +257,8 @@ class SensorScreenState extends State<SensorScreen> {
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.italic,
-                    color: Color.fromARGB(255, 20, 142, 243),
+                    //color: Color.fromARGB(255, 20, 142, 243),
+                    color: Color.fromARGB(238, 165, 33, 150),
                     fontSize: 50),
               ),
               Divider(
@@ -302,7 +306,7 @@ class SensorScreenState extends State<SensorScreen> {
                     decoration: TextDecoration.underline,
                     fontSize: 25),
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 5),
               Divider(
                 color: Colors.blue,
                 thickness: 2,
@@ -354,7 +358,7 @@ class SensorScreenState extends State<SensorScreen> {
                         child: FirebaseAnimatedList(
                             scrollDirection: Axis.vertical,
                             query: prevDatabaseRef,
-                            reverse: false,
+                            reverse: true,
                             itemBuilder: (BuildContext context,
                                 DataSnapshot snapshot,
                                 Animation<double> animation,
@@ -371,10 +375,10 @@ class SensorScreenState extends State<SensorScreen> {
                                   getTempColor(snapshot.value['Temperature']);
                               return Column(
                                 children: [
-                                  Divider(
-                                    color: Colors.blue,
-                                    thickness: 2,
-                                  ),
+                                  // Divider(
+                                  //   color: Colors.blue,
+                                  //   thickness: 2,
+                                  // ),
                                   Row(
                                     children: [
                                       Expanded(

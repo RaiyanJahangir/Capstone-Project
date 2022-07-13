@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:email_password_login/screens/profile.dart';
+import 'package:email_password_login/screens/noti.dart';
 
 import '../model/babies_model.dart';
 import 'baby_info_as_guardian.dart';
@@ -83,6 +84,10 @@ class _UserHomeState extends State<UserHome> with TickerProviderStateMixin {
                   color: Colors.white,
                   size: 24.0,
                 ),
+                // onPressed: () {
+                //   Navigator.of(context).push(
+                //       MaterialPageRoute(builder: (c) => NotificationScreen()));
+                // },
                 onPressed: () {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (c) => NotificationScreen()));

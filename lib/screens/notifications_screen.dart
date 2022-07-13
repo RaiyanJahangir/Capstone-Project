@@ -165,6 +165,7 @@ class NotificationScreenState extends State<NotificationScreen> {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 2),
       padding: EdgeInsets.fromLTRB(1, 1, 1, 1),
+      alignment: Alignment.center,
       //height: 130,
       color: Colors.white,
       child: Column(
@@ -211,9 +212,11 @@ class NotificationScreenState extends State<NotificationScreen> {
               Text(
                 contact['Details'].toString(),
                 style: TextStyle(
-                    fontSize: 12,
-                    color: Color.fromARGB(255, 19, 19, 19),
-                    fontWeight: FontWeight.w600),
+                  fontSize: 12,
+                  color: Color.fromARGB(255, 19, 19, 19),
+                  fontWeight: FontWeight.w600,
+                  height: 1.2,
+                ),
               ),
               SizedBox(width: 15),
               Icon(
@@ -226,6 +229,7 @@ class NotificationScreenState extends State<NotificationScreen> {
               ),
               Text(
                 contact['Timestamp'].toString(),
+                textAlign: TextAlign.right,
                 style: TextStyle(
                     fontSize: 10,
                     color: Color.fromARGB(255, 19, 19, 19),
@@ -233,10 +237,10 @@ class NotificationScreenState extends State<NotificationScreen> {
               ),
             ],
           ),
-          Divider(
-            color: Colors.black,
-            thickness: 2,
-          ),
+          // Divider(
+          //   color: Colors.black,
+          //   thickness: 2,
+          // ),
         ],
       ),
     );
@@ -336,7 +340,7 @@ class NotificationScreenState extends State<NotificationScreen> {
                   child: FirebaseAnimatedList(
                       scrollDirection: Axis.vertical,
                       query: notifRef,
-                      reverse: false,
+                      reverse: true,
                       itemBuilder: (BuildContext context, DataSnapshot snapshot,
                           Animation<double> animation, int index) {
                         Map contact = snapshot.value;

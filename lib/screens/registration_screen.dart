@@ -448,7 +448,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     ]))),
                             const SizedBox(height: 20),
                             signUpButton,
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 20),
                           ])))),
         ),
       ),
@@ -496,8 +496,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     //     (context),
     //     MaterialPageRoute(builder: (context) => const UserHome()),
     //     (route) => false);
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => UserHome(true)));
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => UserHome(true)));
   }
 
   showSnackBar(String snackText, Duration d) {

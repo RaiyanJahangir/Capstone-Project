@@ -571,23 +571,23 @@ class _RegisterChildState extends State<RegisterChild> {
                       ),
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 10,
                     ),
                     nameField,
                     SizedBox(
-                      height: 5,
+                      height: 10,
                     ),
                     dobField,
                     SizedBox(
-                      height: 5,
+                      height: 10,
                     ),
                     genderField,
                     SizedBox(
-                      height: 5,
+                      height: 10,
                     ),
                     ageField,
                     SizedBox(
-                      height: 5,
+                      height: 10,
                     ),
                     h8Field,
                     SizedBox(
