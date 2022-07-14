@@ -350,7 +350,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Color.fromARGB(255, 33, 150, 243),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -382,7 +382,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             SizedBox(
                               height: 200,
                               child: Image.asset(
-                                "assets/baby_picture.png",
+                                "assets/app_logo.png",
                                 fit: BoxFit.contain,
                               ),
                             ),

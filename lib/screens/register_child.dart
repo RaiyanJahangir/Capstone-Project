@@ -566,7 +566,7 @@ class _RegisterChildState extends State<RegisterChild> {
                     SizedBox(
                       height: 150,
                       child: Image.asset(
-                        "assets/baby_picture.png",
+                        "assets/app_logo.png",
                         fit: BoxFit.contain,
                       ),
                     ),

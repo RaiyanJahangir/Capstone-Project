@@ -306,6 +306,9 @@ class NotificationScreenState extends State<NotificationScreen> {
                         return _buildNotificationItem(contact: contact);
                       }),
                 ),
+                SizedBox(
+                  height: 45,
+                ),
               ],
             ),
           ),
@@ -315,7 +318,7 @@ class NotificationScreenState extends State<NotificationScreen> {
   highPulseAlert() {
     notifRef.push().set({
       "Title": "Health Alert",
-      "Details": "Baby's Pulse Rate is high",
+      "Details": "Baby's Pulse Rate is high                .", //25
       "Timestamp": DateTime.now().toString().substring(0, 19)
     });
   }
@@ -323,7 +326,7 @@ class NotificationScreenState extends State<NotificationScreen> {
   lowPulseAlert() {
     notifRef.push().set({
       "Title": "Health Alert",
-      "Details": "Baby's Pulse Rate is low",
+      "Details": "Baby's Pulse Rate is low                 .", //24
       "Timestamp": DateTime.now().toString().substring(0, 19)
     });
   }
@@ -331,7 +334,7 @@ class NotificationScreenState extends State<NotificationScreen> {
   lowTempAlert() {
     notifRef.push().set({
       "Title": "Health Alert",
-      "Details": "Baby's Body Temperature is low",
+      "Details": "Baby's Body Temperature is low   .", //30
       "Timestamp": DateTime.now().toString().substring(0, 19)
     });
   }
@@ -339,7 +342,7 @@ class NotificationScreenState extends State<NotificationScreen> {
   highTempAlert() {
     notifRef.push().set({
       "Title": "Health Alert",
-      "Details": "Baby's Body Temperature is high",
+      "Details": "Baby's Body Temperature is high  .", //31
       "Timestamp": DateTime.now().toString().substring(0, 19)
     });
   }
@@ -347,7 +350,7 @@ class NotificationScreenState extends State<NotificationScreen> {
   cryAlert() {
     notifRef.push().set({
       "Title": "Cry Alert",
-      "Details": "Your baby is crying. Give a check.",
+      "Details": "Your baby is crying. Give a check.", //34
       "Timestamp": DateTime.now().toString().substring(0, 19)
     });
   }

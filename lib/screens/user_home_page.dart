@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:email_password_login/screens/profile.dart';
-import 'package:email_password_login/screens/noti.dart';
 
 import '../model/babies_model.dart';
 import 'baby_info_as_guardian.dart';
@@ -181,7 +180,7 @@ class _UserHomeState extends State<UserHome> with TickerProviderStateMixin {
                 Tab(
                   text: 'Nurturer',
                 ),
-                Tab(text: 'Reg Child'),
+                Tab(text: 'Reg Baby'),
                 Tab(text: 'Req Auth'),
               ],
             ),

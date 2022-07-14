@@ -214,7 +214,7 @@ class _authState extends State<auth> {
                                                           10))),
                                           child: const Text(
                                             'Guardian',
-                                            style: TextStyle(fontSize: 12),
+                                            style: TextStyle(fontSize: 11),
                                           ),
                                           onPressed: () async {
                                             print(Access![index]);
@@ -287,7 +287,7 @@ class _authState extends State<auth> {
                                                           10))),
                                           child: const Text(
                                             'Nurturer',
-                                            style: TextStyle(fontSize: 12),
+                                            style: TextStyle(fontSize: 11),
                                           ),
                                           onPressed: () async {
                                             print(Access![index]);
@@ -361,7 +361,7 @@ class _authState extends State<auth> {
                                                           10))),
                                           child: const Text(
                                             'Cancel',
-                                            style: TextStyle(fontSize: 12),
+                                            style: TextStyle(fontSize: 11),
                                           ),
                                           onPressed: () async {
                                             await FirebaseFirestore.instance

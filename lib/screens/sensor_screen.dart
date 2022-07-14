@@ -9,6 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:email_password_login/screens/graph_screen.dart';
 import 'graph_screen.dart';
 
+class GradientColors {
+  final List<Color> colors;
+  GradientColors(this.colors);
+
+  static List<Color> sky = [Color(0xFF6448FE), Color(0xFF5FC6FF)];
+  static List<Color> sunset = [Color(0xFFFE6197), Color(0xFFFFB463)];
+  static List<Color> sea = [Color(0xFF61A3FE), Color(0xFF63FFD5)];
+  static List<Color> mango = [Color(0xFFFFA738), Color(0xFFFFE130)];
+  static List<Color> fire = [Color(0xFFFF5DCD), Color(0xFFFF8484)];
+}
+
 class SensorScreen extends StatefulWidget {
   final String text;
   const SensorScreen(@required this.text, {Key? key}) : super(key: key);
@@ -31,21 +42,6 @@ class SensorScreenState extends State<SensorScreen> {
       .reference()
       .child("baby0")
       .child("Previous Sensor Data");
-  // final prevPulseRef = FirebaseDatabase.instance
-  //     .reference()
-  //     .child("baby0")
-  //     .child("Previous Sensor Data")
-  //     .child("Pulse Rate");
-  // final prevTempRef = FirebaseDatabase.instance
-  //     .reference()
-  //     .child("baby0")
-  //     .child("Previous Sensor Data")
-  //     .child("Temperature");
-  // final prevTimeRef = FirebaseDatabase.instance
-  //     .reference()
-  //     .child("baby0")
-  //     .child("Previous Sensor Data")
-  //     .child("Timestamp");
 
   var pulse;
   var temperature;
@@ -197,50 +193,126 @@ class SensorScreenState extends State<SensorScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
               SizedBox(height: 15),
-              Text(
-                "Pulse Rate: ",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    color: Colors.blueAccent,
-                    //color: Color.fromARGB(255, 192, 109, 13),
-                    fontSize: 30),
+              // Text(
+              //   "Pulse Rate: ",
+              //   style: TextStyle(
+              //       fontWeight: FontWeight.bold,
+              //       // fontStyle: FontStyle.italic,
+              //       color: Colors.blueAccent,
+              //       //color: Color.fromARGB(255, 192, 109, 13),
+              //       fontSize: 30),
+              // ),
+              // Text(
+              //   pulse.toString() + " BPM",
+              //   style: TextStyle(
+              //       fontWeight: FontWeight.bold,
+              //       //fontStyle: FontStyle.italic,
+              //       //color: Color.fromARGB(255, 20, 142, 243),
+              //       color: Color.fromARGB(238, 165, 33, 150),
+              //       fontSize: 50),
+              // ),
+              // Expanded(
+              //   flex: 2,
+              //   child:
+              TextButton(
+                onPressed: () {},
+                child: Container(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: GradientColors.sky,
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  child: Text(
+                    "Pulse Rate: " + pulse.toString() + " BPM",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
-              Text(
-                pulse.toString() + " BPM",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    //color: Color.fromARGB(255, 20, 142, 243),
-                    color: Color.fromARGB(238, 165, 33, 150),
-                    fontSize: 50),
+              //  ),
+              // Divider(
+              //   color: Colors.blue,
+              //   thickness: 2,
+              // ),
+              // Text(
+              //   "Body Temperature: ",
+              //   style: TextStyle(
+              //       fontWeight: FontWeight.bold,
+              //       //fontStyle: FontStyle.italic,
+              //       color: Colors.blueAccent,
+              //       //color: Color.fromARGB(255, 192, 109, 13),
+              //       fontSize: 30),
+              // ),
+              // Text(
+              //   temperature.toString() + " °C",
+              //   style: TextStyle(
+              //       fontWeight: FontWeight.bold,
+              //       //fontStyle: FontStyle.italic,
+              //       //color: Color.fromARGB(255, 20, 142, 243),
+              //       color: Color.fromARGB(238, 165, 33, 150),
+              //       fontSize: 50),
+              // ),
+              // Divider(
+              //   color: Colors.blue,
+              //   thickness: 2,
+              // ),
+              TextButton(
+                onPressed: () {},
+                child: Container(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: GradientColors.sky,
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  child: Text(
+                    "Temperature: " + temperature.toString() + "°C",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
-              Divider(
-                color: Colors.blue,
-                thickness: 2,
-              ),
-              Text(
-                "Body Temperature: ",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    color: Colors.blueAccent,
-                    //color: Color.fromARGB(255, 192, 109, 13),
-                    fontSize: 30),
-              ),
-              Text(
-                temperature.toString() + " °C",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    //color: Color.fromARGB(255, 20, 142, 243),
-                    color: Color.fromARGB(238, 165, 33, 150),
-                    fontSize: 50),
-              ),
-              Divider(
-                color: Colors.blue,
-                thickness: 2,
-              ),
+              // TextButton(
+              //   onPressed: () {
+              //     Navigator.of(context).push(MaterialPageRoute(
+              //         builder: (c) =>
+              //             GraphScreen(pulse_list, temp_list, time_list)));
+              //   },
+              //   child: Container(
+              //     decoration: const BoxDecoration(
+              //       gradient: LinearGradient(
+              //         colors: <Color>[
+              //           Color(0xFF0D47A1),
+              //           Color(0xFF1976D2),
+              //           Color(0xFF42A5F5),
+              //         ],
+              //       ),
+              //     ),
+              //     padding:
+              //         const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              //     child: Text(
+              //       'Check Graph',
+              //       style: TextStyle(
+              //         color: Colors.white,
+              //         fontSize: 14,
+              //         fontWeight: FontWeight.bold,
+              //       ),
+              //     ),
+              //   ),
+              // ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -248,36 +320,34 @@ class SensorScreenState extends State<SensorScreen> {
                           GraphScreen(pulse_list, temp_list, time_list)));
                 },
                 child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: <Color>[
-                        Color(0xFF0D47A1),
-                        Color(0xFF1976D2),
-                        Color(0xFF42A5F5),
-                      ],
-                    ),
-                  ),
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: GradientColors.sky,
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 83, vertical: 10),
                   child: Text(
                     'Check Graph',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 14,
+                      fontSize: 35,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ),
-              Divider(
-                color: Colors.blue,
-                thickness: 2,
-              ),
+              // Divider(
+              //   color: Colors.blue,
+              //   thickness: 2,
+              // ),
               Text(
                 "Previous Data",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
+                    //fontStyle: FontStyle.italic,
                     color: Colors.blueAccent,
                     decoration: TextDecoration.underline,
                     fontSize: 25),
@@ -294,7 +364,7 @@ class SensorScreenState extends State<SensorScreen> {
                     Text("Timestamp",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
+                          //fontStyle: FontStyle.italic,
                           fontSize: 20,
                           color: Colors.blueAccent,
                         )),
@@ -305,7 +375,7 @@ class SensorScreenState extends State<SensorScreen> {
                     Text("Pulse Rate",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
+                          // fontStyle: FontStyle.italic,
                           color: Colors.blueAccent,
                           fontSize: 20,
                         )),
@@ -316,7 +386,7 @@ class SensorScreenState extends State<SensorScreen> {
                     Text("Temperature",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
+                          // fontStyle: FontStyle.italic,
                           color: Colors.blueAccent,
                           fontSize: 20,
                         )),
@@ -375,7 +445,7 @@ class SensorScreenState extends State<SensorScreen> {
                                             pulse.toString() + " BPM",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontStyle: FontStyle.italic,
+                                              //fontStyle: FontStyle.italic,
                                               //color: Colors.blueAccent,
                                               color: pulseColor,
                                             ),
@@ -392,7 +462,7 @@ class SensorScreenState extends State<SensorScreen> {
                                               temperature.toString() + " °C",
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                fontStyle: FontStyle.italic,
+                                                //fontStyle: FontStyle.italic,
                                                 // color: Colors.blueAccent,
                                                 color: tempColor,
                                               )),
@@ -408,14 +478,15 @@ class SensorScreenState extends State<SensorScreen> {
                               );
                             }),
                       ),
-                      Divider(
-                        color: Colors.blue,
-                        thickness: 2,
-                      ),
+                      // Divider(
+                      //   color: Colors.blue,
+                      //   thickness: 2,
+                      // ),
                     ],
                   ),
                 ),
               ),
+              SizedBox(height: 35)
             ])));
   }
 
