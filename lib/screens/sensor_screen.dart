@@ -227,10 +227,10 @@ class SensorScreenState extends State<SensorScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                   child: Text(
-                    "Pulse Rate: " + pulse.toString() + " BPM",
+                    "Pulse Rate:     " + pulse.toString() + " BPM",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 36,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -279,7 +279,7 @@ class SensorScreenState extends State<SensorScreen> {
                     "Temperature: " + temperature.toString() + "°C",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 35,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -333,7 +333,7 @@ class SensorScreenState extends State<SensorScreen> {
                     'Check Graph',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 35,
+                      fontSize: 31,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -421,6 +421,10 @@ class SensorScreenState extends State<SensorScreen> {
                                   getTempColor(snapshot.value['Temperature']);
                               return Column(
                                 children: [
+                                  // Divider(
+                                  //   color: Colors.blue,
+                                  //   thickness: 2,
+                                  // ),
                                   Row(
                                     children: [
                                       Expanded(
@@ -481,7 +485,7 @@ class SensorScreenState extends State<SensorScreen> {
                       // Divider(
                       //   color: Colors.blue,
                       //   thickness: 2,
-                      // ),
+                      // ),s
                     ],
                   ),
                 ),

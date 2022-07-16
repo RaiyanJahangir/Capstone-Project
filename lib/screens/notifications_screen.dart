@@ -125,16 +125,19 @@ class NotificationScreenState extends State<NotificationScreen> {
       margin: EdgeInsets.symmetric(vertical: 2),
       padding: EdgeInsets.fromLTRB(1, 1, 1, 1),
       alignment: Alignment.center,
-      //height: 130,
-      color: Colors.white,
+      //height: 60,
+      //color: Theme.of(context).backgroundColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Divider(
-            color: Colors.black,
-            thickness: 2,
-          ),
+          // Divider(
+          //   color: Colors.black,
+          //   thickness: 1,
+          // ),
+          // SizedBox(
+          //   height: 5,
+          // ),
           Row(
             children: [
               Icon(
@@ -143,7 +146,7 @@ class NotificationScreenState extends State<NotificationScreen> {
                 size: 20,
               ),
               SizedBox(
-                width: 6,
+                width: 5,
               ),
               Text(
                 contact!['Title'].toString(),
@@ -155,9 +158,9 @@ class NotificationScreenState extends State<NotificationScreen> {
               ),
             ],
           ),
-          SizedBox(
-            height: 5,
-          ),
+          // SizedBox(
+          //   height: 5,
+          // ),
           Row(
             children: [
               Icon(
@@ -194,12 +197,16 @@ class NotificationScreenState extends State<NotificationScreen> {
                     color: Color.fromARGB(255, 19, 19, 19),
                     fontWeight: FontWeight.w600),
               ),
+              // Divider(
+              //   color: Colors.black,
+              //   thickness: 2,
+              // ),
             ],
           ),
-          // Divider(
-          //   color: Colors.black,
-          //   thickness: 2,
-          // ),
+          Divider(
+            color: Colors.black,
+            thickness: 1,
+          ),
         ],
       ),
     );
@@ -295,6 +302,9 @@ class NotificationScreenState extends State<NotificationScreen> {
             height: 760,
             child: Column(
               children: [
+                SizedBox(
+                  height: 5,
+                ),
                 Expanded(
                   child: FirebaseAnimatedList(
                       scrollDirection: Axis.vertical,
@@ -306,8 +316,12 @@ class NotificationScreenState extends State<NotificationScreen> {
                         return _buildNotificationItem(contact: contact);
                       }),
                 ),
+                // Divider(
+                //   color: Colors.black,
+                //   thickness: 2,
+                // ),
                 SizedBox(
-                  height: 45,
+                  height: 33,
                 ),
               ],
             ),

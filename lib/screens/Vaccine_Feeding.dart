@@ -491,6 +491,15 @@ class _homePageState extends State<HomePage> {
                                             ),
                                           ),
                                         ),
+                                        InkWell(
+                                          onTap: closeTaskPop,
+                                          child: Container(
+                                              // child: Text(
+                                              //   "Add Vaccination",
+                                              //   style: TextStyle(fontSize: 18),
+                                              // ),
+                                              ),
+                                        ),
                                         SizedBox(
                                           height: 1,
                                         )

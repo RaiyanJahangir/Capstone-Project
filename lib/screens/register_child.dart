@@ -734,7 +734,7 @@ class _RegisterChildState extends State<RegisterChild> {
     databaseRef.set({
       "Cry": "NO",
       "Pulse Rate": 72,
-      "Temperature": 29.0,
+      "Temperature": 29.2,
       "Latitude": 2383765,
       "Longitude": 9035776,
       "Timestamp": DateTime.now().toString().substring(0, 19)
@@ -745,7 +745,7 @@ class _RegisterChildState extends State<RegisterChild> {
     PrevdatabaseRef.push().set(({
       "Cry": "NO",
       "Pulse Rate": 72,
-      "Temperature": 29.0,
+      "Temperature": 29.2,
       "Latitude": 2383765,
       "Longitude": 9035776,
       "Timestamp": DateTime.now().toString().substring(0, 19)
