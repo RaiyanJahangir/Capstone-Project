@@ -185,7 +185,6 @@ class SensorScreenState extends State<SensorScreen> {
               ],
             ),
           ],
-          //backgroundColor: Color.fromRGBO(232, 232, 242, 1),
         ),
         body: Container(
             child: Column(
@@ -193,27 +192,6 @@ class SensorScreenState extends State<SensorScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
               SizedBox(height: 15),
-              // Text(
-              //   "Pulse Rate: ",
-              //   style: TextStyle(
-              //       fontWeight: FontWeight.bold,
-              //       // fontStyle: FontStyle.italic,
-              //       color: Colors.blueAccent,
-              //       //color: Color.fromARGB(255, 192, 109, 13),
-              //       fontSize: 30),
-              // ),
-              // Text(
-              //   pulse.toString() + " BPM",
-              //   style: TextStyle(
-              //       fontWeight: FontWeight.bold,
-              //       //fontStyle: FontStyle.italic,
-              //       //color: Color.fromARGB(255, 20, 142, 243),
-              //       color: Color.fromARGB(238, 165, 33, 150),
-              //       fontSize: 50),
-              // ),
-              // Expanded(
-              //   flex: 2,
-              //   child:
               TextButton(
                 onPressed: () {},
                 child: Container(
@@ -236,33 +214,6 @@ class SensorScreenState extends State<SensorScreen> {
                   ),
                 ),
               ),
-              //  ),
-              // Divider(
-              //   color: Colors.blue,
-              //   thickness: 2,
-              // ),
-              // Text(
-              //   "Body Temperature: ",
-              //   style: TextStyle(
-              //       fontWeight: FontWeight.bold,
-              //       //fontStyle: FontStyle.italic,
-              //       color: Colors.blueAccent,
-              //       //color: Color.fromARGB(255, 192, 109, 13),
-              //       fontSize: 30),
-              // ),
-              // Text(
-              //   temperature.toString() + " °C",
-              //   style: TextStyle(
-              //       fontWeight: FontWeight.bold,
-              //       //fontStyle: FontStyle.italic,
-              //       //color: Color.fromARGB(255, 20, 142, 243),
-              //       color: Color.fromARGB(238, 165, 33, 150),
-              //       fontSize: 50),
-              // ),
-              // Divider(
-              //   color: Colors.blue,
-              //   thickness: 2,
-              // ),
               TextButton(
                 onPressed: () {},
                 child: Container(
@@ -285,34 +236,6 @@ class SensorScreenState extends State<SensorScreen> {
                   ),
                 ),
               ),
-              // TextButton(
-              //   onPressed: () {
-              //     Navigator.of(context).push(MaterialPageRoute(
-              //         builder: (c) =>
-              //             GraphScreen(pulse_list, temp_list, time_list)));
-              //   },
-              //   child: Container(
-              //     decoration: const BoxDecoration(
-              //       gradient: LinearGradient(
-              //         colors: <Color>[
-              //           Color(0xFF0D47A1),
-              //           Color(0xFF1976D2),
-              //           Color(0xFF42A5F5),
-              //         ],
-              //       ),
-              //     ),
-              //     padding:
-              //         const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              //     child: Text(
-              //       'Check Graph',
-              //       style: TextStyle(
-              //         color: Colors.white,
-              //         fontSize: 14,
-              //         fontWeight: FontWeight.bold,
-              //       ),
-              //     ),
-              //   ),
-              // ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -339,10 +262,6 @@ class SensorScreenState extends State<SensorScreen> {
                   ),
                 ),
               ),
-              // Divider(
-              //   color: Colors.blue,
-              //   thickness: 2,
-              // ),
               Text(
                 "Previous Data",
                 style: TextStyle(
@@ -352,7 +271,6 @@ class SensorScreenState extends State<SensorScreen> {
                     decoration: TextDecoration.underline,
                     fontSize: 25),
               ),
-              // SizedBox(height: 2),
               Divider(
                 color: Colors.blue,
                 thickness: 2,
@@ -364,7 +282,6 @@ class SensorScreenState extends State<SensorScreen> {
                     Text("Timestamp",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          //fontStyle: FontStyle.italic,
                           fontSize: 20,
                           color: Colors.blueAccent,
                         )),
@@ -375,7 +292,6 @@ class SensorScreenState extends State<SensorScreen> {
                     Text("Pulse Rate",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          // fontStyle: FontStyle.italic,
                           color: Colors.blueAccent,
                           fontSize: 20,
                         )),
@@ -386,7 +302,6 @@ class SensorScreenState extends State<SensorScreen> {
                     Text("Temperature",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          // fontStyle: FontStyle.italic,
                           color: Colors.blueAccent,
                           fontSize: 20,
                         )),
@@ -404,7 +319,7 @@ class SensorScreenState extends State<SensorScreen> {
                         child: FirebaseAnimatedList(
                             scrollDirection: Axis.vertical,
                             query: prevDatabaseRef,
-                            reverse: true,
+                            reverse: false,
                             itemBuilder: (BuildContext context,
                                 DataSnapshot snapshot,
                                 Animation<double> animation,
@@ -421,10 +336,6 @@ class SensorScreenState extends State<SensorScreen> {
                                   getTempColor(snapshot.value['Temperature']);
                               return Column(
                                 children: [
-                                  // Divider(
-                                  //   color: Colors.blue,
-                                  //   thickness: 2,
-                                  // ),
                                   Row(
                                     children: [
                                       Expanded(
@@ -449,8 +360,6 @@ class SensorScreenState extends State<SensorScreen> {
                                             pulse.toString() + " BPM",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              //fontStyle: FontStyle.italic,
-                                              //color: Colors.blueAccent,
                                               color: pulseColor,
                                             ),
                                           ),
@@ -466,8 +375,6 @@ class SensorScreenState extends State<SensorScreen> {
                                               temperature.toString() + " °C",
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                //fontStyle: FontStyle.italic,
-                                                // color: Colors.blueAccent,
                                                 color: tempColor,
                                               )),
                                         ),
@@ -482,10 +389,6 @@ class SensorScreenState extends State<SensorScreen> {
                               );
                             }),
                       ),
-                      // Divider(
-                      //   color: Colors.blue,
-                      //   thickness: 2,
-                      // ),s
                     ],
                   ),
                 ),
